@@ -11,4 +11,5 @@
 
 .mobileContent {
     max-width: 768px;
+    position: relative;
 }

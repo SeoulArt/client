@@ -106,6 +106,7 @@ body,
 #root {
     width: 100%;
     height: 100%;
+    font-family: "Inter", sans-serif;
 }
 
 ol,
@@ -152,4 +153,17 @@ input:disabled {
 
 * {
     box-sizing: border-box !important;
+}
+
+:root {
+    --color-primary: #262626;
+    --color-secondary: #000000;
+    --color-disabled: #d1d1d1;
+    --color-error: #be0000;
+    --color-white: #ffffff;
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
 }

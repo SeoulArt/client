@@ -1,13 +1,13 @@
 import MobileLayout from "layout/MobileLayout";
+import Onboarding from "pages/Onboarding";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
     return (
         <MobileLayout>
             <BrowserRouter>
-                <header>I'm head</header>
                 <Routes>
-                    <Route path="/" element={<div>heeloo</div>}></Route>
+                    <Route path="/" element={<Onboarding />}></Route>
                 </Routes>
             </BrowserRouter>
         </MobileLayout>
