@@ -11,6 +11,7 @@ export default defineConfig({
             components: "/src/components",
             assets: "/src/assets",
             hooks: "/src/hooks",
+            UI: "/src/UI",
         },
     },
 });
