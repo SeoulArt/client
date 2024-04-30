@@ -15,6 +15,7 @@ interface AuthStore {
 
 interface AuthAction {
     login: (user: User) => void;
+    logout: () => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({

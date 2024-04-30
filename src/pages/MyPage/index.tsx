@@ -3,9 +3,9 @@ import authStore from "store/authStore";
 import styles from "./index.module.css";
 
 const MyPage = () => {
-    const { user } = authStore();
+    const { user, logout } = authStore();
 
-    const isAuthenticated = user !== null;
+    const isAuthenticated = user === null;
 
     return (
         <div className={styles.layout}>
@@ -24,7 +24,9 @@ const MyPage = () => {
             </div>
             <div className={styles.buttons}>
                 {isAuthenticated ? (
-                    <Button buttonType="default">로그아웃</Button>
+                    <Button buttonType="default" onClick={logout}>
+                        로그아웃
+                    </Button>
                 ) : (
                     <>
                         <Button buttonType="kakao">카카오로 계속하기</Button>
