@@ -1,5 +1,5 @@
 .layout {
-    position: fixed;
+    position: sticky;
     z-index: 1;
     top: 0;
     width: 100%;
@@ -22,9 +22,4 @@
 .heading {
     font-size: 36px;
     font-weight: var(--weight-bold);
-}
-
-.spacer {
-    background-color: var(--color-white);
-    height: 105px;
 }
