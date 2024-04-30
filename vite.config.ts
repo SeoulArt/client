@@ -12,6 +12,7 @@ export default defineConfig({
             assets: "/src/assets",
             hooks: "/src/hooks",
             UI: "/src/UI",
+            queries: "/src/queries",
         },
     },
 });
