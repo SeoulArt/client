@@ -1,16 +1,24 @@
 import MobileLayout from "layout/MobileLayout";
+import Home from "pages/Home";
+import MyPage from "pages/MyPage";
 import Onboarding from "pages/Onboarding";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
     return (
-        <MobileLayout>
-            <BrowserRouter>
+        <BrowserRouter>
+            <MobileLayout>
                 <Routes>
-                    <Route path="/" element={<Onboarding />}></Route>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/mypage" element={<MyPage />} />
+                    <Route path="/onboarding" element={<Onboarding />} />
+                    <Route
+                        path="*"
+                        element={<Navigate to={"/onboarding"} replace />}
+                    />
                 </Routes>
-            </BrowserRouter>
-        </MobileLayout>
+            </MobileLayout>
+        </BrowserRouter>
     );
 }
 

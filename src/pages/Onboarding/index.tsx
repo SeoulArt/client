@@ -2,11 +2,12 @@ import Button from "UI/Button";
 import styles from "./index.module.css";
 import { useRef } from "react";
 import useWaitImageLoad from "hooks/useWaitImageLoad";
+import { useNavigate } from "react-router";
 
 const Onboarding = () => {
     const imgRef = useRef<HTMLImageElement>(null);
     const isImageLoaded = useWaitImageLoad(imgRef);
-
+    const navigate = useNavigate();
     return (
         <div className={styles.layout}>
             <div className={styles.logoContainer}>
@@ -27,7 +28,7 @@ const Onboarding = () => {
                 />
             </div>
             <footer className={styles.footer}>
-                <Button>시작하기</Button>
+                <Button onClick={() => navigate("/")}>시작하기</Button>
                 <span className={styles.explain}>
                     서울예술대학교 연극제작실습I / III 에서 진행한 플랫폼입니다.
                 </span>
