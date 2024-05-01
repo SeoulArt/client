@@ -1,11 +1,38 @@
 import Button from "UI/Button";
 import authStore from "store/authStore";
 import styles from "./index.module.css";
+import baseAxios from "queries/baseAxios";
+import { AxiosResponse } from "axios";
+import { useState } from "react";
+
+interface OauthResponse {
+    url: string;
+}
 
 const MyPage = () => {
     const { user, logout } = authStore();
+    const [isBeingAuthenticated, setIsBeingAuthenticated] = useState(false);
+    const isAuthenticated = user !== null;
 
-    const isAuthenticated = user === null;
+    const handleOauthLogin = async (provider: "kakao" | "naver") => {
+        if (isBeingAuthenticated) return;
+        setIsBeingAuthenticated(true);
+        try {
+            const {
+                data: {
+                    data: { url },
+                },
+            } = await baseAxios.get<AxiosResponse<OauthResponse>>(
+                `/oauth/url/${provider}`
+            );
+            document.location.href = url;
+        } catch (error) {
+            console.log(error);
+            alert("로그인 중 문제가 발생했습니다.");
+        } finally {
+            setIsBeingAuthenticated(false);
+        }
+    };
 
     return (
         <div className={styles.layout}>
@@ -29,8 +56,20 @@ const MyPage = () => {
                     </Button>
                 ) : (
                     <>
-                        <Button buttonType="kakao">카카오로 계속하기</Button>
-                        <Button buttonType="naver">네이버로 계속하기</Button>
+                        <Button
+                            buttonType="kakao"
+                            onClick={() => handleOauthLogin("kakao")}
+                            disabled={isBeingAuthenticated}
+                        >
+                            카카오로 계속하기
+                        </Button>
+                        <Button
+                            buttonType="naver"
+                            onClick={() => handleOauthLogin("naver")}
+                            disabled={isBeingAuthenticated}
+                        >
+                            네이버로 계속하기
+                        </Button>
                     </>
                 )}
             </div>
