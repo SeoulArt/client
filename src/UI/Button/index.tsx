@@ -5,7 +5,7 @@ import naverIcon from "assets/naver.svg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
-    buttonType: "default" | "kakao" | "naver";
+    buttonType?: "default" | "kakao" | "naver";
 }
 
 const Button = ({ children, buttonType = "default", ...rest }: ButtonProps) => {
