@@ -2,7 +2,6 @@ import Button from "UI/Button";
 import authStore from "store/authStore";
 import styles from "./index.module.css";
 import baseAxios from "queries/baseAxios";
-import { AxiosResponse } from "axios";
 import { useState } from "react";
 
 interface OauthResponse {
@@ -19,11 +18,9 @@ const MyPage = () => {
         setIsBeingAuthenticated(true);
         try {
             const {
-                data: {
-                    data: { url },
-                },
-            } = await baseAxios.get<AxiosResponse<OauthResponse>>(
-                `/oauth/url/${provider}`
+                data: { url },
+            } = await baseAxios.get<OauthResponse>(
+                `/auth/${provider}/login-url`
             );
             document.location.href = url;
         } catch (error) {
