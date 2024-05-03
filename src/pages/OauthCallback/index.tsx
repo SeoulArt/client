@@ -19,8 +19,12 @@ const OauthCallback = () => {
 
         (async () => {
             try {
-                await baseAxios.post(`/oauth/login/${provider}`, code);
+                const response = await baseAxios.post(
+                    `/auth/${provider}/token`,
+                    { code }
+                );
                 // login(user);
+                console.log(response);
                 toast.success("환영합니다 user님");
             } catch (error) {
                 toast.error("로그인 중 문제가 발생하였습니다.");
