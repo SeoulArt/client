@@ -5,13 +5,16 @@ import Header from "layout/Header";
 
 const MobileLayout = ({ children }: { children: React.ReactNode }) => {
     const { pathname } = useLocation();
-
-    const isOnboardingPage = pathname === "/onboarding";
+    console.log(pathname);
+    const shouldHeaderHide =
+        pathname === "/onboarding" ||
+        pathname === "/oauth/callback/kakao" ||
+        pathname === "/oauth/callback/naver";
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.mobileContent}>
-                {isOnboardingPage || (
+                {shouldHeaderHide || (
                     <Header isOnMyPage={pathname === "/mypage"} />
                 )}
                 {children}
