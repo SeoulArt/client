@@ -3,6 +3,7 @@ import authStore from "store/authStore";
 import styles from "./index.module.css";
 import baseAxios from "queries/baseAxios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface OauthResponse {
     url: string;
@@ -24,8 +25,7 @@ const MyPage = () => {
             );
             document.location.href = url;
         } catch (error) {
-            console.log(error);
-            alert("로그인 중 문제가 발생했습니다.");
+            toast.error("로그인 중 문제가 발생했습니다.");
         } finally {
             setIsBeingAuthenticated(false);
         }

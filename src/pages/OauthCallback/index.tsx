@@ -1,5 +1,7 @@
+import Loading from "components/Loading";
 import baseAxios from "queries/baseAxios";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 // import authStore from "store/authStore";
@@ -19,14 +21,15 @@ const OauthCallback = () => {
             try {
                 await baseAxios.post(`/oauth/login/${provider}`, code);
                 // login(user);
+                toast.success("환영합니다 user님");
             } catch (error) {
-                alert(error);
+                toast.error("로그인 중 문제가 발생하였습니다.");
                 navigate("/");
             }
         })();
     }, []);
 
-    return <div>로딩 중</div>;
+    return <Loading />;
 };
 
 export default OauthCallback;
