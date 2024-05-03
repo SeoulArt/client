@@ -1,6 +1,5 @@
 .layout {
     position: relative;
-    margin-inline: 22px;
     background-color: var(--color-disabled);
     border-radius: 10px;
 }
