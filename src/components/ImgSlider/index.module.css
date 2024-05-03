@@ -1,0 +1,21 @@
+.layout {
+    position: relative;
+    margin-inline: 22px;
+    background-color: var(--color-disabled);
+    border-radius: 10px;
+}
+
+.leftArrow,
+.rightArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.leftArrow {
+    left: 6px;
+}
+
+.rightArrow {
+    right: 6px;
+}
