@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import baseAxios from "queries/baseAxios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 interface OauthResponse {
     url: string;
@@ -11,6 +12,7 @@ interface OauthResponse {
 
 const MyPage = () => {
     const { user, logout } = authStore();
+    const navigate = useNavigate();
     const [isBeingAuthenticated, setIsBeingAuthenticated] = useState(false);
     const isAuthenticated = user !== null;
 
@@ -31,6 +33,11 @@ const MyPage = () => {
         }
     };
 
+    const resetUser = () => {
+        logout();
+        navigate("/");
+    };
+
     return (
         <div className={styles.layout}>
             <h2 className={styles.heading3}>프로필</h2>
@@ -48,7 +55,7 @@ const MyPage = () => {
             </div>
             <div className={styles.buttons}>
                 {isAuthenticated ? (
-                    <Button buttonType="default" onClick={logout}>
+                    <Button buttonType="default" onClick={resetUser}>
                         로그아웃
                     </Button>
                 ) : (
