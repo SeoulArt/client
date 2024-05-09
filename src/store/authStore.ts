@@ -3,9 +3,8 @@ import { create } from "zustand";
 interface User {
     userId: number;
     username: string;
-    // role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
+    role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
     profileImage: string;
-    // description: string;
 }
 
 interface AuthStore {

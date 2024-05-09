@@ -7,11 +7,10 @@ import { useSearchParams } from "react-router-dom";
 import authStore from "store/authStore";
 
 interface LoginedUser {
-    id: number;
-    properties: {
-        nickname: string;
-        profile_image: string;
-    };
+    userId: number;
+    username: string;
+    role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
+    profileImage: string;
 }
 
 const OauthCallback = () => {
@@ -27,17 +26,21 @@ const OauthCallback = () => {
 
         (async () => {
             try {
+                console.log(code);
                 const { data } = await baseAxios.post<LoginedUser>(
-                    `/auth/${provider}/token`,
+                    `/auth/${provider}/login`,
                     { code }
                 );
+
                 login({
-                    userId: data.id,
-                    username: data.properties.nickname,
-                    profileImage: data.properties.profile_image,
+                    userId: data.userId,
+                    username: data.username,
+                    profileImage: data.profileImage,
+                    role: data.role,
                 });
-                toast.success(`환영합니다 ${data.properties.nickname}님`);
+                toast.success(`환영합니다 ${data.username}님`);
             } catch (error) {
+                console.log(error);
                 toast.error("로그인 중 문제가 발생하였습니다.");
             } finally {
                 navigate("/");
