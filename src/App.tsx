@@ -56,10 +56,6 @@ function App() {
                                 <Route element={<LayoutWithHeaderAndMenu />}>
                                     <Route path="/" element={<Home />} />
                                     <Route
-                                        path="/plays"
-                                        element={<div>plays</div>}
-                                    />
-                                    <Route
                                         path="/creators"
                                         element={<div>creators</div>}
                                     />

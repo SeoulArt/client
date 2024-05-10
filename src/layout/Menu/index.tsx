@@ -14,7 +14,7 @@ const Menu = () => {
                     onClick={() => setIsOpened(false)}
                 />
                 <div className={styles.activeMenu}>
-                    <Link to="/plays" onClick={() => setIsOpened(false)}>
+                    <Link to="/" onClick={() => setIsOpened(false)}>
                         작품
                     </Link>
                     <div>
