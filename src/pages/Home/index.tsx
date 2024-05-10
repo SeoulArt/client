@@ -1,11 +1,14 @@
 import ImgSlider from "components/ImgSlider";
-import styles from "./index.module.css";
 import { Link } from "react-router-dom";
+import toIntroducePlayIcon from "assets/toIntroducePlayIcon.svg";
+import toCreatorsIcon from "assets/toCreatorsIcon.svg";
+import toQnAIcon from "assets/toQnAIcon.svg";
+import styles from "./index.module.css";
 
 const links = [
-    { src: "logo.svg", text: "작품 소개" },
-    { src: "logo.svg", text: "창작자 소개" },
-    { src: "logo.svg", text: "작품 Q&A" },
+    { src: toIntroducePlayIcon, text: "작품 소개" },
+    { src: toCreatorsIcon, text: "창작자 소개" },
+    { src: toQnAIcon, text: "작품 Q&A" },
 ];
 
 const Home = () => {
