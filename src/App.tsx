@@ -24,29 +24,33 @@ function App() {
         <BrowserRouter>
             <MobileLayout>
                 <Routes>
-                    {!isFirstTime && <Route path="/" element={<Home />} />}
-                    <Route path="/mypage" element={<MyPage />} />
                     <Route
                         path="/onboarding"
                         element={
                             <Onboarding onSkipOnboarding={skipOnboarding} />
                         }
                     />
-                    {!user && (
+                    {isFirstTime ? (
                         <Route
-                            path="/oauth/callback/:provider"
-                            element={<OauthCallback />}
+                            path="*"
+                            element={<Navigate to={"/onboarding"} replace />}
                         />
-                    )}
-                    <Route
-                        path="*"
-                        element={
-                            <Navigate
-                                to={isFirstTime ? "/onboarding" : "/"}
-                                replace
+                    ) : (
+                        <>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/mypage" element={<MyPage />} />
+                            {!user && (
+                                <Route
+                                    path="/oauth/callback/:provider"
+                                    element={<OauthCallback />}
+                                />
+                            )}
+                            <Route
+                                path="*"
+                                element={<Navigate to={"/"} replace />}
                             />
-                        }
-                    />
+                        </>
+                    )}
                 </Routes>
             </MobileLayout>
         </BrowserRouter>
