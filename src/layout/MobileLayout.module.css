@@ -7,9 +7,12 @@
 .wrapper {
     display: flex;
     justify-content: center;
+    background-color: var(--color-disabled);
 }
 
 .mobileContent {
     max-width: 768px;
+    overflow-y: scroll;
     position: relative;
+    background-color: var(--color-white);
 }

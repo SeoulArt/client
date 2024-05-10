@@ -1,10 +1,11 @@
 import Avatar from "assets/avatar.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./index.module.css";
 import authStore from "store/authStore";
 
-const Header = ({ isOnMyPage }: { isOnMyPage: boolean }) => {
+const Header = () => {
     const { user } = authStore();
+    const { pathname } = useLocation();
 
     return (
         <header className={styles.layout}>
@@ -12,7 +13,7 @@ const Header = ({ isOnMyPage }: { isOnMyPage: boolean }) => {
                 <Link to={"/"}>
                     <h1 className={styles.heading}>Playground</h1>
                 </Link>
-                {isOnMyPage || (
+                {pathname === "/mypage" || (
                     <Link to={"/mypage"}>
                         <img
                             src={user?.profileImage || Avatar}
