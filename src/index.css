@@ -146,6 +146,10 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    cursor: not-allowed;
+}
+
 button:disabled,
 input:disabled {
     cursor: not-allowed;

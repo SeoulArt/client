@@ -1,16 +1,59 @@
 import MobileLayout from "layout/MobileLayout";
+import Home from "pages/Home";
+import MyPage from "pages/MyPage";
+import OauthCallback from "pages/OauthCallback";
 import Onboarding from "pages/Onboarding";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import authStore from "store/authStore";
+
+const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
+    const { user } = authStore();
+    const [isFirstTime, setIsFirstTime] = useState(
+        JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
+    );
+
+    const skipOnboarding = () => {
+        setIsFirstTime(false);
+        localStorage.setItem(LOCAL_STORAGE_KEY, "false");
+    };
+
     return (
-        <MobileLayout>
-            <BrowserRouter>
+        <BrowserRouter>
+            <MobileLayout>
                 <Routes>
-                    <Route path="/" element={<Onboarding />}></Route>
+                    <Route
+                        path="/onboarding"
+                        element={
+                            <Onboarding onSkipOnboarding={skipOnboarding} />
+                        }
+                    />
+                    {isFirstTime ? (
+                        <Route
+                            path="*"
+                            element={<Navigate to={"/onboarding"} replace />}
+                        />
+                    ) : (
+                        <>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/mypage" element={<MyPage />} />
+                            {!user && (
+                                <Route
+                                    path="/oauth/callback/:provider"
+                                    element={<OauthCallback />}
+                                />
+                            )}
+                            <Route
+                                path="*"
+                                element={<Navigate to={"/"} replace />}
+                            />
+                        </>
+                    )}
                 </Routes>
-            </BrowserRouter>
-        </MobileLayout>
+            </MobileLayout>
+        </BrowserRouter>
     );
 }
 

@@ -21,12 +21,14 @@
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
         "paths": {
+            "store/*": ["src/store/*"],
             "layout/*": ["src/layout/*"],
             "pages/*": ["src/pages/*"],
             "components/*": ["src/components/*"],
             "assets/*": ["src/assets/*"],
             "hooks/*": ["src/hooks/*"],
-            "UI/*": ["src/UI/*"]
+            "UI/*": ["src/UI/*"],
+            "queries/*": ["src/queries/*"]
         }
     },
     "include": ["src"],
