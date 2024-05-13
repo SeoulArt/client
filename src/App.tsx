@@ -1,10 +1,18 @@
+import Header from "layout/Header";
+import LayoutWithHeaderAndMenu from "layout/LayoutWithHeaderAndMenu";
 import MobileLayout from "layout/MobileLayout";
 import Home from "pages/Home";
 import MyPage from "pages/MyPage";
 import OauthCallback from "pages/OauthCallback";
 import Onboarding from "pages/Onboarding";
 import { useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+    BrowserRouter,
+    Navigate,
+    Outlet,
+    Route,
+    Routes,
+} from "react-router-dom";
 import authStore from "store/authStore";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
@@ -22,8 +30,8 @@ function App() {
 
     return (
         <BrowserRouter>
-            <MobileLayout>
-                <Routes>
+            <Routes>
+                <Route element={<MobileLayout />}>
                     <Route
                         path="/onboarding"
                         element={
@@ -37,8 +45,43 @@ function App() {
                         />
                     ) : (
                         <>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/mypage" element={<MyPage />} />
+                            <Route
+                                element={
+                                    <>
+                                        <Header />
+                                        <Outlet />
+                                    </>
+                                }
+                            >
+                                <Route element={<LayoutWithHeaderAndMenu />}>
+                                    <Route path="/" element={<Home />} />
+                                    <Route
+                                        path="/plays"
+                                        element={<div>plays</div>}
+                                    />
+                                    <Route
+                                        path="/creators"
+                                        element={<div>creators</div>}
+                                    />
+                                    <Route
+                                        path="/qna"
+                                        element={<div>qna</div>}
+                                    />
+                                    <Route
+                                        path="/contents"
+                                        element={<div>contents</div>}
+                                    />
+                                    <Route
+                                        path="/ticketing"
+                                        element={<div>ticketing</div>}
+                                    />
+                                    <Route
+                                        path="/community"
+                                        element={<div>community</div>}
+                                    />
+                                </Route>
+                                <Route path="/mypage" element={<MyPage />} />
+                            </Route>
                             {!user && (
                                 <Route
                                     path="/oauth/callback/:provider"
@@ -51,8 +94,8 @@ function App() {
                             />
                         </>
                     )}
-                </Routes>
-            </MobileLayout>
+                </Route>
+            </Routes>
         </BrowserRouter>
     );
 }

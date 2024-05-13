@@ -22,9 +22,7 @@ const MyPage = () => {
         try {
             const {
                 data: { url },
-            } = await baseAxios.get<OauthResponse>(
-                `/auth/${provider}/login-url`
-            );
+            } = await baseAxios.get<OauthResponse>(`/auth/${provider}/url`);
             document.location.href = url;
         } catch (error) {
             toast.error("로그인 중 문제가 발생했습니다.");

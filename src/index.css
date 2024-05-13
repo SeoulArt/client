@@ -165,9 +165,18 @@ input:disabled {
     --color-disabled: #d1d1d1;
     --color-error: #be0000;
     --color-white: #ffffff;
+    --color-overlay: #323232;
 
     --weight-regular: 400;
     --weight-medium: 500;
     --weight-semibold: 600;
     --weight-bold: 700;
+}
+
+* {
+    scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }
