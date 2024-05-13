@@ -17,16 +17,7 @@ export default ({ mode }: { mode: string }) => {
             },
         },
         resolve: {
-            alias: {
-                store: "/src/store",
-                layout: "/src/layout",
-                pages: "/src/pages",
-                components: "/src/components",
-                assets: "/src/assets",
-                hooks: "/src/hooks",
-                UI: "/src/UI",
-                queries: "/src/queries",
-            },
+            alias: [{ find: "@", replacement: "/src" }],
         },
     });
 };

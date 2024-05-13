@@ -1,8 +1,8 @@
-import ImgSlider from "components/ImgSlider";
+import ImgSlider from "@/components/ImgSlider";
 import { Link } from "react-router-dom";
-import toIntroducePlayIcon from "assets/toIntroducePlayIcon.svg";
-import toCreatorsIcon from "assets/toCreatorsIcon.svg";
-import toQnAIcon from "assets/toQnAIcon.svg";
+import toIntroducePlayIcon from "@/assets/toIntroducePlayIcon.svg";
+import toCreatorsIcon from "@/assets/toCreatorsIcon.svg";
+import toQnAIcon from "@/assets/toQnAIcon.svg";
 import styles from "./index.module.css";
 
 const links = [

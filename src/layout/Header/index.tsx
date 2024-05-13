@@ -1,7 +1,7 @@
-import Avatar from "assets/avatar.svg";
+import Avatar from "@/assets/avatar.svg";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./index.module.css";
-import authStore from "store/authStore";
+import authStore from "@/store/authStore";
 
 const Header = () => {
     const { user } = authStore();

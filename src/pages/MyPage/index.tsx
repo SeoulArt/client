@@ -1,7 +1,7 @@
-import Button from "UI/Button";
-import authStore from "store/authStore";
+import Button from "@/UI/Button";
+import authStore from "@/store/authStore";
 import styles from "./index.module.css";
-import baseAxios from "queries/baseAxios";
+import baseAxios from "@/queries/baseAxios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";

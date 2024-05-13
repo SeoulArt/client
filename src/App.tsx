@@ -1,10 +1,11 @@
-import Header from "layout/Header";
-import LayoutWithHeaderAndMenu from "layout/LayoutWithHeaderAndMenu";
-import MobileLayout from "layout/MobileLayout";
-import Home from "pages/Home";
-import MyPage from "pages/MyPage";
-import OauthCallback from "pages/OauthCallback";
-import Onboarding from "pages/Onboarding";
+import Header from "@/layout/Header";
+import LayoutWithHeaderAndMenu from "@/layout/LayoutWithHeaderAndMenu";
+import MobileLayout from "@/layout/MobileLayout";
+import Home from "@/pages/Home";
+import MyPage from "@/pages/MyPage";
+import OauthCallback from "@/pages/OauthCallback";
+import Onboarding from "@/pages/Onboarding";
+import Plays from "@/pages/Plays";
 import { useState } from "react";
 import {
     BrowserRouter,
@@ -13,7 +14,7 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
-import authStore from "store/authStore";
+import authStore from "@/store/authStore";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -55,10 +56,7 @@ function App() {
                             >
                                 <Route element={<LayoutWithHeaderAndMenu />}>
                                     <Route path="/" element={<Home />} />
-                                    <Route
-                                        path="/plays"
-                                        element={<div>plays</div>}
-                                    />
+                                    <Route path="/plays" element={<Plays />} />
                                     <Route
                                         path="/creators"
                                         element={<div>creators</div>}

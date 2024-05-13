@@ -1,5 +1,5 @@
-import triangle from "assets/triangle.svg";
-import menu from "assets/menu.png";
+import triangle from "@/assets/triangle.svg";
+import menu from "@/assets/menu.png";
 import styles from "./index.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
