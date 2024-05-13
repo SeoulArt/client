@@ -14,7 +14,8 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
-import authStore, { User } from "store/authStore";
+import { User } from "src/types";
+import authStore from "store/authStore";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -32,8 +33,12 @@ function App() {
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await baseAxios.post<User>("/auth/refresh");
-                login(data);
+                const response = await baseAxios.post<User & Error>(
+                    "/auth/refresh"
+                );
+                if (response.status !== 200)
+                    throw new Error(response.data.message);
+                login(response.data);
             } catch (error) {
                 logout();
             }

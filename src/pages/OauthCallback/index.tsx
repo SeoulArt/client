@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import authStore, { User } from "store/authStore";
+import { User } from "src/types";
+import authStore from "store/authStore";
 
 const OauthCallback = () => {
     const { login } = authStore();

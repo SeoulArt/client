@@ -1,12 +1,6 @@
 import baseAxios from "queries/baseAxios";
+import { User } from "src/types";
 import { create } from "zustand";
-
-export interface User {
-    userId: number;
-    username: string;
-    role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
-    profileImage: string;
-}
 
 interface AuthStore {
     user: null | User;
