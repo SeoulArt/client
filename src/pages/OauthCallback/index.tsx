@@ -4,14 +4,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import authStore from "store/authStore";
-
-interface LoginedUser {
-    userId: number;
-    username: string;
-    role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
-    profileImage: string;
-}
+import authStore, { User } from "store/authStore";
 
 const OauthCallback = () => {
     const { login } = authStore();
@@ -27,7 +20,7 @@ const OauthCallback = () => {
         (async () => {
             try {
                 console.log(code);
-                const { data } = await baseAxios.post<LoginedUser>(
+                const { data } = await baseAxios.post<User>(
                     `/auth/${provider}/login`,
                     { code }
                 );

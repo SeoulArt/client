@@ -5,13 +5,14 @@ import baseAxios from "queries/baseAxios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import Loading from "components/Loading";
 
 interface OauthResponse {
     url: string;
 }
 
 const MyPage = () => {
-    const { user, logout } = authStore();
+    const { user, logout, isLoading } = authStore();
     const navigate = useNavigate();
     const [isBeingAuthenticated, setIsBeingAuthenticated] = useState(false);
     const isAuthenticated = user !== null;
@@ -35,6 +36,8 @@ const MyPage = () => {
         logout();
         navigate("/");
     };
+
+    if (isLoading) return <Loading />;
 
     return (
         <div className={styles.layout}>

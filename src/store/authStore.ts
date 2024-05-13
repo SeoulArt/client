@@ -1,6 +1,7 @@
+import baseAxios from "queries/baseAxios";
 import { create } from "zustand";
 
-interface User {
+export interface User {
     userId: number;
     username: string;
     role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
@@ -14,17 +15,25 @@ interface AuthStore {
 
 interface AuthAction {
     login: (user: User) => void;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
     user: null,
     isLoading: true,
     login: (user) => {
-        set((state) => ({ ...state, user, isLoading: false }));
+        set(() => ({ user, isLoading: false }));
     },
-    logout: () => {
-        set((state) => ({ ...state, user: null, isLoading: false }));
+    logout: async () => {
+        try {
+            set(() => ({ isLoading: true }));
+            await baseAxios.post("/auth/logout");
+            set(() => ({ user: null, isLoading: false }));
+        } catch (error) {
+            console.log(error);
+        } finally {
+            set(() => ({ isLoading: false }));
+        }
     },
 }));
 

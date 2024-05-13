@@ -5,7 +5,8 @@ import Home from "pages/Home";
 import MyPage from "pages/MyPage";
 import OauthCallback from "pages/OauthCallback";
 import Onboarding from "pages/Onboarding";
-import { useState } from "react";
+import baseAxios from "queries/baseAxios";
+import { useEffect, useState } from "react";
 import {
     BrowserRouter,
     Navigate,
@@ -13,12 +14,12 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
-import authStore from "store/authStore";
+import authStore, { User } from "store/authStore";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
-    const { user } = authStore();
+    const { user, login, logout } = authStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
     );
@@ -27,6 +28,17 @@ function App() {
         setIsFirstTime(false);
         localStorage.setItem(LOCAL_STORAGE_KEY, "false");
     };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await baseAxios.post<User>("/auth/refresh");
+                login(data);
+            } catch (error) {
+                logout();
+            }
+        })();
+    }, []);
 
     return (
         <BrowserRouter>
