@@ -15,6 +15,7 @@ import {
     Routes,
 } from "react-router-dom";
 import authStore from "@/store/authStore";
+import PlayDetail from "@/pages/Plays/PlayDetail";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -60,7 +61,7 @@ function App() {
                                         <Route path="" element={<Plays />} />
                                         <Route
                                             path=":id"
-                                            element={<div>play detail</div>}
+                                            element={<PlayDetail />}
                                         />
                                     </Route>
                                     <Route
