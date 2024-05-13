@@ -56,7 +56,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-overlay);
+    background-color: var(--color-primary);
     opacity: 0.3;
 }
 
