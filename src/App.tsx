@@ -56,7 +56,13 @@ function App() {
                             >
                                 <Route element={<LayoutWithHeaderAndMenu />}>
                                     <Route path="/" element={<Home />} />
-                                    <Route path="/plays" element={<Plays />} />
+                                    <Route path="/plays">
+                                        <Route path="" element={<Plays />} />
+                                        <Route
+                                            path=":id"
+                                            element={<div>play detail</div>}
+                                        />
+                                    </Route>
                                     <Route
                                         path="/creators"
                                         element={<div>creators</div>}

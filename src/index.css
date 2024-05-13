@@ -166,6 +166,10 @@ input:disabled {
     --color-error: #be0000;
     --color-white: #ffffff;
     --color-overlay: #323232;
+    /* with rgb or rgba */
+    --color-play1: 2, 68, 109;
+    --color-play2: 188, 7, 7;
+    --color-play3: 233, 125, 4;
 
     --weight-regular: 400;
     --weight-medium: 500;
