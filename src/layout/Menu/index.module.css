@@ -1,9 +1,8 @@
 /* 기본 */
 .menuWrapper {
     position: fixed;
-    bottom: 0px;
+    bottom: -21px;
     left: 50%;
-    background-color: var(--color-white);
 
     transform: translate3d(-50%, 0, 0);
 }
