@@ -20,16 +20,20 @@ const Questions = () => {
                 {DUMMY_QUESTIONS(playId).map((question) => (
                     <li key={question.id}>
                         <Link to={`/qna/${playId}/questions/${question.id}`}>
-                            <span
-                                className={
-                                    question.isAnswered
-                                        ? styles.answered
-                                        : styles.notAnswered
-                                }
-                            >
-                                {question.isAnswered ? "답변완료" : "답변미완"}
-                            </span>
-                            {question.text}
+                            <p>
+                                <span
+                                    className={
+                                        question.isAnswered
+                                            ? styles.answered
+                                            : styles.notAnswered
+                                    }
+                                >
+                                    {question.isAnswered
+                                        ? "답변완료"
+                                        : "답변미완"}
+                                </span>
+                                {question.text}
+                            </p>
                         </Link>
                     </li>
                 ))}
