@@ -43,3 +43,42 @@ export const DUMMY_CREATORS: { id: number; role: FilterKeys; name: string }[] =
         { id: 39, role: "staff", name: "기획팀 9" },
         { id: 40, role: "staff", name: "기획팀 10" },
     ];
+
+export const DUMMY_QUESTIONS = (playId: 0 | 1 | 2) => [
+    {
+        id: 0,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 1,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
+    {
+        id: 2,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 3,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
+    {
+        id: 4,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 5,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
+];

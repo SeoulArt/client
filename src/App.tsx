@@ -18,6 +18,8 @@ import authStore from "@/store/authStore";
 import PlayDetail from "@/pages/Plays/PlayDetail";
 import Creators from "@/pages/Plays/Creators";
 import CreatorDetail from "@/pages/Plays/Creators/CreatorDetail";
+import QnA from "@/pages/QnA";
+import QnADetail from "@/pages/QnA/QnADetail";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -73,10 +75,13 @@ function App() {
                                             element={<CreatorDetail />}
                                         />
                                     </Route>
-                                    <Route
-                                        path="/qna"
-                                        element={<div>qna</div>}
-                                    />
+                                    <Route path="/qna">
+                                        <Route path="" element={<QnA />} />
+                                        <Route
+                                            path=":id"
+                                            element={<QnADetail />}
+                                        />
+                                    </Route>
                                     <Route
                                         path="/contents"
                                         element={<div>contents</div>}
