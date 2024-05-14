@@ -37,6 +37,11 @@
     }
 }
 
+.layout > article {
+    margin-inline: 16px;
+    padding-top: 20px;
+}
+
 .layout > article > h3 {
     font-size: 32px;
     font-weight: var(--weight-semibold);

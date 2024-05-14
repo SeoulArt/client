@@ -10,9 +10,9 @@ const Plays = () => {
 
     return (
         <ul className={styles.layout}>
-            {PLAYS.map((play, index) => (
+            {Object.entries(PLAYS).map(([key, play]) => (
                 <li key={play}>
-                    <Link to={`/plays/${index}`}>
+                    <Link to={`/plays/${key}`}>
                         <span>{play}</span>
                     </Link>
                 </li>
