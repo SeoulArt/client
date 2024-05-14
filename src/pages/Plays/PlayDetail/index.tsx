@@ -18,7 +18,7 @@ const PlayDetail = () => {
     if (Number.isNaN(playId)) return <Navigate to="/" replace />;
 
     if (playId < 0) return <Loading />;
-    console.log(playId);
+
     return (
         <>
             <TitleWithBackButton title={PLAYS[playId]} />
