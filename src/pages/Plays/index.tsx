@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
-import { PLAYS } from "@/constants";
+import { PLAYS_MAP } from "@/constants";
 
 const Plays = () => {
     useEffect(() => {
@@ -10,7 +10,7 @@ const Plays = () => {
 
     return (
         <ul className={styles.layout}>
-            {Object.entries(PLAYS).map(([key, play]) => (
+            {Array.from(PLAYS_MAP.entries()).map(([key, play]) => (
                 <li key={play}>
                     <Link to={`/plays/${key}`}>
                         <span>{play}</span>

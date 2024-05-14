@@ -1,6 +1,6 @@
 import Loading from "@/components/Loading";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { PLAYS } from "@/constants";
+import { PLAYS_MAP } from "@/constants";
 import leftArrow from "@/assets/leftArrow.svg";
 import { useEffect, useRef } from "react";
 import { Navigate, useParams } from "react-router";
@@ -9,22 +9,26 @@ import styles from "./index.module.css";
 const PlayDetail = () => {
     const { id } = useParams();
     const articleRef = useRef<HTMLElement>(null);
-    const playId = Number(id);
+    const playId = Number(id) as 0 | 1 | 2;
 
     useEffect(() => {
         // 작품 소개 글 가져오기
     }, []);
 
-    if (Number.isNaN(playId)) return <Navigate to="/" replace />;
+    if (Number.isNaN(playId) && !PLAYS_MAP.get(playId))
+        return <Navigate to="/" replace />;
 
     if (playId < 0) return <Loading />;
 
     return (
         <>
-            <TitleWithBackButton title={PLAYS[playId]} />
+            <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
             <div className={styles.layout}>
                 <div className={styles.relative}>
-                    <img src={"/logo.svg"} alt={`${PLAYS[playId]} 포스터`} />
+                    <img
+                        src={"/logo.svg"}
+                        alt={`${PLAYS_MAP.get(playId)} 포스터`}
+                    />
                     <button
                         onClick={() =>
                             articleRef.current?.scrollIntoView({
