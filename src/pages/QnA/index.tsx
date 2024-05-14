@@ -7,7 +7,7 @@ const QnA = () => {
         <div className={styles.layout}>
             {Array.from(PLAYS_MAP.keys()).map((playId) => (
                 <div key={playId}>
-                    <Link to={`/qna/${playId}`} />
+                    <Link to={`/qna/${playId}/questions`} />
                 </div>
             ))}
         </div>

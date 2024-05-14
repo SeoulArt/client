@@ -1,60 +1,25 @@
-import { Navigate, useLocation, useNavigate, useParams } from "react-router";
-import styles from "./index.module.css";
 import { PLAYS_MAP } from "@/constants";
-import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { DUMMY_QUESTIONS } from "@/data";
-import { useState } from "react";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Navigate, useParams } from "react-router";
 
 const QnADetail = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const params = useParams();
+    const playId = Number(params.playId) as 0 | 1 | 2;
+    const questionId = Number(params.questionId);
+    console.log(playId, questionId);
 
-    const currentQnAId = Number(searchParams.get("id"));
-    const isEdit = searchParams.get("edit");
+    useEffect(() => {
+        // QNA 글 조회, 해당 글 없으면 홈으로 REDIRECT
+    }, []);
 
-    const playId = Number(id) as 0 | 1 | 2;
-
-    if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
+    if (
+        Number.isNaN(playId) ||
+        !PLAYS_MAP.get(playId) ||
+        Number.isNaN(questionId)
+    )
         return <Navigate to="/" replace />;
 
-    return (
-        <>
-            <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
-            {currentQnAId ? (
-                <div>
-                    여기에 {currentQnAId}에 대한 인풋과 수정 가능 내용이 들어갈
-                    곳
-                </div>
-            ) : (
-                <ul className={styles.list}>
-                    {DUMMY_QUESTIONS(playId).map((question) => (
-                        <li key={question.id}>
-                            <button
-                                onClick={() => {
-                                    navigate({
-                                        pathname,
-                                        search: `?${createSearchParams({
-                                            id: question.id.toString(),
-                                        })}`,
-                                    });
-                                }}
-                            >
-                                <span>
-                                    {question.isAnswered
-                                        ? "답변완료"
-                                        : "답변 미완"}
-                                </span>
-                                <p>{question.text}</p>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </>
-    );
+    return <div>QnADetail</div>;
 };
 
 export default QnADetail;
