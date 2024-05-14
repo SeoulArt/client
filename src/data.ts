@@ -81,4 +81,40 @@ export const DUMMY_QUESTIONS = (playId: 0 | 1 | 2) => [
         text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
         isAnswered: false,
     },
+    {
+        id: 10,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 11,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
+    {
+        id: 12,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 13,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
+    {
+        id: 14,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: true,
+    },
+    {
+        id: 15,
+        playId,
+        text: "sdoifhp;ahrueah;va;rbv;fhg;jg;ajeogieaj;gaoehg;aheg;rhgr;gh;auhg;gaergh;reag",
+        isAnswered: false,
+    },
 ];

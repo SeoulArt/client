@@ -16,14 +16,20 @@ const Questions = () => {
     return (
         <>
             <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
-            <ul className={styles.list}>
+            <ul className={`${styles.list} ${styles[`play${playId}`]}`}>
                 {DUMMY_QUESTIONS(playId).map((question) => (
                     <li key={question.id}>
                         <Link to={`/qna/${playId}/questions/${question.id}`}>
-                            <span>
-                                {question.isAnswered ? "답변완료" : "답변 미완"}
+                            <span
+                                className={
+                                    question.isAnswered
+                                        ? styles.answered
+                                        : styles.notAnswered
+                                }
+                            >
+                                {question.isAnswered ? "답변완료" : "답변미완"}
                             </span>
-                            <p>{question.text}</p>
+                            {question.text}
                         </Link>
                     </li>
                 ))}
