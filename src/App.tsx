@@ -21,6 +21,7 @@ import CreatorDetail from "@/pages/Plays/Creators/CreatorDetail";
 import QnA from "@/pages/QnA";
 import QnADetail from "@/pages/QnA/QnADetail";
 import Questions from "@/pages/QnA/Questions";
+import CreateQuestion from "@/pages/QnA/CreateQuestion";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -78,6 +79,10 @@ function App() {
                                     </Route>
                                     <Route path="/qna">
                                         <Route path="" element={<QnA />} />
+                                        <Route
+                                            path=":playId/questions/new"
+                                            element={<CreateQuestion />}
+                                        />
                                         <Route
                                             path=":playId/questions/:questionId"
                                             element={<QnADetail />}
