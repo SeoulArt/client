@@ -1,5 +1,5 @@
 import baseAxios from "queries/baseAxios";
-import { User } from "src/types";
+import { User } from "@/types";
 import { create } from "zustand";
 
 interface AuthStore {

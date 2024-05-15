@@ -1,6 +1,6 @@
 import axios from "axios";
-import { User } from "src/types";
-import authStore from "store/authStore";
+import { User } from "@/types";
+import authStore from "@/store/authStore";
 
 const baseAxios = axios.create({
     baseURL: "/back",

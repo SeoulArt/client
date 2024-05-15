@@ -1,0 +1,18 @@
+.headerWithSelect {
+    position: relative;
+    display: flex;
+    align-items: last baseline;
+}
+
+.absolute {
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+}
+
+.list {
+    margin: 40px 42px 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

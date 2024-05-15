@@ -1,0 +1,7 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: calc(100% - var(--height-header));
+    padding-inline: 22px;
+}

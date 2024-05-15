@@ -1,8 +1,8 @@
 import styles from "./index.module.css";
-import blueCircle from "assets/loadingBlueCircle.svg";
-import redCircle from "assets/loadingRedCircle.svg";
-import yellowCircle from "assets/loadingYellowCircle.svg";
-import greenCircle from "assets/loadingGreenCircle.svg";
+import blueCircle from "@/assets/loadingBlueCircle.svg";
+import redCircle from "@/assets/loadingRedCircle.svg";
+import yellowCircle from "@/assets/loadingYellowCircle.svg";
+import greenCircle from "@/assets/loadingGreenCircle.svg";
 
 const Loading = () => {
     return (

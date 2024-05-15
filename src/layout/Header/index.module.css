@@ -10,7 +10,7 @@
 }
 
 .layout > .flex {
-    height: 60px;
+    height: 45px;
     width: 100%;
     padding-inline: 16px;
     display: flex;

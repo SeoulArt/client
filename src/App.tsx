@@ -1,11 +1,11 @@
-import Header from "layout/Header";
-import LayoutWithHeaderAndMenu from "layout/LayoutWithHeaderAndMenu";
-import MobileLayout from "layout/MobileLayout";
-import Home from "pages/Home";
-import MyPage from "pages/MyPage";
-import OauthCallback from "pages/OauthCallback";
-import Onboarding from "pages/Onboarding";
-import baseAxios from "queries/baseAxios";
+import Header from "@/layout/Header";
+import LayoutWithHeaderAndMenu from "@/layout/LayoutWithHeaderAndMenu";
+import MobileLayout from "@/layout/MobileLayout";
+import Home from "@/pages/Home";
+import MyPage from "@/pages/MyPage";
+import OauthCallback from "@/pages/OauthCallback";
+import Onboarding from "@/pages/Onboarding";
+import Plays from "@/pages/Plays";
 import { useEffect, useState } from "react";
 import {
     BrowserRouter,
@@ -14,8 +14,16 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
-import { User } from "src/types";
-import authStore from "store/authStore";
+import authStore from "@/store/authStore";
+import PlayDetail from "@/pages/Plays/PlayDetail";
+import Creators from "@/pages/Plays/Creators";
+import CreatorDetail from "@/pages/Plays/Creators/CreatorDetail";
+import QnA from "@/pages/QnA";
+import QnADetail from "@/pages/QnA/QnADetail";
+import Questions from "@/pages/QnA/Questions";
+import CreateQuestion from "@/pages/QnA/CreateQuestion";
+import { User } from "@/types";
+import baseAxios from "@/queries/baseAxios";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
@@ -72,18 +80,35 @@ function App() {
                             >
                                 <Route element={<LayoutWithHeaderAndMenu />}>
                                     <Route path="/" element={<Home />} />
-                                    <Route
-                                        path="/plays"
-                                        element={<div>plays</div>}
-                                    />
-                                    <Route
-                                        path="/creators"
-                                        element={<div>creators</div>}
-                                    />
-                                    <Route
-                                        path="/qna"
-                                        element={<div>qna</div>}
-                                    />
+                                    <Route path="/plays">
+                                        <Route path="" element={<Plays />} />
+                                        <Route
+                                            path=":id"
+                                            element={<PlayDetail />}
+                                        />
+                                    </Route>
+                                    <Route path="/creators">
+                                        <Route path="" element={<Creators />} />
+                                        <Route
+                                            path=":id"
+                                            element={<CreatorDetail />}
+                                        />
+                                    </Route>
+                                    <Route path="/qna">
+                                        <Route path="" element={<QnA />} />
+                                        <Route
+                                            path=":playId/questions/new"
+                                            element={<CreateQuestion />}
+                                        />
+                                        <Route
+                                            path=":playId/questions/:questionId"
+                                            element={<QnADetail />}
+                                        />
+                                        <Route
+                                            path=":playId/questions"
+                                            element={<Questions />}
+                                        />
+                                    </Route>
                                     <Route
                                         path="/contents"
                                         element={<div>contents</div>}

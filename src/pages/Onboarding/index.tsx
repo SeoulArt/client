@@ -1,7 +1,7 @@
-import Button from "UI/Button";
+import Button from "@/UI/Button";
 import styles from "./index.module.css";
 import { useRef } from "react";
-import useWaitImageLoad from "hooks/useWaitImageLoad";
+import useWaitImageLoad from "@/hooks/useWaitImageLoad";
 import { useNavigate } from "react-router";
 
 const Onboarding = ({ onSkipOnboarding }: { onSkipOnboarding: () => void }) => {

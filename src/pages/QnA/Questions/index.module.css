@@ -1,0 +1,74 @@
+.layout {
+    padding-inline: 25px;
+    height: calc(100% - var(--height-header));
+}
+
+.list.play0 {
+    background-color: rgb(var(--color-play1));
+}
+.list.play1 {
+    background-color: rgb(var(--color-play2));
+}
+.list.play2 {
+    background-color: rgb(var(--color-play3));
+}
+
+.list {
+    padding-inline: 22px;
+    padding-block: 33px;
+    margin-bottom: 30px;
+    height: calc(100% - 96px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: scroll;
+}
+
+.list.withoutButton {
+    height: 100%;
+}
+
+.list > li {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    min-height: 81px;
+    width: 100%;
+    display: flex;
+}
+
+.list > li > a {
+    padding-inline: 17px;
+    padding-block: 16px;
+    line-height: 1.2;
+    font-size: 14px;
+    max-height: 81px;
+    word-break: break-all;
+}
+
+.list > li > a > p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+span.answered,
+span.notAnswered {
+    margin-right: 5px;
+    border-radius: 10px;
+    display: inline-block;
+    height: 17px;
+    min-width: 50px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 17px;
+}
+
+span.answered {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+span.notAnswered {
+    border: 1px solid var(--color-primary);
+}

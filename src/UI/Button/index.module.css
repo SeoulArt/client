@@ -8,6 +8,10 @@
     gap: 10px;
 }
 
+.flex:disabled {
+    background-color: var(--color-disabled);
+}
+
 .default {
     background-color: var(--color-primary);
     color: var(--color-white);

@@ -1,4 +1,5 @@
-import triangle from "assets/triangle.svg";
+import triangle from "@/assets/triangle.svg";
+import menu from "@/assets/menu.png";
 import styles from "./index.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -44,8 +45,7 @@ const Menu = () => {
                 className={styles.menuContent}
                 onClick={() => setIsOpened(true)}
             >
-                <div className={styles.circle} />
-                <img src={triangle} />
+                <img src={menu} />
             </button>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
-import kakaoIcon from "assets/kakao.svg";
-import naverIcon from "assets/naver.svg";
+import kakaoIcon from "@/assets/kakao.svg";
+import naverIcon from "@/assets/naver.svg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;

@@ -1,0 +1,16 @@
+.layout {
+    margin-inline: 42px;
+    margin-bottom: 30px;
+}
+
+.layout > p {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+}
+
+.layout > p > img {
+    width: 100%;
+    max-height: 60vh;
+}

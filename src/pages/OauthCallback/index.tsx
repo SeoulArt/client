@@ -1,11 +1,11 @@
-import Loading from "components/Loading";
-import baseAxios from "queries/baseAxios";
+import Loading from "@/components/Loading";
+import baseAxios from "@/queries/baseAxios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { User } from "src/types";
-import authStore from "store/authStore";
+import authStore from "@/store/authStore";
+import { User } from "@/types";
 
 const OauthCallback = () => {
     const { login } = authStore();
