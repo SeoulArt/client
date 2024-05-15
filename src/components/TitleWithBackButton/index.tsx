@@ -11,13 +11,13 @@ const TitleWithBackButton = ({ title, isEditable = false }: Props) => {
     const navigate = useNavigate();
 
     return (
-        <div className={styles.layout}>
+        <header className={styles.layout}>
             <button onClick={() => navigate(-1)}>
                 <img src={backArrow} />
             </button>
             <h2>{title}</h2>
             {isEditable && <button>수정하기</button>}
-        </div>
+        </header>
     );
 };
 
