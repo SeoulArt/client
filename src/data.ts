@@ -1,4 +1,4 @@
-import { FilterKeys } from "@/constants";
+import { FilterKeys, PlayId } from "@/constants";
 
 export const DUMMY_CREATORS: { id: number; role: FilterKeys; name: string }[] =
     [
@@ -44,7 +44,7 @@ export const DUMMY_CREATORS: { id: number; role: FilterKeys; name: string }[] =
         { id: 40, role: "staff", name: "기획팀 10" },
     ];
 
-export const DUMMY_QUESTIONS = (playId: 0 | 1 | 2) => [
+export const DUMMY_QUESTIONS = (playId: PlayId) => [
     {
         id: 0,
         playId,

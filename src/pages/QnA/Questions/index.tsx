@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from "react-router";
-import { PLAYS_MAP } from "@/constants";
+import { PLAYS_MAP, PlayId } from "@/constants";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { DUMMY_QUESTIONS } from "@/data";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ const Questions = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-    const playId = Number(params.playId) as 0 | 1 | 2;
+    const playId = Number(params.playId) as PlayId;
 
     if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
         return <Navigate to="/" replace />;

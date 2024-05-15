@@ -20,24 +20,24 @@ const OauthCallback = () => {
 
         (async () => {
             try {
-                console.log(code);
                 const { data } = await baseAxios.post<User>(
                     `/auth/${provider}/login`,
                     { code }
                 );
+                console.log("객체로 형식 변경 후 수정 필요");
 
                 login({
-                    userId: data.userId,
-                    username: data.username,
-                    profileImage: data.profileImage,
-                    role: data.role,
+                    ...data,
+                    plays: [{ playId: 1, ticketId: 4 }],
                 });
                 toast.success(`환영합니다 ${data.username}님`);
             } catch (error) {
                 console.log(error);
                 toast.error("로그인 중 문제가 발생하였습니다.");
             } finally {
-                navigate("/");
+                const redirectUrl = localStorage.getItem("redirectUrl") || "/";
+                localStorage.removeItem("redirectUrl");
+                navigate(redirectUrl);
             }
         })();
     }, []);

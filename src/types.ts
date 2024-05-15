@@ -11,4 +11,6 @@ export interface User {
     username: string;
     role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
     profileImage: string;
+    phoneNumber: string | null;
+    plays: { playId: number; ticketId: number }[];
 }

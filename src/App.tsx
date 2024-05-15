@@ -24,11 +24,12 @@ import Questions from "@/pages/QnA/Questions";
 import CreateQuestion from "@/pages/QnA/CreateQuestion";
 import { User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
+import Ticketing from "@/pages/Ticketing";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
-    const { user, login, logout } = authStore();
+    const { login, logout } = authStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
     );
@@ -113,10 +114,12 @@ function App() {
                                         path="/contents"
                                         element={<div>contents</div>}
                                     />
-                                    <Route
-                                        path="/ticketing"
-                                        element={<div>ticketing</div>}
-                                    />
+                                    <Route path="/ticketing">
+                                        <Route
+                                            path=""
+                                            element={<Ticketing />}
+                                        />
+                                    </Route>
                                     <Route
                                         path="/community"
                                         element={<div>community</div>}
@@ -124,12 +127,12 @@ function App() {
                                 </Route>
                                 <Route path="/mypage" element={<MyPage />} />
                             </Route>
-                            {!user && (
+                            {
                                 <Route
                                     path="/oauth/callback/:provider"
                                     element={<OauthCallback />}
                                 />
-                            )}
+                            }
                             <Route
                                 path="*"
                                 element={<Navigate to={"/"} replace />}

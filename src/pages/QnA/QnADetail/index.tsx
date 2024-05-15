@@ -1,6 +1,6 @@
 import Textarea from "@/UI/Textarea";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { PLAYS_MAP } from "@/constants";
+import { PLAYS_MAP, PlayId } from "@/constants";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
 import styles from "./index.module.css";
@@ -17,7 +17,7 @@ const QnADetail = () => {
     const { user } = authStore();
     const params = useParams();
     const navigate = useNavigate();
-    const playId = Number(params.playId) as 0 | 1 | 2;
+    const playId = Number(params.playId) as PlayId;
     const questionId = Number(params.questionId);
     const [questionValue, setQuestionValue] = useState(QUESTION_TEXT);
     const [answerValue, setAnswerValue] = useState(ANSWER_TEXT);

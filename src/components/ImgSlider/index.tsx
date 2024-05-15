@@ -3,15 +3,16 @@ import rightArrow from "@/assets/rightArrow.svg";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "./index.module.css";
 
 interface Props {
     images: { src: string; description: string }[];
+    currentIndex: number;
+    onChange: (idx: number) => void;
 }
 
-const ImgSlider = ({ images }: Props) => {
-    const [idx, setIdx] = useState(0);
+const ImgSlider = ({ images, currentIndex, onChange }: Props) => {
     const sliderRef = useRef<Slider>(null);
     const settings: Settings = {
         dots: false,
@@ -21,8 +22,9 @@ const ImgSlider = ({ images }: Props) => {
         slidesToScroll: 1,
         arrows: false,
         beforeChange: (_, next) => {
-            setIdx(next);
+            onChange(next);
         },
+        adaptiveHeight: false,
     };
 
     return (
@@ -32,7 +34,7 @@ const ImgSlider = ({ images }: Props) => {
                     <img key={index} src={image.src} alt={image.description} />
                 ))}
             </Slider>
-            {idx !== 0 && (
+            {currentIndex !== 0 && (
                 <button
                     className={styles.leftArrow}
                     onClick={() => sliderRef.current?.slickPrev()}
@@ -45,7 +47,7 @@ const ImgSlider = ({ images }: Props) => {
                     />
                 </button>
             )}
-            {idx !== images.length - 1 && (
+            {currentIndex !== images.length - 1 && (
                 <button
                     className={styles.rightArrow}
                     onClick={() => sliderRef.current?.slickNext()}

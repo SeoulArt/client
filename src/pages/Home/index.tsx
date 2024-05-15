@@ -4,6 +4,7 @@ import toIntroducePlayIcon from "@/assets/toIntroducePlayIcon.svg";
 import toCreatorsIcon from "@/assets/toCreatorsIcon.svg";
 import toQnAIcon from "@/assets/toQnAIcon.svg";
 import styles from "./index.module.css";
+import { useState } from "react";
 
 const links = [
     { src: toIntroducePlayIcon, to: "/plays", text: "작품 소개" },
@@ -12,6 +13,8 @@ const links = [
 ];
 
 const Home = () => {
+    const [postIdx, setPostIdx] = useState(0);
+
     return (
         <div className={styles.layout}>
             <ImgSlider
@@ -19,6 +22,8 @@ const Home = () => {
                     { src: "logo.svg", description: "로고 1" },
                     { src: "logo.svg", description: "로고 2" },
                 ]}
+                currentIndex={postIdx}
+                onChange={(number) => setPostIdx(number)}
             />
             <div className={styles.links}>
                 {links.map((link) => (

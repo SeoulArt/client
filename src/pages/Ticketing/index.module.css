@@ -1,0 +1,67 @@
+.layout {
+    margin-top: 56px;
+    margin-inline: 22px;
+    height: calc(100% - var(--height-header));
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.layout.withDate {
+    margin-top: 37px;
+}
+
+.date {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 5px;
+}
+
+.date > span {
+    border: 1px solid var(--color-primary);
+    border-radius: 40px;
+    min-width: 80px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.poster {
+    flex: 1;
+    border-radius: 10px;
+}
+
+.poster.noti {
+    background-color: var(--color-disabled);
+    margin-bottom: 39px;
+}
+
+.times {
+    margin-block: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.times > button {
+    border: 1px solid var(--color-primary);
+    padding-block: 5px;
+    padding-inline: 15px;
+    color: black;
+}
+
+.times > button.selected1 {
+    background-color: rgb(var(--color-play1));
+}
+.times > button.selected2 {
+    background-color: rgb(var(--color-play2));
+}
+.times > button.selected3 {
+    background-color: rgb(var(--color-play3));
+}
+
+.times > button.selected1,
+.times > button.selected2,
+.times > button.selected3 {
+    color: var(--color-white);
+}

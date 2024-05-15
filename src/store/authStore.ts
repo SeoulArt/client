@@ -10,6 +10,7 @@ interface AuthStore {
 interface AuthAction {
     login: (user: User) => void;
     logout: () => Promise<void>;
+    addPlayId: (playObj: { playId: number; ticketId: number }) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -28,6 +29,17 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
         } finally {
             set(() => ({ isLoading: false }));
         }
+    },
+    addPlayId: (playObj) => {
+        set((state) => {
+            if (!state.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    plays: [...state.user.plays, playObj],
+                },
+            };
+        });
     },
 }));
 
