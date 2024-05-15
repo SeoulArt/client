@@ -1,6 +1,6 @@
 .layout {
     padding-inline: 25px;
-    height: calc(100% - 90px);
+    height: calc(100% - var(--height-header));
 }
 
 .list.play0 {
@@ -17,7 +17,7 @@
     padding-inline: 22px;
     padding-block: 33px;
     margin-bottom: 30px;
-    height: calc(100% - 100px);
+    height: calc(100% - 96px);
     display: flex;
     flex-direction: column;
     gap: 12px;

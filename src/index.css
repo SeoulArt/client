@@ -178,6 +178,8 @@ body {
     --weight-medium: 500;
     --weight-semibold: 600;
     --weight-bold: 700;
+
+    --height-header: 82px;
 }
 
 * {
