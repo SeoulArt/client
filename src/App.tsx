@@ -6,7 +6,7 @@ import MyPage from "@/pages/MyPage";
 import OauthCallback from "@/pages/OauthCallback";
 import Onboarding from "@/pages/Onboarding";
 import Plays from "@/pages/Plays";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     BrowserRouter,
     Navigate,
@@ -22,11 +22,13 @@ import QnA from "@/pages/QnA";
 import QnADetail from "@/pages/QnA/QnADetail";
 import Questions from "@/pages/QnA/Questions";
 import CreateQuestion from "@/pages/QnA/CreateQuestion";
+import { User } from "@/types";
+import baseAxios from "@/queries/baseAxios";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
-    const { user } = authStore();
+    const { user, login, logout } = authStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
     );
@@ -35,6 +37,21 @@ function App() {
         setIsFirstTime(false);
         localStorage.setItem(LOCAL_STORAGE_KEY, "false");
     };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await baseAxios.post<User & Error>(
+                    "/auth/refresh"
+                );
+                if (response.status !== 200)
+                    throw new Error(response.data.message);
+                login(response.data);
+            } catch (error) {
+                logout();
+            }
+        })();
+    }, []);
 
     return (
         <BrowserRouter>

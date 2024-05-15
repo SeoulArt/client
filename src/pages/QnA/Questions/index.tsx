@@ -13,7 +13,7 @@ const Questions = () => {
     const navigate = useNavigate();
 
     const playId = Number(params.playId) as 0 | 1 | 2;
-    console.log("여기 걸리네");
+
     if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
         return <Navigate to="/" replace />;
 
