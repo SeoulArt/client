@@ -1,4 +1,4 @@
-import baseAxios from "queries/baseAxios";
+import baseAxios from "@/queries/baseAxios";
 import { User } from "@/types";
 import { create } from "zustand";
 

@@ -1,12 +1,10 @@
 import Button from "@/UI/Button";
 import styles from "./index.module.css";
 import { useRef } from "react";
-import useWaitImageLoad from "@/hooks/useWaitImageLoad";
 import { useNavigate } from "react-router";
 
 const Onboarding = ({ onSkipOnboarding }: { onSkipOnboarding: () => void }) => {
-    const imgRef = useRef<HTMLImageElement>(null);
-    const isImageLoaded = useWaitImageLoad(imgRef);
+    const videoRef = useRef<HTMLVideoElement>(null);
     const navigate = useNavigate();
 
     const handleStart = () => {
@@ -16,23 +14,16 @@ const Onboarding = ({ onSkipOnboarding }: { onSkipOnboarding: () => void }) => {
 
     return (
         <div className={styles.layout}>
-            <div className={styles.logoContainer}>
-                {isImageLoaded && (
-                    <p>
-                        <span>Welcome</span>
-                        <span>To</span>
-                        <span>My PlayGround</span>
-                    </p>
-                )}
+            <video
+                className={styles.video}
+                ref={videoRef}
+                src={import.meta.env.VITE_ONBOARDING_VIDEO}
+                autoPlay
+                muted
+                loop
+                width={"100%"}
+            />
 
-                <img
-                    ref={imgRef}
-                    src="logo.svg"
-                    alt="playground logo"
-                    width={300}
-                    height={300}
-                />
-            </div>
             <footer className={styles.footer}>
                 <Button onClick={handleStart}>시작하기</Button>
                 <span className={styles.explain}>
