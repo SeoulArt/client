@@ -24,6 +24,10 @@
     overflow-y: scroll;
 }
 
+.list.withoutButton {
+    height: 100%;
+}
+
 .list > li {
     background-color: var(--color-white);
     border-radius: 10px;

@@ -26,7 +26,6 @@ const OauthCallback = () => {
 
         (async () => {
             try {
-                console.log(code);
                 const { data } = await baseAxios.post<LoginedUser>(
                     `/auth/${provider}/login`,
                     { code }

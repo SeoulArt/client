@@ -1,6 +1,6 @@
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { PLAYS_MAP } from "@/constants";
-import { Navigate, useParams } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import styles from "./index.module.css";
 import Button from "@/UI/Button";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import Textarea from "@/UI/Textarea";
 
 const CreateQuestion = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const playId = Number(params.playId) as 0 | 1 | 2;
     const [value, setValue] = useState("");
 
@@ -20,6 +21,9 @@ const CreateQuestion = () => {
             return toast.error("질문 내용을 입력해주세요");
 
         // 질문 등록하는 로직
+        const newQuestionId = 1;
+        toast.success("질문 작성 완료!");
+        navigate(`/qna/${playId}/questions/${newQuestionId}`);
     };
 
     return (
@@ -30,7 +34,7 @@ const CreateQuestion = () => {
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
                     className={styles.qnaInput}
-                    placeholder="질문할 내용을 작성해 주세요."
+                    placeholder="질문할 내용을 작성해 주세요.(최대 100자)"
                 />
                 <Button
                     type="submit"
