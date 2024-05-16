@@ -3,13 +3,13 @@
     height: calc(100% - var(--height-header));
 }
 
-.list.play0 {
+.list.play1 {
     background-color: rgb(var(--color-play1));
 }
-.list.play1 {
+.list.play3 {
     background-color: rgb(var(--color-play2));
 }
-.list.play2 {
+.list.play5 {
     background-color: rgb(var(--color-play3));
 }
 
