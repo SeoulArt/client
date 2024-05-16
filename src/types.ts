@@ -1,4 +1,6 @@
-export interface Error {
+import { PlayId } from "@/constants";
+
+export interface CustomError {
     code: string;
     message: string;
     status: number;
@@ -11,4 +13,6 @@ export interface User {
     username: string;
     role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
     profileImage: string;
+    phoneNumber: string | null;
+    ticketPlayPairs: { playId: PlayId | 2 | 4 | 6; ticketId: number }[];
 }

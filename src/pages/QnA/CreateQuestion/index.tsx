@@ -1,5 +1,5 @@
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { PLAYS_MAP } from "@/constants";
+import { PLAYS_MAP, PlayId } from "@/constants";
 import { Navigate, useNavigate, useParams } from "react-router";
 import styles from "./index.module.css";
 import Button from "@/UI/Button";
@@ -10,7 +10,7 @@ import Textarea from "@/UI/Textarea";
 const CreateQuestion = () => {
     const params = useParams();
     const navigate = useNavigate();
-    const playId = Number(params.playId) as 0 | 1 | 2;
+    const playId = Number(params.playId) as PlayId;
     const [value, setValue] = useState("");
 
     if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
