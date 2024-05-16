@@ -1,3 +1,4 @@
+import { PlayId } from "@/constants";
 import baseAxios from "@/queries/baseAxios";
 import { User } from "@/types";
 import { create } from "zustand";
@@ -10,7 +11,11 @@ interface AuthStore {
 interface AuthAction {
     login: (user: User) => void;
     logout: () => Promise<void>;
-    addPlayId: (playObj: { playId: number; ticketId: number }) => void;
+    addTicket: (playObj: {
+        playId: PlayId | 2 | 4 | 6;
+        ticketId: number;
+    }) => void;
+    cancelTicket: (ticketId: number) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -30,13 +35,28 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
             set(() => ({ isLoading: false }));
         }
     },
-    addPlayId: (playObj) => {
+    addTicket: (playObj) => {
         set((state) => {
             if (!state.user) return state;
             return {
                 user: {
                     ...state.user,
-                    plays: [...state.user.plays, playObj],
+                    ticketPlayPairs: [...state.user.ticketPlayPairs, playObj],
+                },
+            };
+        });
+    },
+    cancelTicket: (ticketId) => {
+        set((state) => {
+            if (!state.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    ticketPlayPairs: [
+                        ...state.user.ticketPlayPairs.filter(
+                            (obj) => obj.ticketId !== ticketId
+                        ),
+                    ],
                 },
             };
         });

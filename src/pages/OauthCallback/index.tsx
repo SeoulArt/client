@@ -26,10 +26,8 @@ const OauthCallback = () => {
                 );
                 if (response.status !== 200)
                     throw new Error(response.data.message);
-                console.log("객체로 형식 변경 후 수정 필요");
                 login({
                     ...response.data,
-                    plays: [{ playId: 1, ticketId: 4 }],
                 });
                 toast.success(`환영합니다 ${response.data.username}님`);
             } catch (error) {
@@ -43,7 +41,7 @@ const OauthCallback = () => {
         })();
     }, []);
 
-    return <Loading />;
+    return <Loading isPageLoading={false} />;
 };
 
 export default OauthCallback;

@@ -4,7 +4,11 @@ import redCircle from "@/assets/loadingRedCircle.svg";
 import yellowCircle from "@/assets/loadingYellowCircle.svg";
 import greenCircle from "@/assets/loadingGreenCircle.svg";
 
-const Loading = () => {
+interface Props {
+    isPageLoading?: boolean;
+}
+
+const Loading = ({ isPageLoading = true }: Props) => {
     return (
         <div className={styles.layout}>
             <div className={styles.spacer} />
@@ -19,7 +23,9 @@ const Loading = () => {
                     잠시만 기다려주세요.
                 </span>
                 <span className={styles.explain}>
-                    페이지를 불러오고 있습니다.
+                    {isPageLoading
+                        ? "페이지를 불러오고 있습니다."
+                        : "잠시만 기다려주세요."}
                 </span>
             </div>
         </div>

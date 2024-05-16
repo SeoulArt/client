@@ -25,11 +25,12 @@ import CreateQuestion from "@/pages/QnA/CreateQuestion";
 import { CustomError, User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
 import Ticketing from "@/pages/Ticketing";
+import Loading from "@/components/Loading";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
-    const { login, logout } = authStore();
+    const { login, logout, isLoading } = authStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
     );
@@ -49,13 +50,14 @@ function App() {
                     throw new Error(response.data.message);
                 login({
                     ...response.data,
-                    plays: [{ playId: 1, ticketId: 4 }],
                 });
             } catch (error) {
                 logout();
             }
         })();
     }, []);
+
+    if (isLoading) return <Loading />;
 
     return (
         <BrowserRouter>

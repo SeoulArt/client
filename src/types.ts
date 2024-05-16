@@ -1,3 +1,5 @@
+import { PlayId } from "@/constants";
+
 export interface CustomError {
     code: string;
     message: string;
@@ -12,5 +14,5 @@ export interface User {
     role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
     profileImage: string;
     phoneNumber: string | null;
-    plays: { playId: number; ticketId: number }[];
+    ticketPlayPairs: { playId: PlayId | 2 | 4 | 6; ticketId: number }[];
 }

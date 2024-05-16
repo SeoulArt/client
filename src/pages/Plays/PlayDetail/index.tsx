@@ -1,4 +1,3 @@
-import Loading from "@/components/Loading";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { PLAYS_MAP, PlayId } from "@/constants";
 import leftArrow from "@/assets/leftArrow.svg";
@@ -15,10 +14,8 @@ const PlayDetail = () => {
         // 작품 소개 글 가져오기
     }, []);
 
-    if (Number.isNaN(playId) && !PLAYS_MAP.get(playId))
+    if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
         return <Navigate to="/" replace />;
-
-    if (playId < 0) return <Loading />;
 
     return (
         <>
