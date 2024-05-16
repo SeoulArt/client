@@ -35,7 +35,7 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 
 const Ticketing = () => {
     const { user, addTicket, cancelTicket } = authStore();
-    const { open } = UIStore();
+    const { open, close } = UIStore();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [selectedTimeIndex, setSelectedTimeIndex] = useState<null | 0 | 1>(
@@ -103,6 +103,7 @@ const Ticketing = () => {
             toast("예매하기 전 먼저 로그인하세요");
             localStorage.setItem("redirectUrl", "/ticketing");
             navigate("/mypage");
+            close();
         }
         (async () => {
             try {
@@ -115,6 +116,12 @@ const Ticketing = () => {
             }
         })();
     }, []);
+
+    useEffect(() => {
+        if (!user) return;
+        if (step == "ticketing" && ticketAlreadyUserHave && !user.phoneNumber)
+            open(["전화 번호를 입력해주세요."], true);
+    }, [step, user?.phoneNumber, ticketAlreadyUserHave]);
 
     if (loading) return <Loading isPageLoading={false} />;
 
@@ -197,6 +204,7 @@ const Ticketing = () => {
                             onClick={() =>
                                 open(
                                     ["정말 취소하시겠습니까?"],
+                                    false,
                                     handleCancelTicket
                                 )
                             }

@@ -33,6 +33,15 @@
     color: white;
 }
 
+.modal > input {
+    height: 42px;
+    outline: none;
+    background-color: var(--color-primary);
+    color: white;
+    border: 1px solid var(--color-white);
+    padding: 12px;
+}
+
 .modal > .description {
     display: flex;
     flex-direction: column;
