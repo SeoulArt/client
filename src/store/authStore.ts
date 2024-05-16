@@ -16,6 +16,7 @@ interface AuthAction {
         ticketId: number;
     }) => void;
     cancelTicket: (ticketId: number) => void;
+    addPhoneNumber: (phoneNumber: string) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -57,6 +58,17 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
                             (obj) => obj.ticketId !== ticketId
                         ),
                     ],
+                },
+            };
+        });
+    },
+    addPhoneNumber: (phoneNumber: string) => {
+        set((state) => {
+            if (!state.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    phoneNumber: phoneNumber,
                 },
             };
         });

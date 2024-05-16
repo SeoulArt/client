@@ -4,8 +4,10 @@ import UIStore from "@/store/UIStore";
 import { useState } from "react";
 import baseAxios from "@/queries/baseAxios";
 import toast from "react-hot-toast";
+import authStore from "@/store/authStore";
 
 const Modal = () => {
+    const { addPhoneNumber } = authStore();
     const { texts, isMobile, close, onSubmit } = UIStore();
     const [isLoading, setIsLoading] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -14,6 +16,7 @@ const Modal = () => {
         try {
             setIsLoading(true);
             await baseAxios.post("/user/mobile", { mobile: phoneNumber });
+            addPhoneNumber(phoneNumber);
             toast.success("전화번호가 등록되었습니다.");
         } catch (error) {
             console.log(error);
