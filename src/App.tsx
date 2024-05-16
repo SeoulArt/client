@@ -51,7 +51,6 @@ function App() {
                 );
                 if (response.status !== 200)
                     throw new Error(response.data.message);
-                console.log(response.data);
                 login({
                     ...response.data,
                 });
