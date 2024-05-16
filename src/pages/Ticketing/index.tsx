@@ -47,6 +47,7 @@ const Ticketing = () => {
             ? "ticketing"
             : "noti"
     );
+    const [availableTickets, setAvailableTickets] = useState<number[]>([]);
     const specificPlayId = posterIdx * 2 + 1 + Number(selectedTimeIndex);
 
     const ticketAlreadyUserHave = user?.ticketPlayPairs.find(
@@ -64,14 +65,11 @@ const Ticketing = () => {
                 }
             );
 
-            open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
-            if (data.status !== 200) {
-                if (data.message === "빈 자리가 없습니다.") {
-                    open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
-                    throw Error(data.message);
-                }
+            if (data.message === "빈 자리가 없습니다.") {
+                open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
                 throw Error(data.message);
             }
+
             addTicket(data);
             setSelectedTimeIndex(null);
         } catch (error) {
@@ -83,19 +81,14 @@ const Ticketing = () => {
 
     const handleCancelTicket = async () => {
         try {
+            if (!ticketAlreadyUserHave) return;
             setLoading(true);
-            const { data } = await baseAxios.delete<
-                DeleteResponse & CustomError
-            >("/ticket", {
+            await baseAxios.delete<DeleteResponse & CustomError>("/ticket", {
                 data: {
-                    playId: specificPlayId,
+                    ticketId: ticketAlreadyUserHave?.ticketId,
                 },
             });
-
-            if (data.status !== 200) {
-                throw Error(data.message);
-            }
-            cancelTicket(specificPlayId);
+            cancelTicket(ticketAlreadyUserHave?.ticketId);
             setSelectedTimeIndex(null);
             toast.success("예매가 취소되었습니다.");
         } catch (error) {
@@ -111,6 +104,16 @@ const Ticketing = () => {
             localStorage.setItem("redirectUrl", "/ticketing");
             navigate("/mypage");
         }
+        (async () => {
+            try {
+                const response = await baseAxios.get<number[]>(
+                    "/ticket/available"
+                );
+                setAvailableTickets(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
     }, []);
 
     if (loading) return <Loading isPageLoading={false} />;
@@ -127,6 +130,7 @@ const Ticketing = () => {
                 </Button>
             </div>
         );
+
     // 남아있는 좌석 없다 실패 메시지, 예매 성공 시 화면, 예매 취소, 핸드폰 번호
     return (
         <div className={`${styles.layout} ${styles.withDate}`}>
@@ -208,6 +212,11 @@ const Ticketing = () => {
                             (posterIdx * 2 + 1) as PlayId
                         )?.map((timeStr, index) => (
                             <button
+                                disabled={
+                                    availableTickets.indexOf(
+                                        posterIdx * 2 + 1 + index
+                                    ) === -1
+                                }
                                 className={
                                     selectedTimeIndex === index
                                         ? styles[`selected${posterIdx + 1}`]
