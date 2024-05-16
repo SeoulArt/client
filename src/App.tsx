@@ -22,7 +22,7 @@ import QnA from "@/pages/QnA";
 import QnADetail from "@/pages/QnA/QnADetail";
 import Questions from "@/pages/QnA/Questions";
 import CreateQuestion from "@/pages/QnA/CreateQuestion";
-import { User } from "@/types";
+import { CustomError, User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
 import Ticketing from "@/pages/Ticketing";
 
@@ -42,12 +42,15 @@ function App() {
     useEffect(() => {
         (async () => {
             try {
-                const response = await baseAxios.post<User & Error>(
+                const response = await baseAxios.post<User & CustomError>(
                     "/auth/refresh"
                 );
                 if (response.status !== 200)
                     throw new Error(response.data.message);
-                login(response.data);
+                login({
+                    ...response.data,
+                    plays: [{ playId: 1, ticketId: 4 }],
+                });
             } catch (error) {
                 logout();
             }
