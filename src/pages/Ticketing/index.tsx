@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import Button from "@/UI/Button";
 import authStore from "@/store/authStore";
+import { CustomError } from "@/types";
 import { PLAYS_MAP, PLAY_AND_DATE_TIME_MAP, PlayId } from "@/constants";
 import ImgSlider from "@/components/ImgSlider";
 import Loading from "@/components/Loading";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import baseAxios from "@/queries/baseAxios";
-import { CustomError } from "@/types";
+import UIStore from "@/store/UIStore";
 
 interface PostResponse {
     playId: PlayId | 2 | 4 | 6;
@@ -34,6 +35,7 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 
 const Ticketing = () => {
     const { user, addTicket, cancelTicket } = authStore();
+    const { open } = UIStore();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [selectedTimeIndex, setSelectedTimeIndex] = useState<null | 0 | 1>(
@@ -52,7 +54,6 @@ const Ticketing = () => {
             obj.playId === posterIdx * 2 + 1 || obj.playId === posterIdx * 2 + 2
     );
 
-    console.log(ticketAlreadyUserHave);
     const handleTicketing = async () => {
         try {
             setLoading(true);
@@ -62,7 +63,17 @@ const Ticketing = () => {
                     playId: specificPlayId,
                 }
             );
+
+            open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
+            if (data.status !== 200) {
+                if (data.message === "빈 자리가 없습니다.") {
+                    open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
+                    throw Error(data.message);
+                }
+                throw Error(data.message);
+            }
             addTicket(data);
+            setSelectedTimeIndex(null);
         } catch (error) {
             console.log(error);
         } finally {
@@ -73,12 +84,19 @@ const Ticketing = () => {
     const handleCancelTicket = async () => {
         try {
             setLoading(true);
-            await baseAxios.delete<DeleteResponse & CustomError>("/ticket", {
+            const { data } = await baseAxios.delete<
+                DeleteResponse & CustomError
+            >("/ticket", {
                 data: {
                     playId: specificPlayId,
                 },
             });
+
+            if (data.status !== 200) {
+                throw Error(data.message);
+            }
             cancelTicket(specificPlayId);
+            setSelectedTimeIndex(null);
             toast.success("예매가 취소되었습니다.");
         } catch (error) {
             console.log(error);
@@ -171,7 +189,14 @@ const Ticketing = () => {
                     </div>
                     <div className={styles.ticketDescription}>
                         (예매 번호 {ticketAlreadyUserHave.ticketId}) |{" "}
-                        <button onClick={handleCancelTicket}>
+                        <button
+                            onClick={() =>
+                                open(
+                                    ["정말 취소하시겠습니까?"],
+                                    handleCancelTicket
+                                )
+                            }
+                        >
                             예매 취소하기
                         </button>
                     </div>

@@ -26,11 +26,14 @@ import { CustomError, User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
 import Ticketing from "@/pages/Ticketing";
 import Loading from "@/components/Loading";
+import Modal from "@/UI/Modal";
+import UIStore from "@/store/UIStore";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
     const { login, logout, isLoading } = authStore();
+    const { isOpened } = UIStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
     );
@@ -60,93 +63,109 @@ function App() {
     if (isLoading) return <Loading />;
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route element={<MobileLayout />}>
-                    <Route
-                        path="/onboarding"
-                        element={
-                            <Onboarding onSkipOnboarding={skipOnboarding} />
-                        }
-                    />
-                    {isFirstTime ? (
+        <>
+            {isOpened && <Modal />}
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<MobileLayout />}>
                         <Route
-                            path="*"
-                            element={<Navigate to={"/onboarding"} replace />}
-                        />
-                    ) : (
-                        <>
-                            <Route
-                                element={
-                                    <>
-                                        <Header />
-                                        <Outlet />
-                                    </>
-                                }
-                            >
-                                <Route element={<LayoutWithHeaderAndMenu />}>
-                                    <Route path="/" element={<Home />} />
-                                    <Route path="/plays">
-                                        <Route path="" element={<Plays />} />
-                                        <Route
-                                            path=":id"
-                                            element={<PlayDetail />}
-                                        />
-                                    </Route>
-                                    <Route path="/creators">
-                                        <Route path="" element={<Creators />} />
-                                        <Route
-                                            path=":id"
-                                            element={<CreatorDetail />}
-                                        />
-                                    </Route>
-                                    <Route path="/qna">
-                                        <Route path="" element={<QnA />} />
-                                        <Route
-                                            path=":playId/questions/new"
-                                            element={<CreateQuestion />}
-                                        />
-                                        <Route
-                                            path=":playId/questions/:questionId"
-                                            element={<QnADetail />}
-                                        />
-                                        <Route
-                                            path=":playId/questions"
-                                            element={<Questions />}
-                                        />
-                                    </Route>
-                                    <Route
-                                        path="/contents"
-                                        element={<div>contents</div>}
-                                    />
-                                    <Route path="/ticketing">
-                                        <Route
-                                            path=""
-                                            element={<Ticketing />}
-                                        />
-                                    </Route>
-                                    <Route
-                                        path="/community"
-                                        element={<div>community</div>}
-                                    />
-                                </Route>
-                                <Route path="/mypage" element={<MyPage />} />
-                            </Route>
-                            {
-                                <Route
-                                    path="/oauth/callback/:provider"
-                                    element={<OauthCallback />}
-                                />
+                            path="/onboarding"
+                            element={
+                                <Onboarding onSkipOnboarding={skipOnboarding} />
                             }
+                        />
+                        {isFirstTime ? (
                             <Route
                                 path="*"
-                                element={<Navigate to={"/"} replace />}
+                                element={
+                                    <Navigate to={"/onboarding"} replace />
+                                }
                             />
-                        </>
-                    )}
-                </Route>
-            </Routes>
-        </BrowserRouter>
+                        ) : (
+                            <>
+                                <Route
+                                    element={
+                                        <>
+                                            <Header />
+                                            <Outlet />
+                                        </>
+                                    }
+                                >
+                                    <Route
+                                        element={<LayoutWithHeaderAndMenu />}
+                                    >
+                                        <Route path="/" element={<Home />} />
+                                        <Route path="/plays">
+                                            <Route
+                                                path=""
+                                                element={<Plays />}
+                                            />
+                                            <Route
+                                                path=":id"
+                                                element={<PlayDetail />}
+                                            />
+                                        </Route>
+                                        <Route path="/creators">
+                                            <Route
+                                                path=""
+                                                element={<Creators />}
+                                            />
+                                            <Route
+                                                path=":id"
+                                                element={<CreatorDetail />}
+                                            />
+                                        </Route>
+                                        <Route path="/qna">
+                                            <Route path="" element={<QnA />} />
+                                            <Route
+                                                path=":playId/questions/new"
+                                                element={<CreateQuestion />}
+                                            />
+                                            <Route
+                                                path=":playId/questions/:questionId"
+                                                element={<QnADetail />}
+                                            />
+                                            <Route
+                                                path=":playId/questions"
+                                                element={<Questions />}
+                                            />
+                                        </Route>
+                                        <Route
+                                            path="/contents"
+                                            element={<div>contents</div>}
+                                        />
+                                        <Route path="/ticketing">
+                                            <Route
+                                                path=""
+                                                element={<Ticketing />}
+                                            />
+                                        </Route>
+                                        <Route
+                                            path="/community"
+                                            element={<div>community</div>}
+                                        />
+                                    </Route>
+                                    <Route
+                                        path="/mypage"
+                                        element={<MyPage />}
+                                    />
+                                </Route>
+                                {
+                                    <Route
+                                        path="/oauth/callback/:provider"
+                                        element={<OauthCallback />}
+                                    />
+                                }
+                                <Route
+                                    path="*"
+                                    element={<Navigate to={"/"} replace />}
+                                />
+                            </>
+                        )}
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </>
     );
 }
 
