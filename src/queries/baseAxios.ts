@@ -1,9 +1,16 @@
 import axios from "axios";
 import { User } from "@/types";
 import authStore from "@/store/authStore";
-
+console.log(
+    import.meta.env.MODE === "development"
+        ? "/back"
+        : import.meta.env.VITE_API_URL
+);
 const baseAxios = axios.create({
-    baseURL: "/back",
+    baseURL:
+        import.meta.env.MODE === "development"
+            ? "/back"
+            : import.meta.env.VITE_API_URL,
     withCredentials: true,
 });
 
