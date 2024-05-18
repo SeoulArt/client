@@ -9,7 +9,7 @@ export default ({ mode }: { mode: string }) => {
         server: {
             proxy: {
                 "/back": {
-                    target: env.VITE_API_URL,
+                    target: env.VITE_API_URL + "/api",
                     changeOrigin: true,
                     rewrite: (_path) => _path.replace(/^\/back/, ""),
                     secure: true,
