@@ -3,7 +3,10 @@ import { User } from "@/types";
 import authStore from "@/store/authStore";
 
 const baseAxios = axios.create({
-    baseURL: "/back",
+    baseURL:
+        import.meta.env.MODE === "development"
+            ? "/back"
+            : import.meta.env.VITE_API_URL,
     withCredentials: true,
     headers: {
         "Access-Control-Allow-Origin": import.meta.env.VITE_API_URL,
