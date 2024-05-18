@@ -12,6 +12,10 @@ const baseAxios = axios.create({
             ? "/back"
             : import.meta.env.VITE_API_URL,
     withCredentials: true,
+    headers: {
+        "Access-Control-Allow-Origin": import.meta.env.VITE_API_URL,
+        "Access-Control-Allow-Credentials": "true",
+    },
 });
 
 baseAxios.interceptors.response.use(
