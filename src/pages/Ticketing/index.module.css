@@ -7,6 +7,44 @@
     overflow-y: scroll;
 }
 
+.layout.withPhone {
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.layout.withPhone > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout.withPhone > div > h2 {
+    margin-bottom: 4px;
+    font-size: min(8vw, 28px);
+    font-weight: var(--weight-semibold);
+}
+
+.layout.withPhone > div > span:first-of-type {
+    margin-bottom: 2px;
+    font-size: min(4vw, 14px);
+}
+
+.layout.withPhone > div > span:last-of-type {
+    margin-bottom: 24px;
+    font-size: min(3vw, 12px);
+}
+
+.layout.withPhone > div > input {
+    height: 50px;
+    outline: none;
+    color: black;
+    border: 1px solid var(--color-primary);
+    padding: 12px;
+    font-size: 20px;
+    text-align: center;
+}
+
 .layout.withDate {
     margin-top: 37px;
 }
@@ -58,18 +96,17 @@
 }
 
 .times > button.selected1 {
-    background-color: rgb(var(--color-play1));
+    background-color: var(--color-play1);
 }
 .times > button.selected2 {
-    background-color: rgb(var(--color-play2));
+    background-color: var(--color-play2);
 }
 .times > button.selected3 {
-    background-color: rgb(var(--color-play3));
+    background-color: var(--color-play3);
 }
 
 .times > button.selected1,
-.times > button.selected2,
-.times > button.selected3 {
+.times > button.selected2 {
     color: var(--color-white);
 }
 

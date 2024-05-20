@@ -1,8 +1,4 @@
 import styles from "./index.module.css";
-import blueCircle from "@/assets/loadingBlueCircle.svg";
-import redCircle from "@/assets/loadingRedCircle.svg";
-import yellowCircle from "@/assets/loadingYellowCircle.svg";
-import greenCircle from "@/assets/loadingGreenCircle.svg";
 
 interface Props {
     isPageLoading?: boolean;
@@ -13,10 +9,30 @@ const Loading = ({ isPageLoading = true }: Props) => {
         <div className={styles.layout}>
             <div className={styles.spacer} />
             <div className={styles.animationWrapper}>
-                <img src={blueCircle} alt="" />
-                <img src={redCircle} alt="" />
-                <img src={yellowCircle} alt="" />
-                <img src={greenCircle} alt="" />
+                <img
+                    src={
+                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingBlueCircle.svg"
+                    }
+                    alt="로딩 중 구 1"
+                />
+                <img
+                    src={
+                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingRedCircle.svg"
+                    }
+                    alt="로딩 중 구 2"
+                />
+                <img
+                    src={
+                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingYellowCircle.svg"
+                    }
+                    alt="로딩 중 구 3"
+                />
+                <img
+                    src={
+                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingGreenCircle.svg"
+                    }
+                    alt="로딩 중 구 4"
+                />
             </div>
             <div className={styles.bottom}>
                 <span className={styles.notification}>

@@ -1,5 +1,4 @@
 import triangle from "@/assets/triangle.svg";
-import menu from "@/assets/menu.png";
 import styles from "./index.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -45,7 +44,11 @@ const Menu = () => {
                 className={styles.menuContent}
                 onClick={() => setIsOpened(true)}
             >
-                <img src={menu} />
+                <img
+                    src={
+                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/menu.svg"
+                    }
+                />
             </button>
         </div>
     );

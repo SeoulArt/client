@@ -1,15 +1,25 @@
 import ImgSlider from "@/components/ImgSlider";
 import { Link } from "react-router-dom";
-import toIntroducePlayIcon from "@/assets/toIntroducePlayIcon.svg";
-import toCreatorsIcon from "@/assets/toCreatorsIcon.svg";
-import toQnAIcon from "@/assets/toQnAIcon.svg";
+
 import styles from "./index.module.css";
 import { useState } from "react";
 
 const links = [
-    { src: toIntroducePlayIcon, to: "/plays", text: "작품 소개" },
-    { src: toCreatorsIcon, to: "/creators", text: "창작자 소개" },
-    { src: toQnAIcon, to: "/qna", text: "작품 Q&A" },
+    {
+        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toIntroducePlayIcon",
+        to: "/plays",
+        text: "작품 소개",
+    },
+    {
+        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toCreatorsIcon.svg",
+        to: "/creators",
+        text: "창작자 소개",
+    },
+    {
+        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toQnAIcon.svg",
+        to: "/qna",
+        text: "작품 Q&A",
+    },
 ];
 
 const Home = () => {

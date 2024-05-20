@@ -14,6 +14,10 @@ const Creators = () => {
         // 창작자 불러오기
     }, []);
 
+    const filteredCreators = DUMMY_CREATORS.filter(
+        (obj) => filter === "all" || obj.role === filter
+    );
+
     return (
         <>
             <div className={styles.headerWithSelect}>
@@ -22,20 +26,22 @@ const Creators = () => {
                     <FilterSelect value={filter} onChange={setFilter} />
                 </div>
             </div>
-            <ul className={styles.list}>
-                {DUMMY_CREATORS.filter(
-                    (obj) => filter === "all" || obj.role === filter
-                ).map((creator) => (
-                    <li key={creator.id}>
-                        <Link to={`/creators/${creator.id}`}>
-                            <CreatorListUnit
-                                name={creator.name}
-                                role={creator.role}
-                            />
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+            {filteredCreators.length === 0 ? (
+                <ul className={styles.list}>
+                    {filteredCreators.map((creator) => (
+                        <li key={creator.id}>
+                            <Link to={`/creators/${creator.id}`}>
+                                <CreatorListUnit
+                                    name={creator.name}
+                                    role={creator.role}
+                                />
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <div className={styles.empty}>등록된 창작자가 없습니다</div>
+            )}
         </>
     );
 };

@@ -9,27 +9,28 @@
 .layout > li {
     flex: 1;
     display: flex;
-    /* opacity: 0.5; */
 }
 
 .layout > li > a {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: var(--weight-bold);
-    color: var(--color-white);
+}
+
+.layout > li > a {
+    border-top: 1px solid rgba(38, 38, 38, 0.5);
 }
 
 .layout > li:first-child > a {
-    background-color: rgba(var(--color-play1), 0.5);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.layout > li:nth-child(2) > a {
-    background-color: rgba(var(--color-play2), 0.5);
-}
-
-.layout > li:nth-child(3) > a {
-    background-color: rgba(var(--color-play3), 0.5);
+.layout > li:last-child > a {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 1px solid rgba(38, 38, 38, 0.5);
 }

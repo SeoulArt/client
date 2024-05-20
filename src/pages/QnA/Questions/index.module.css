@@ -4,13 +4,13 @@
 }
 
 .list.play1 {
-    background-color: rgb(var(--color-play1));
+    background-color: var(--color-play1);
 }
 .list.play3 {
-    background-color: rgb(var(--color-play2));
+    background-color: var(--color-play2);
 }
 .list.play5 {
-    background-color: rgb(var(--color-play3));
+    background-color: var(--color-play3);
 }
 
 .list {
