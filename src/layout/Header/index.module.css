@@ -16,7 +16,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: "source-serif-pro";
 }
 
 .layout > .flex > a:last-child {

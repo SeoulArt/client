@@ -17,7 +17,7 @@ const Onboarding = ({ onSkipOnboarding }: { onSkipOnboarding: () => void }) => {
             <video
                 className={styles.video}
                 ref={videoRef}
-                src={import.meta.env.VITE_ONBOARDING_VIDEO}
+                src={import.meta.env.VITE_STORAGE_HOSTNAME + "/Onboarding.mp4"}
                 autoPlay
                 muted
                 loop

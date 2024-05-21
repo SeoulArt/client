@@ -21,11 +21,11 @@
 }
 
 .layout > div:first-child > a {
-    background-color: rgb(var(--color-play1));
+    background-color: var(--color-play1);
 }
 .layout > div:nth-child(2) > a {
-    background-color: rgb(var(--color-play2));
+    background-color: var(--color-play2);
 }
 .layout > div:last-child > a {
-    background-color: rgb(var(--color-play3));
+    background-color: var(--color-play3);
 }

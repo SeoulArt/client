@@ -19,11 +19,13 @@ const PlayDetail = () => {
 
     return (
         <>
-            <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
+            <TitleWithBackButton title={"작품 소개"} />
             <div className={styles.layout}>
                 <div className={styles.relative}>
                     <img
-                        src={"/logo.svg"}
+                        src={`${
+                            import.meta.env.VITE_STORAGE_HOSTNAME
+                        }/esset/num${Math.floor(playId / 2) + 1}.png`}
                         alt={`${PLAYS_MAP.get(playId)} 포스터`}
                     />
                     <button
@@ -37,7 +39,7 @@ const PlayDetail = () => {
                     </button>
                 </div>
                 <article ref={articleRef}>
-                    <h3>작품 소개 제목 {playId}</h3>
+                    <h3>{PLAYS_MAP.get(playId)}</h3>
                     <hr />
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.

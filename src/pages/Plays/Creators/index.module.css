@@ -16,3 +16,18 @@
     flex-direction: column;
     gap: 15px;
 }
+
+.empty {
+    margin-inline: 42px;
+    height: calc(100% - var(--height-header));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 41px;
+}
+
+.empty > span {
+    font-size: 20px;
+    font-weight: var(--weight-medium);
+}

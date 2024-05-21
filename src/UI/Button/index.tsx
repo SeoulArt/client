@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./index.module.css";
-import kakaoIcon from "@/assets/kakao.svg";
-import naverIcon from "@/assets/naver.svg";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
@@ -9,7 +7,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ children, buttonType = "default", ...rest }: ButtonProps) => {
-    const leftIcon = buttonType === "kakao" ? kakaoIcon : naverIcon;
+    const leftIcon =
+        import.meta.env.VITE_STORAGE_HOSTNAME +
+        (buttonType === "kakao" ? "/menu/kakao.svg" : "/menu/naver.svg");
 
     return (
         <button className={`${styles.flex} ${styles[buttonType]}`} {...rest}>

@@ -34,10 +34,18 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 };
 
 const Ticketing = () => {
-    const { user, addTicket, cancelTicket } = authStore();
+    const {
+        user,
+        addTicket,
+        isTypingPhoneNumber,
+        cancelTicket,
+        addPhoneNumber,
+        startTypingPhoneNumber,
+        endTypingPhoneNumber,
+    } = authStore();
     const { open, close } = UIStore();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [selectedTimeIndex, setSelectedTimeIndex] = useState<null | 0 | 1>(
         null
     );
@@ -48,6 +56,7 @@ const Ticketing = () => {
             : "noti"
     );
     const [availableTickets, setAvailableTickets] = useState<number[]>([]);
+    const [phoneNumber, setPhoneNumber] = useState("");
     const specificPlayId = posterIdx * 2 + 1 + Number(selectedTimeIndex);
 
     const ticketAlreadyUserHave = user?.ticketPlayPairs.find(
@@ -57,7 +66,7 @@ const Ticketing = () => {
 
     const handleTicketing = async () => {
         try {
-            setLoading(true);
+            setIsLoading(true);
             const { data } = await baseAxios.post<PostResponse & CustomError>(
                 "/ticket",
                 {
@@ -69,20 +78,36 @@ const Ticketing = () => {
                 open(["남아있는 좌석이 없습니다.", "다시 시도해주세요."]);
                 throw Error(data.message);
             }
-
             addTicket(data);
+            // 번호가 없다면 번호 입력 칸으로
+            if (!user?.phoneNumber) startTypingPhoneNumber();
             setSelectedTimeIndex(null);
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
+    const handleConfirmTicketingWithPhoneNumber = async () => {
+        try {
+            setIsLoading(true);
+            await baseAxios.post("/user/mobile", { mobile: phoneNumber });
+            addPhoneNumber(phoneNumber);
+            toast.success("전화번호가 등록되었습니다.");
+            // 예매 확정
+            endTypingPhoneNumber();
+            setSelectedTimeIndex(null);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     const handleCancelTicket = async () => {
         try {
             if (!ticketAlreadyUserHave) return;
-            setLoading(true);
+            setIsLoading(true);
             await baseAxios.delete<DeleteResponse & CustomError>("/ticket", {
                 data: {
                     ticketId: ticketAlreadyUserHave?.ticketId,
@@ -94,7 +119,7 @@ const Ticketing = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
@@ -104,36 +129,76 @@ const Ticketing = () => {
             localStorage.setItem("redirectUrl", "/ticketing");
             navigate("/mypage");
             close();
+        } else {
+            (async () => {
+                try {
+                    const response = await baseAxios.get<number[]>(
+                        "/ticket/available"
+                    );
+                    setAvailableTickets(response.data);
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    setIsLoading(false);
+                }
+            })();
         }
-        (async () => {
-            try {
-                const response = await baseAxios.get<number[]>(
-                    "/ticket/available"
-                );
-                setAvailableTickets(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        })();
+
+        return () => {
+            endTypingPhoneNumber();
+        };
     }, []);
 
-    useEffect(() => {
-        if (!user) return;
-        if (step == "ticketing" && ticketAlreadyUserHave && !user.phoneNumber)
-            open(["전화 번호를 입력해주세요."], true);
-    }, [step, user?.phoneNumber, ticketAlreadyUserHave]);
-
-    if (loading) return <Loading isPageLoading={false} />;
+    if (isLoading) return <Loading isPageLoading={false} />;
 
     if (step === "noti")
         return (
             <div className={styles.layout}>
-                {/* <img src={"logo.svg"} className={styles.poster} /> */}
-                <div className={`${styles.poster} ${styles.noti}`}>
-                    여기 안내사항
-                </div>
+                <img
+                    src={
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/esset/%ED%8B%B0%EC%BC%93+%EC%88%98%EB%A0%B9+%EB%B0%8F+%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD.png"
+                    }
+                    className={styles.poster}
+                />
                 <Button onClick={() => setStep("ticketing")}>
                     확인했습니다.
+                </Button>
+            </div>
+        );
+
+    if (isTypingPhoneNumber)
+        return (
+            <div className={`${styles.layout} ${styles.withPhone}`}>
+                <div>
+                    <h2>전화번호를 입력해주세요</h2>
+                    <span>예매 완료를 위해 전화번호 입력이 필요합니다.</span>
+                    <span>
+                        (입력하신 전화번호는 예매 확인 및 관련 안내를 위해
+                        사용됩니다.)
+                    </span>
+                    <input
+                        type="tel"
+                        placeholder="(-) 없이 숫자만 입력(11자)"
+                        maxLength={13}
+                        value={phoneNumber}
+                        onChange={(event) =>
+                            setPhoneNumber(
+                                event.target.value
+                                    .replace(/[^0-9]/g, "")
+                                    .replace(
+                                        /^(\d{2,3})(\d{3,4})(\d{4})$/,
+                                        `$1-$2-$3`
+                                    )
+                            )
+                        }
+                    />
+                </div>
+                <Button
+                    onClick={handleConfirmTicketingWithPhoneNumber}
+                    disabled={phoneNumber.trim().length !== 13 || isLoading}
+                >
+                    예매 확정
                 </Button>
             </div>
         );
@@ -152,9 +217,24 @@ const Ticketing = () => {
             </div>
             <ImgSlider
                 images={[
-                    { src: "logo.svg", description: "로고 1" },
-                    { src: "logo.svg", description: "로고 2" },
-                    { src: "logo.svg", description: "로고 3" },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num1.png",
+                        description: `${PLAYS_MAP.get(1)} 포스터`,
+                    },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num2.png",
+                        description: `${PLAYS_MAP.get(3)} 포스터`,
+                    },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num3.png",
+                        description: `${PLAYS_MAP.get(5)} 포스터`,
+                    },
                 ]}
                 currentIndex={posterIdx}
                 onChange={(number) => {
@@ -204,7 +284,6 @@ const Ticketing = () => {
                             onClick={() =>
                                 open(
                                     ["정말 취소하시겠습니까?"],
-                                    false,
                                     handleCancelTicket
                                 )
                             }
@@ -235,7 +314,11 @@ const Ticketing = () => {
                                     setSelectedTimeIndex(index as 0 | 1)
                                 }
                             >
-                                {index + 1}회 {timeStr}
+                                {availableTickets.indexOf(
+                                    posterIdx * 2 + 1 + index
+                                ) === -1
+                                    ? "좌석 매진"
+                                    : `${index + 1}회 ${timeStr}`}
                             </button>
                         ))}
                     </div>

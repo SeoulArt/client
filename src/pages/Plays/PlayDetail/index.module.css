@@ -15,7 +15,7 @@
 }
 
 .relative > button {
-    position: absolute;
+    position: sticky;
     bottom: 8px;
     left: 50%;
     display: flex;
