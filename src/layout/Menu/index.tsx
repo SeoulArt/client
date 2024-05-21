@@ -46,7 +46,7 @@ const Menu = () => {
             >
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/menu.svg"
+                        import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/menu.svg"
                     }
                 />
             </button>

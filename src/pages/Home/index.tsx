@@ -6,17 +6,19 @@ import { useState } from "react";
 
 const links = [
     {
-        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toIntroducePlayIcon",
+        src:
+            import.meta.env.VITE_STORAGE_HOSTNAME +
+            "/menu/toIntroducePlayIcon.svg",
         to: "/plays",
         text: "작품 소개",
     },
     {
-        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toCreatorsIcon.svg",
+        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toCreatorsIcon.svg",
         to: "/creators",
         text: "창작자 소개",
     },
     {
-        src: "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/toQnAIcon.svg",
+        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toQnAIcon.svg",
         to: "/qna",
         text: "작품 Q&A",
     },
@@ -29,8 +31,13 @@ const Home = () => {
         <div className={styles.layout}>
             <ImgSlider
                 images={[
-                    { src: "logo.svg", description: "로고 1" },
-                    { src: "logo.svg", description: "로고 2" },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/playground_main.png",
+                        description: "로고 1",
+                    },
+                    // { src: "logo.svg", description: "로고 2" },
                 ]}
                 currentIndex={postIdx}
                 onChange={(number) => setPostIdx(number)}

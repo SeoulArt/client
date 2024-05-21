@@ -34,7 +34,15 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 };
 
 const Ticketing = () => {
-    const { user, addTicket, cancelTicket, addPhoneNumber } = authStore();
+    const {
+        user,
+        addTicket,
+        isTypingPhoneNumber,
+        cancelTicket,
+        addPhoneNumber,
+        startTypingPhoneNumber,
+        endTypingPhoneNumber,
+    } = authStore();
     const { open, close } = UIStore();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +50,7 @@ const Ticketing = () => {
         null
     );
     const [posterIdx, setPosterIdx] = useState(0);
-    const [step, setStep] = useState<"noti" | "ticketing" | "phone">(
+    const [step, setStep] = useState<"noti" | "ticketing">(
         user?.ticketPlayPairs && user.ticketPlayPairs.length > 0
             ? "ticketing"
             : "noti"
@@ -72,22 +80,7 @@ const Ticketing = () => {
             }
             addTicket(data);
             // 번호가 없다면 번호 입력 칸으로
-            if (!user?.phoneNumber) setStep("phone");
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleConfirmTicketing = async () => {
-        try {
-            setIsLoading(true);
-            await baseAxios.post("/user/mobile", { mobile: phoneNumber });
-            addPhoneNumber(phoneNumber);
-            toast.success("전화번호가 등록되었습니다.");
-            // 예매 확정
-            setStep("ticketing");
+            if (!user?.phoneNumber) startTypingPhoneNumber();
             setSelectedTimeIndex(null);
         } catch (error) {
             console.log(error);
@@ -96,6 +89,21 @@ const Ticketing = () => {
         }
     };
 
+    const handleConfirmTicketingWithPhoneNumber = async () => {
+        try {
+            setIsLoading(true);
+            await baseAxios.post("/user/mobile", { mobile: phoneNumber });
+            addPhoneNumber(phoneNumber);
+            toast.success("전화번호가 등록되었습니다.");
+            // 예매 확정
+            endTypingPhoneNumber();
+            setSelectedTimeIndex(null);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
     const handleCancelTicket = async () => {
         try {
             if (!ticketAlreadyUserHave) return;
@@ -135,25 +143,11 @@ const Ticketing = () => {
                 }
             })();
         }
-    }, []);
 
-    useEffect(() => {
-        if (!user) return;
-        if (step == "ticketing" && ticketAlreadyUserHave && !user.phoneNumber)
-            setStep("phone");
-    }, [step, user?.phoneNumber, ticketAlreadyUserHave]);
-
-    useEffect(() => {
         return () => {
-            if (
-                user?.phoneNumber &&
-                user?.ticketPlayPairs.length > 0 &&
-                step === "phone"
-            ) {
-                handleCancelTicket();
-            }
+            endTypingPhoneNumber();
         };
-    }, [user?.phoneNumber, user?.ticketPlayPairs, step]);
+    }, []);
 
     if (isLoading) return <Loading isPageLoading={false} />;
 
@@ -162,7 +156,8 @@ const Ticketing = () => {
             <div className={styles.layout}>
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/esset/%ED%8B%B0%EC%BC%93+%EC%88%98%EB%A0%B9+%EB%B0%8F+%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD.png"
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/esset/%ED%8B%B0%EC%BC%93+%EC%88%98%EB%A0%B9+%EB%B0%8F+%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD.png"
                     }
                     className={styles.poster}
                 />
@@ -172,7 +167,7 @@ const Ticketing = () => {
             </div>
         );
 
-    if (step === "phone")
+    if (isTypingPhoneNumber)
         return (
             <div className={`${styles.layout} ${styles.withPhone}`}>
                 <div>
@@ -200,7 +195,7 @@ const Ticketing = () => {
                     />
                 </div>
                 <Button
-                    onClick={handleConfirmTicketing}
+                    onClick={handleConfirmTicketingWithPhoneNumber}
                     disabled={phoneNumber.trim().length !== 13 || isLoading}
                 >
                     예매 확정
@@ -222,9 +217,24 @@ const Ticketing = () => {
             </div>
             <ImgSlider
                 images={[
-                    { src: "logo.svg", description: "로고 1" },
-                    { src: "logo.svg", description: "로고 2" },
-                    { src: "logo.svg", description: "로고 3" },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num1.png",
+                        description: `${PLAYS_MAP.get(1)} 포스터`,
+                    },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num2.png",
+                        description: `${PLAYS_MAP.get(3)} 포스터`,
+                    },
+                    {
+                        src:
+                            import.meta.env.VITE_STORAGE_HOSTNAME +
+                            "/esset/num3.png",
+                        description: `${PLAYS_MAP.get(5)} 포스터`,
+                    },
                 ]}
                 currentIndex={posterIdx}
                 onChange={(number) => {

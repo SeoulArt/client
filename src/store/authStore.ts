@@ -6,6 +6,7 @@ import { create } from "zustand";
 interface AuthStore {
     user: null | User;
     isLoading: boolean;
+    isTypingPhoneNumber: boolean;
 }
 
 interface AuthAction {
@@ -17,11 +18,14 @@ interface AuthAction {
     }) => void;
     cancelTicket: (ticketId: number) => void;
     addPhoneNumber: (phoneNumber: string) => void;
+    startTypingPhoneNumber: () => void;
+    endTypingPhoneNumber: () => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
     user: null,
     isLoading: true,
+    isTypingPhoneNumber: false,
     login: (user) => {
         set(() => ({ user, isLoading: false }));
     },
@@ -72,6 +76,12 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
                 },
             };
         });
+    },
+    startTypingPhoneNumber: () => {
+        set(() => ({ isTypingPhoneNumber: true }));
+    },
+    endTypingPhoneNumber: () => {
+        set(() => ({ isTypingPhoneNumber: false }));
     },
 }));
 

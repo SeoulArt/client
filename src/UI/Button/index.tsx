@@ -8,9 +8,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ children, buttonType = "default", ...rest }: ButtonProps) => {
     const leftIcon =
-        buttonType === "kakao"
-            ? "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/kakao.svg"
-            : "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/naver.svg";
+        import.meta.env.VITE_STORAGE_HOSTNAME +
+        (buttonType === "kakao" ? "/menu/kakao.svg" : "/menu/naver.svg");
 
     return (
         <button className={`${styles.flex} ${styles[buttonType]}`} {...rest}>

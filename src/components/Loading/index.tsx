@@ -11,25 +11,29 @@ const Loading = ({ isPageLoading = true }: Props) => {
             <div className={styles.animationWrapper}>
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingBlueCircle.svg"
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/menu/loadingBlueCircle.svg"
                     }
                     alt="로딩 중 구 1"
                 />
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingRedCircle.svg"
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/menu/loadingRedCircle.svg"
                     }
                     alt="로딩 중 구 2"
                 />
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingYellowCircle.svg"
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/menu/loadingYellowCircle.svg"
                     }
                     alt="로딩 중 구 3"
                 />
                 <img
                     src={
-                        "https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/menu/loadingGreenCircle.svg"
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        "/menu/loadingGreenCircle.svg"
                     }
                     alt="로딩 중 구 4"
                 />

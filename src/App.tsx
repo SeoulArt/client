@@ -28,11 +28,19 @@ import Ticketing from "@/pages/Ticketing";
 import Loading from "@/components/Loading";
 import Modal from "@/UI/Modal";
 import UIStore from "@/store/UIStore";
+import toast from "react-hot-toast";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
 function App() {
-    const { login, logout, isLoading } = authStore();
+    const {
+        user,
+        login,
+        logout,
+        isLoading,
+        isTypingPhoneNumber,
+        cancelTicket,
+    } = authStore();
     const { isOpened } = UIStore();
     const [isFirstTime, setIsFirstTime] = useState(
         JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
@@ -59,6 +67,27 @@ function App() {
             }
         })();
     }, []);
+
+    useEffect(() => {
+        try {
+            if (!user || user?.phoneNumber || isTypingPhoneNumber) return;
+            user?.ticketPlayPairs.forEach(async ({ ticketId }, index) => {
+                await baseAxios.delete("/ticket", {
+                    data: {
+                        ticketId,
+                    },
+                });
+                cancelTicket(ticketId);
+                if (user?.ticketPlayPairs.length - 1 === index) {
+                    toast.error(
+                        "번호가 등록되지 않아 모든 예매가 취소되었습니다."
+                    );
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }, [user, user?.phoneNumber, isTypingPhoneNumber]);
 
     if (isLoading) return <Loading />;
 

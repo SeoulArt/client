@@ -23,9 +23,9 @@ const PlayDetail = () => {
             <div className={styles.layout}>
                 <div className={styles.relative}>
                     <img
-                        src={`https://skybory-bucket.s3.ap-northeast-2.amazonaws.com/esset/num${
-                            Math.floor(playId / 2) + 1
-                        }.png`}
+                        src={`${
+                            import.meta.env.VITE_STORAGE_HOSTNAME
+                        }/esset/num${Math.floor(playId / 2) + 1}.png`}
                         alt={`${PLAYS_MAP.get(playId)} 포스터`}
                     />
                     <button

@@ -28,12 +28,25 @@
     height: 100%;
 }
 
-.list > li {
+.list > li,
+.list > .empty {
     background-color: var(--color-white);
     border-radius: 10px;
+    display: flex;
+}
+
+.list > li {
     min-height: 81px;
     width: 100%;
     display: flex;
+}
+
+.list > .empty {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 23px;
 }
 
 .list > li > a {

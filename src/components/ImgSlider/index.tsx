@@ -3,7 +3,7 @@ import rightArrow from "@/assets/rightArrow.svg";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./index.module.css";
 
 interface Props {
@@ -26,6 +26,10 @@ const ImgSlider = ({ images, currentIndex, onChange }: Props) => {
         },
         adaptiveHeight: false,
     };
+
+    useEffect(() => {
+        sliderRef.current?.slickGoTo(currentIndex);
+    }, [currentIndex]);
 
     return (
         <div className={styles.layout}>
