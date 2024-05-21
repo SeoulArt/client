@@ -32,6 +32,11 @@ import toast from "react-hot-toast";
 
 const LOCAL_STORAGE_KEY = "isFirstTime";
 
+if (navigator.userAgent.toLowerCase().includes("kakao")) {
+    location.href =
+        "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+}
+
 function App() {
     const {
         user,
@@ -62,7 +67,7 @@ function App() {
                 login({
                     ...response.data,
                 });
-            } catch (error) {
+            } catch {
                 logout();
             }
         })();
