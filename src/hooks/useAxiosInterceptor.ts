@@ -29,20 +29,21 @@ const useAxiosInterceptor = () => {
                     const response = await baseAxios.post<
                         { user: User } & Token
                     >("/auth/refresh");
-                    login(response.data);
                     if (response.status !== 200) {
                         throw response;
                     }
+                    login(response.data);
                     originalRequest.headers[
                         "Authorization"
                     ] = `Bearer ${response.data.accessToken}`;
                     return baseAxios(originalRequest);
                 } catch (refreshError) {
                     logout();
-                    return Error("인증 실패");
+                    console.log(refreshError);
+                    return refreshError;
                 }
             }
-            return error.response;
+            return error;
         }
     );
 

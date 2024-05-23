@@ -143,6 +143,9 @@ const Ticketing = () => {
                 const response = await baseAxios.get<number[]>(
                     "/ticket/available"
                 );
+                if (response.status !== 200) {
+                    throw Error("에러 발생");
+                }
                 setAvailableTickets(response.data);
             } catch (error) {
                 toast.error("예매 가능한 티켓 조회에 실패했습니다.");
@@ -152,7 +155,7 @@ const Ticketing = () => {
                 setIsLoading(false);
             }
         };
-        getAvailablePlays();
+        user && getAvailablePlays();
     }, [user?.ticketPlayList]);
 
     if (isLoading) return <Loading isPageLoading={false} />;
