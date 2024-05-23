@@ -14,5 +14,10 @@ export interface User {
     role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_CREATOR";
     profileImage: string;
     phoneNumber: string | null;
-    ticketPlayPairs: { playId: PlayId | 2 | 4 | 6; ticketId: number }[];
+    ticketPlayList: { playId: PlayId | 2 | 4 | 6; ticketId: number }[];
+}
+
+export interface Token {
+    accessToken: string;
+    refreshToken: string;
 }

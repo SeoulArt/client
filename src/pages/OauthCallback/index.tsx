@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import authStore from "@/store/authStore";
-import { CustomError, User } from "@/types";
+import { CustomError, Token, User } from "@/types";
 
 const OauthCallback = () => {
     const { login } = authStore();
@@ -20,8 +20,14 @@ const OauthCallback = () => {
 
         (async () => {
             try {
-                const response = await baseAxios.post<User & CustomError>(
-                    `/auth/${provider}/login`,
+                const response = await baseAxios.post<
+                    { user: User } & Token & CustomError
+                >(
+                    `/auth/${
+                        (import.meta.env.MODE === "development"
+                            ? "local/"
+                            : "") + provider
+                    }/login`,
                     { code }
                 );
                 if (response.status !== 200)
@@ -29,14 +35,13 @@ const OauthCallback = () => {
                 login({
                     ...response.data,
                 });
-                toast.success(`환영합니다 ${response.data.username}님`);
+                toast.success(`환영합니다 ${response.data.user.username}님`);
+                const redirectUrl = localStorage.getItem("redirectUrl") || "/";
+                navigate(redirectUrl);
             } catch (error) {
-                console.log(error);
                 toast.error("로그인 중 문제가 발생하였습니다.");
             } finally {
-                const redirectUrl = localStorage.getItem("redirectUrl") || "/";
                 localStorage.removeItem("redirectUrl");
-                navigate(redirectUrl);
             }
         })();
     }, []);

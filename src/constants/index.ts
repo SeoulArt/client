@@ -26,3 +26,8 @@ export const FILTER_TEXT_MAP = new Map<FilterKeys, string>([
     ...NOT_PLAYS_MAP,
     ...PLAYS_MAP,
 ]);
+
+export const TOKENS = {
+    ACCESS: "access",
+    REFRESH: "refresh",
+};

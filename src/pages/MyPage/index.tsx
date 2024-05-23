@@ -15,16 +15,22 @@ const MyPage = () => {
     const [isBeingAuthenticated, setIsBeingAuthenticated] = useState(false);
     const isAuthenticated = user !== null;
 
-    const handleOauthLogin = async (provider: "kakao" | "naver") => {
+    const handleOauthLogin = async (provider: "Kakao" | "Naver") => {
         if (isBeingAuthenticated) return;
         setIsBeingAuthenticated(true);
         try {
-            const {
-                data: { url },
-            } = await baseAxios.get<OauthResponse>(`/auth/${provider}/url`);
-            document.location.href = url;
+            const response = await baseAxios.get<OauthResponse>(
+                `/auth/${
+                    import.meta.env.MODE === "development"
+                        ? "local" + provider
+                        : provider.toLowerCase()
+                }/url`
+            );
+            if (response.status !== 200) throw Error();
+            document.location.href = response.data.url;
         } catch (error) {
             toast.error("로그인 중 문제가 발생했습니다.");
+            localStorage.removeItem("redirectUrl");
         } finally {
             setIsBeingAuthenticated(false);
         }
@@ -59,14 +65,14 @@ const MyPage = () => {
                     <>
                         <Button
                             buttonType="kakao"
-                            onClick={() => handleOauthLogin("kakao")}
+                            onClick={() => handleOauthLogin("Kakao")}
                             disabled={isBeingAuthenticated}
                         >
                             카카오로 계속하기
                         </Button>
                         <Button
                             buttonType="naver"
-                            onClick={() => handleOauthLogin("naver")}
+                            onClick={() => handleOauthLogin("Naver")}
                             disabled={isBeingAuthenticated}
                         >
                             네이버로 계속하기

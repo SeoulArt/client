@@ -36,6 +36,7 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 const Ticketing = () => {
     const {
         user,
+        logout,
         addTicket,
         isTypingPhoneNumber,
         cancelTicket,
@@ -51,7 +52,7 @@ const Ticketing = () => {
     );
     const [posterIdx, setPosterIdx] = useState(0);
     const [step, setStep] = useState<"noti" | "ticketing">(
-        user?.ticketPlayPairs && user.ticketPlayPairs.length > 0
+        user?.ticketPlayList && user.ticketPlayList.length > 0
             ? "ticketing"
             : "noti"
     );
@@ -59,7 +60,7 @@ const Ticketing = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const specificPlayId = posterIdx * 2 + 1 + Number(selectedTimeIndex);
 
-    const ticketAlreadyUserHave = user?.ticketPlayPairs.find(
+    const ticketAlreadyUserHave = user?.ticketPlayList.find(
         (obj) =>
             obj.playId === posterIdx * 2 + 1 || obj.playId === posterIdx * 2 + 2
     );
@@ -129,25 +130,30 @@ const Ticketing = () => {
             localStorage.setItem("redirectUrl", "/ticketing");
             navigate("/mypage");
             close();
-        } else {
-            (async () => {
-                try {
-                    const response = await baseAxios.get<number[]>(
-                        "/ticket/available"
-                    );
-                    setAvailableTickets(response.data);
-                } catch (error) {
-                    console.log(error);
-                } finally {
-                    setIsLoading(false);
-                }
-            })();
         }
 
         return () => {
             endTypingPhoneNumber();
         };
     }, []);
+
+    useEffect(() => {
+        const getAvailablePlays = async () => {
+            try {
+                const response = await baseAxios.get<number[]>(
+                    "/ticket/available"
+                );
+                setAvailableTickets(response.data);
+            } catch (error) {
+                toast.error("예매 가능한 티켓 조회에 실패했습니다.");
+                navigate("/");
+                logout();
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getAvailablePlays();
+    }, [user?.ticketPlayList]);
 
     if (isLoading) return <Loading isPageLoading={false} />;
 

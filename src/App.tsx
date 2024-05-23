@@ -22,68 +22,75 @@ import QnA from "@/pages/QnA";
 import QnADetail from "@/pages/QnA/QnADetail";
 import Questions from "@/pages/QnA/Questions";
 import CreateQuestion from "@/pages/QnA/CreateQuestion";
-import { CustomError, User } from "@/types";
+import { CustomError, Token, User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
 import Ticketing from "@/pages/Ticketing";
 import Loading from "@/components/Loading";
 import Modal from "@/UI/Modal";
 import UIStore from "@/store/UIStore";
 import toast from "react-hot-toast";
+import RejectInApp from "@/components/RejectInApp";
+import useAxiosInterceptor from "@/hooks/useAxiosInterceptor";
 
-const LOCAL_STORAGE_KEY = "isFirstTime";
+const IS_FIRST_TIME = "isFirstTime";
 
-if (navigator.userAgent.toLowerCase().includes("kakao")) {
-    location.href =
-        "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
-}
+const IS_KAKAO = navigator.userAgent.toLowerCase().includes("kakao");
 
 function App() {
+    useAxiosInterceptor();
     const {
         user,
+        setIsLoading,
         login,
-        logout,
         isLoading,
         isTypingPhoneNumber,
         cancelTicket,
     } = authStore();
     const { isOpened } = UIStore();
     const [isFirstTime, setIsFirstTime] = useState(
-        JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "true")
+        JSON.parse(localStorage.getItem(IS_FIRST_TIME) || "true")
     );
 
     const skipOnboarding = () => {
         setIsFirstTime(false);
-        localStorage.setItem(LOCAL_STORAGE_KEY, "false");
+        localStorage.setItem(IS_FIRST_TIME, "false");
     };
-
     useEffect(() => {
+        if (IS_KAKAO) return;
         (async () => {
+            if (
+                location.pathname === "/oauth/callback/kakao" ||
+                location.pathname === "/oauth/callback/naver"
+            )
+                return setIsLoading(false);
             try {
-                const response = await baseAxios.post<User & CustomError>(
-                    "/auth/refresh"
-                );
+                const response = await baseAxios.post<
+                    { user: User } & Token & CustomError
+                >("/auth/refresh");
                 if (response.status !== 200)
                     throw new Error(response.data.message);
                 login({
                     ...response.data,
                 });
-            } catch {
-                logout();
+            } catch (error) {
+                console.log(error);
+                setIsLoading(false);
             }
         })();
     }, []);
 
     useEffect(() => {
+        if (IS_KAKAO) return;
         try {
             if (!user || user?.phoneNumber || isTypingPhoneNumber) return;
-            user?.ticketPlayPairs.forEach(async ({ ticketId }, index) => {
+            user?.ticketPlayList.forEach(async ({ ticketId }, index) => {
                 await baseAxios.delete("/ticket", {
                     data: {
                         ticketId,
                     },
                 });
                 cancelTicket(ticketId);
-                if (user?.ticketPlayPairs.length - 1 === index) {
+                if (user?.ticketPlayList.length - 1 === index) {
                     toast.error(
                         "번호가 등록되지 않아 모든 예매가 취소되었습니다."
                     );
@@ -93,6 +100,13 @@ function App() {
             console.log(error);
         }
     }, [user, user?.phoneNumber, isTypingPhoneNumber]);
+
+    if (IS_KAKAO) {
+        location.href =
+            "kakaotalk://web/openExternal?url=" +
+            encodeURIComponent(location.href);
+        return <RejectInApp />;
+    }
 
     if (isLoading) return <Loading />;
 

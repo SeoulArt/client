@@ -1,6 +1,6 @@
-import { PlayId } from "@/constants";
+import { PlayId, TOKENS } from "@/constants";
 import baseAxios from "@/queries/baseAxios";
-import { User } from "@/types";
+import { Token, User } from "@/types";
 import { create } from "zustand";
 
 interface AuthStore {
@@ -10,8 +10,13 @@ interface AuthStore {
 }
 
 interface AuthAction {
-    login: (user: User) => void;
-    logout: () => Promise<void>;
+    setIsLoading: (isLoading: boolean) => void;
+    login: ({
+        user,
+        accessToken,
+        refreshToken,
+    }: { user: User } & Token) => void;
+    logout: () => void;
     addTicket: (playObj: {
         playId: PlayId | 2 | 4 | 6;
         ticketId: number;
@@ -26,19 +31,22 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
     user: null,
     isLoading: true,
     isTypingPhoneNumber: false,
-    login: (user) => {
+    setIsLoading: (isLoading) => {
+        set(() => ({ isLoading }));
+    },
+    login: ({ user, accessToken, refreshToken }) => {
+        localStorage.setItem(TOKENS.ACCESS, accessToken);
+        localStorage.setItem(TOKENS.REFRESH, refreshToken);
+        baseAxios.defaults.headers.common[
+            "Authorization"
+        ] = `Bearer ${accessToken}`;
         set(() => ({ user, isLoading: false }));
     },
-    logout: async () => {
-        try {
-            set(() => ({ isLoading: true }));
-            await baseAxios.post("/auth/logout");
-            set(() => ({ user: null, isLoading: false }));
-        } catch (error) {
-            console.log(error);
-        } finally {
-            set(() => ({ isLoading: false }));
-        }
+    logout: () => {
+        localStorage.removeItem(TOKENS.ACCESS);
+        localStorage.removeItem(TOKENS.REFRESH);
+        delete baseAxios.defaults.headers.common["Authorization"];
+        set(() => ({ user: null, isLoading: false }));
     },
     addTicket: (playObj) => {
         set((state) => {
@@ -46,7 +54,7 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
             return {
                 user: {
                     ...state.user,
-                    ticketPlayPairs: [...state.user.ticketPlayPairs, playObj],
+                    ticketPlayList: [...state.user.ticketPlayList, playObj],
                 },
             };
         });
@@ -57,8 +65,8 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
             return {
                 user: {
                     ...state.user,
-                    ticketPlayPairs: [
-                        ...state.user.ticketPlayPairs.filter(
+                    ticketPlayList: [
+                        ...state.user.ticketPlayList.filter(
                             (obj) => obj.ticketId !== ticketId
                         ),
                     ],

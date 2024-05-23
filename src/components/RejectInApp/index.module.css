@@ -1,0 +1,16 @@
+.layout {
+    margin: 0 auto;
+    height: 100%;
+    max-width: 800px;
+    padding-inline: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+}
+
+.layout > h1 {
+    font-size: min(calc(100vw / 20), 32px);
+}
