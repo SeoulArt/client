@@ -31,6 +31,7 @@ import UIStore from "@/store/UIStore";
 import toast from "react-hot-toast";
 import RejectInApp from "@/components/RejectInApp";
 import useAxiosInterceptor from "@/hooks/useAxiosInterceptor";
+import CreatorDescription from "@/pages/MyPage/CreatorDescription";
 
 const IS_FIRST_TIME = "isFirstTime";
 
@@ -193,10 +194,13 @@ function App() {
                                             element={<div>community</div>}
                                         />
                                     </Route>
-                                    <Route
-                                        path="/mypage"
-                                        element={<MyPage />}
-                                    />
+                                    <Route path="/mypage">
+                                        <Route path="" element={<MyPage />} />
+                                        <Route
+                                            path="creator"
+                                            element={<CreatorDescription />}
+                                        />
+                                    </Route>
                                 </Route>
                                 {
                                     <Route

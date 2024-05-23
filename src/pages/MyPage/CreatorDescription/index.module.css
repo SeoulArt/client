@@ -1,0 +1,85 @@
+.headerRelative {
+    position: relative;
+}
+
+.headerRelative > button {
+    position: absolute;
+    right: 16px;
+    bottom: 8px;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.layout {
+    padding-top: 32px;
+    padding-inline: 22px;
+    height: calc(100% - 187px);
+    display: flex;
+    flex-direction: column;
+}
+
+.layout > div:first-child {
+    margin-bottom: 32px;
+}
+
+.imgWrapper {
+    margin-bottom: 30px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imgWrapper > img {
+    object-fit: contain;
+    position: relative;
+    left: 15px;
+}
+
+.imgWrapper > button {
+    position: relative;
+    right: 0;
+    top: -75px;
+    border-radius: 50%;
+    background-color: var(--color-disabled);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout > textarea {
+    min-height: 200px;
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+.layout textarea.forView {
+    border: none;
+}
+
+.layout > p {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.layout > label {
+    margin-bottom: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.layout > label > input {
+    display: none;
+}
+
+.layout > ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    list-style-type: disc;
+    font-size: 12px;
+    line-height: 1.2;
+}

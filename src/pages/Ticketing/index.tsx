@@ -36,7 +36,6 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
 const Ticketing = () => {
     const {
         user,
-        logout,
         addTicket,
         isTypingPhoneNumber,
         cancelTicket,
@@ -150,7 +149,6 @@ const Ticketing = () => {
             } catch (error) {
                 toast.error("예매 가능한 티켓 조회에 실패했습니다.");
                 navigate("/");
-                logout();
             } finally {
                 setIsLoading(false);
             }

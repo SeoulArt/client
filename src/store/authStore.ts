@@ -25,6 +25,7 @@ interface AuthAction {
     addPhoneNumber: (phoneNumber: string) => void;
     startTypingPhoneNumber: () => void;
     endTypingPhoneNumber: () => void;
+    changeCreatorDescription: (description: string) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -90,6 +91,17 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
     },
     endTypingPhoneNumber: () => {
         set(() => ({ isTypingPhoneNumber: false }));
+    },
+    changeCreatorDescription: (description) => {
+        set((state) => {
+            if (!state.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    description,
+                },
+            };
+        });
     },
 }));
 
