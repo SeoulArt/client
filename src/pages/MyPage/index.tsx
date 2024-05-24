@@ -55,6 +55,26 @@ const MyPage = () => {
                 <div className={styles.userUnits}>
                     {user.role === "ROLE_CREATOR" && (
                         <>
+                            <div className={styles.imageConfig}>
+                                <h3>이미지 설정</h3>
+                                <div>
+                                    <div>
+                                        <img
+                                            src={user.profileImage}
+                                            alt={"내 프로필 이미지"}
+                                        />
+                                        {user.username}
+                                    </div>
+                                    {/* <label>
+                                        수정하기
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            disabled
+                                        />
+                                    </label> */}
+                                </div>
+                            </div>
                             <div className={styles.creator}>
                                 <h3>창작자 소개</h3>
                                 <button
