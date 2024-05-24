@@ -7,13 +7,15 @@ import convertUrlToFile from "@/utils/convertUrlToFile";
 import baseAxios from "@/queries/baseAxios";
 import toast from "react-hot-toast";
 import { CustomError } from "@/types";
+import getValidProfileUrl from "@/utils/getValidProfileUrl";
+import imageCompression from "browser-image-compression";
 
 interface PutResponse {
     image: string;
 }
 
 const MyProfile = () => {
-    const { user } = authStore();
+    const { user, changeProfileImage } = authStore();
     const [imageObj, setImageObj] = useState<{
         previewSrc: string;
         file: File | null;
@@ -49,21 +51,27 @@ const MyProfile = () => {
                 return toast.error("프로필 이미지를 선택해주세요");
             }
             setIsLoading(true);
+            const compressedFile = await imageCompression(imageObj.file, {
+                maxSizeMB: 1,
+            });
+
             const formData = new FormData();
-            formData.append("image", imageObj.file);
+            formData.append("image", compressedFile);
             const response = await baseAxios.put<PutResponse & CustomError>(
                 "/user/profileImage",
                 formData
             );
             if (response.status !== 200) {
-                toast.error("이미지 수정에 실패했습니다.");
+                console.log(response);
                 throw Error("failed to submit new profileImage");
             }
-            setImageObj((prev) => ({
-                ...prev,
-                previewSrc: response.data.image,
-            }));
+            setImageObj({
+                file: compressedFile,
+                previewSrc: getValidProfileUrl(response.data.image),
+            });
+            changeProfileImage(getValidProfileUrl(response.data.image));
         } catch (error) {
+            toast.error("이미지 수정에 실패했습니다.");
             console.log(error);
         } finally {
             setIsLoading(false);

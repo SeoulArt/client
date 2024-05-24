@@ -1,6 +1,7 @@
 import { PlayId, TOKENS } from "@/constants";
 import baseAxios from "@/queries/baseAxios";
 import { Token, User } from "@/types";
+import getValidProfileUrl from "@/utils/getValidProfileUrl";
 import { create } from "zustand";
 
 interface AuthStore {
@@ -26,6 +27,7 @@ interface AuthAction {
     startTypingPhoneNumber: () => void;
     endTypingPhoneNumber: () => void;
     changeCreatorDescription: (description: string) => void;
+    changeProfileImage: (url: string) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -41,7 +43,13 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
         baseAxios.defaults.headers.common[
             "Authorization"
         ] = `Bearer ${accessToken}`;
-        set(() => ({ user, isLoading: false }));
+        set(() => ({
+            user: {
+                ...user,
+                profileImage: getValidProfileUrl(user.profileImage),
+            },
+            isLoading: false,
+        }));
     },
     logout: () => {
         localStorage.removeItem(TOKENS.ACCESS);
@@ -99,6 +107,17 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
                 user: {
                     ...state.user,
                     description,
+                },
+            };
+        });
+    },
+    changeProfileImage(url) {
+        set((state) => {
+            if (!state.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    profileImage: url,
                 },
             };
         });
