@@ -44,9 +44,7 @@ const Creators = () => {
                         ...stringArr,
                         playList:
                             stringArr.playList
-                                ?.toString()
-                                .slice(1, -1)
-                                .split(",")
+                                ?.split(",")
                                 .map((str) => Number(str) as PlayId) || [],
                     }))
                 );
