@@ -18,6 +18,53 @@
     line-height: 1.2;
 }
 
+.userUnits {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.userUnits > div > h3 {
+    font-weight: var(--weight-semibold);
+    margin-bottom: 5px;
+}
+
+.userUnits > div > *:last-child {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--weight-medium);
+}
+
+.imageConfig > div > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.imageConfig img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-primary);
+}
+
+.imageConfig label {
+    background-color: var(--color-disabled);
+    border-radius: 10px;
+    font-size: 10px;
+    line-height: 17px;
+    padding-inline: 4px;
+}
+
+.imageConfig label > input {
+    display: none;
+}
+
 .buttons {
     margin-inline: 6px;
     display: flex;

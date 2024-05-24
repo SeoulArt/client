@@ -39,7 +39,6 @@ const useAxiosInterceptor = () => {
                     return baseAxios(originalRequest);
                 } catch (refreshError) {
                     logout();
-                    console.log(refreshError);
                     return refreshError;
                 }
             }

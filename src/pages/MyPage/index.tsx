@@ -5,6 +5,7 @@ import baseAxios from "@/queries/baseAxios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import myPageArrow from "@/assets/myPageArrow.svg";
 interface OauthResponse {
     url: string;
 }
@@ -44,18 +45,53 @@ const MyPage = () => {
     return (
         <div className={styles.layout}>
             <h2 className={styles.heading3}>프로필</h2>
-            <div className={styles.explains}>
-                <span>
-                    {isAuthenticated
-                        ? "로그인한 상태입니다."
-                        : "로그인한 상태가 아닙니다."}
-                </span>
-                <span>
-                    {isAuthenticated
-                        ? "로그아웃을 하고 싶으시면 아래 버튼을 눌러주세요."
-                        : "아래 간편 로그인을 통해 회원이 되어주세요."}
-                </span>
-            </div>
+            {!isAuthenticated && (
+                <div className={styles.explains}>
+                    <span> 로그인한 상태가 아닙니다.</span>
+                    <span>아래 간편 로그인을 통해 회원이 되어주세요.</span>
+                </div>
+            )}
+            {isAuthenticated && (
+                <div className={styles.userUnits}>
+                    {user.role === "ROLE_CREATOR" && (
+                        <>
+                            <div className={styles.imageConfig}>
+                                <h3>이미지 설정</h3>
+                                <div>
+                                    <div>
+                                        <img
+                                            src={user.profileImage}
+                                            alt={"내 프로필 이미지"}
+                                        />
+                                        {user.username}
+                                    </div>
+                                    {/* <label>
+                                        수정하기
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            disabled
+                                        />
+                                    </label> */}
+                                </div>
+                            </div>
+                            <div className={styles.creator}>
+                                <h3>창작자 소개</h3>
+                                <button
+                                    onClick={() => navigate("/mypage/creator")}
+                                >
+                                    <span>
+                                        {user.description
+                                            ? "수정하기"
+                                            : "등록하기"}
+                                    </span>
+                                    <img src={myPageArrow} />
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
+            )}
             <div className={styles.buttons}>
                 {isAuthenticated ? (
                     <Button buttonType="default" onClick={resetUser}>
