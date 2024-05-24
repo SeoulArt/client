@@ -45,6 +45,7 @@ const Creators = () => {
                 //         playList: stringArr.playList.split(","),
                 //     }))
                 // );
+                setCreators([]);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -55,7 +56,10 @@ const Creators = () => {
     }, []);
 
     const filteredCreators = creators.filter(
-        (obj) => filter === "all" || obj.playList.find(filter) === filter
+        (obj) =>
+            filter === "all" ||
+            (filter === "staff" && obj.department.includes("스태프")) ||
+            (filter !== "staff" && obj.playList.indexOf(filter) !== -1)
     );
 
     if (isLoading) return <Loading />;
