@@ -74,19 +74,23 @@ const MyPage = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className={styles.creator}>
-                                <h3>창작자 소개</h3>
-                                <button
-                                    onClick={() => navigate("/mypage/creator")}
-                                >
-                                    <span>
-                                        {user.description
-                                            ? "수정하기"
-                                            : "등록하기"}
-                                    </span>
-                                    <img src={myPageArrow} />
-                                </button>
-                            </div>
+                            {user.role === "ROLE_CREATOR" && (
+                                <div className={styles.creator}>
+                                    <h3>창작자 소개</h3>
+                                    <button
+                                        onClick={() =>
+                                            navigate("/mypage/creator")
+                                        }
+                                    >
+                                        <span>
+                                            {user.description
+                                                ? "수정하기"
+                                                : "등록하기"}
+                                        </span>
+                                        <img src={myPageArrow} />
+                                    </button>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

@@ -13,6 +13,7 @@
     "homepage": "https://playgroundfortest.netlify.app/",
     "dependencies": {
         "axios": "^1.6.8",
+        "browser-image-compression": "^2.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hot-toast": "^2.4.1",
