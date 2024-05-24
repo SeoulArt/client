@@ -22,7 +22,8 @@ const CreatorDetail = () => {
             <div className={styles.layout}>
                 <CreatorListUnit
                     name={currentCreator.name}
-                    role={currentCreator.role}
+                    department={"미정"}
+                    profileImage={"/logo.svg"}
                 />
                 <p>
                     <img

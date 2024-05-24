@@ -4,7 +4,7 @@ export type FilterKeys = "all" | PlayId | "staff";
 
 export const NOT_PLAYS_MAP = new Map<"all" | "staff", string>([
     ["all", "전체"],
-    ["staff", "기획팀"],
+    ["staff", "공통 스태프"],
 ]);
 
 export const PLAYS_MAP = new Map<PlayId, string>([

@@ -6,46 +6,50 @@ import { FilterKeys, PlayId } from "@/constants";
 import { Link } from "react-router-dom";
 import CreatorListUnit from "@/components/CreatorListUnit";
 import Loading from "@/components/Loading";
-// import baseAxios from "@/queries/baseAxios";
-// import { CustomError } from "@/types";
-// import toast from "react-hot-toast";
+import baseAxios from "@/queries/baseAxios";
+import { CustomError } from "@/types";
+import toast from "react-hot-toast";
+
+interface Creator {
+    id: number;
+    username: string;
+    department: string;
+    profileImage: string;
+    playList: PlayId[];
+}
 
 const Creators = () => {
     const [filter, setFilter] = useState<FilterKeys>("all");
-    const [creators, setCreators] = useState<
-        {
-            id: number;
-            profileImage: string;
-            playList: PlayId[];
-            department: string;
-            name: string;
-        }[]
-    >([]);
+    const [creators, setCreators] = useState<Creator[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
             try {
-                // const response = await baseAxios.get<
-                //     {
-                //         id: number;
-                //         username: string;
-                //         department: string;
-                //         profileImage: string;
-                //         playList: string;
-                //     }[] &
-                //         CustomError
-                // >("/user/creators");
-                // if (response.status !== 200) {
-                //     toast.error("창작자 조회에 실패했습니다.");
-                // }
-                // setCreators(
-                //     response.data.map((stringArr) => ({
-                //         ...stringArr,
-                //         playList: stringArr.playList.split(","),
-                //     }))
-                // );
-                setCreators([]);
+                const response = await baseAxios.get<
+                    {
+                        id: number;
+                        username: string;
+                        department: string;
+                        profileImage: string;
+                        playList: string | null;
+                    }[] &
+                        CustomError
+                >("/user/creators");
+                if (response.status !== 200) {
+                    toast.error("창작자 조회에 실패했습니다.");
+                }
+                setCreators(
+                    response.data.map((stringArr) => ({
+                        ...stringArr,
+                        playList:
+                            stringArr.playList
+                                ?.toString()
+                                .slice(1, -1)
+                                .split(",")
+                                .map((str) => Number(str) as PlayId) || [],
+                    }))
+                );
             } catch (error) {
                 console.log(error);
             } finally {
@@ -58,11 +62,9 @@ const Creators = () => {
     const filteredCreators = creators.filter(
         (obj) =>
             filter === "all" ||
-            (filter === "staff" && obj.department.includes("스태프")) ||
+            (filter === "staff" && obj.playList.length === 0) ||
             (filter !== "staff" && obj.playList.indexOf(filter) !== -1)
     );
-
-    if (isLoading) return <Loading />;
 
     return (
         <>
@@ -72,13 +74,15 @@ const Creators = () => {
                     <FilterSelect value={filter} onChange={setFilter} />
                 </div>
             </div>
-            {filteredCreators.length > 0 ? (
+            {isLoading ? (
+                <Loading />
+            ) : filteredCreators.length > 0 ? (
                 <ul className={styles.list}>
                     {filteredCreators.map((creator) => (
                         <li key={creator.id}>
                             <Link to={`/creators/${creator.id}`}>
                                 <CreatorListUnit
-                                    name={creator.name}
+                                    name={creator.username}
                                     profileImage={creator.profileImage}
                                     department={creator.department}
                                 />
