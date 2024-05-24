@@ -22,7 +22,7 @@ const MyProfile = () => {
                 setImageObj((prev) => ({ ...prev, file }));
             }
         })();
-    });
+    }, []);
 
     const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files === null) return;
