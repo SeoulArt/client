@@ -26,66 +26,67 @@ const CreatorDetail = () => {
 
     useEffect(() => {
         // 유저 세부 정보 가져오기
-
         (async () => {
             try {
                 const response = await baseAxios.get<CreatorInfo & CustomError>(
                     `/user/creator/${creatorId}`
                 );
                 if (response.status !== 200) {
-                    toast.error("창작자 소개 조회에 실패했습니다.");
                     throw Error("failed to get creator description");
                 }
                 setCreatorObj(response.data);
             } catch (error) {
+                toast.error("창작자 소개 조회에 실패했습니다.");
                 navigate("/creators");
                 console.log(error);
             }
         })();
     }, []);
 
-    if (!creatorObj) return <Loading />;
-
     return (
         <>
             <TitleWithBackButton title="창작자 소개" />
-            <div className={styles.layout}>
-                <CreatorListUnit
-                    name={creatorObj.username}
-                    department={creatorObj.department || "미정"}
-                    profileImage={creatorObj.profileImage}
-                />
-                <p>
-                    {creatorObj.image && creatorObj.description && (
-                        <div className={styles.imgWrapper}>
-                            <img
-                                src={
-                                    import.meta.env.VITE_STORAGE_HOSTNAME +
-                                    creatorObj.image
-                                }
-                                alt={creatorObj.username + "님의 이미지"}
+            {!creatorObj ? (
+                <Loading />
+            ) : (
+                <div className={styles.layout}>
+                    <CreatorListUnit
+                        name={creatorObj.username}
+                        department={creatorObj.department || "미정"}
+                        profileImage={creatorObj.profileImage}
+                    />
+                    <p>
+                        {creatorObj.image && creatorObj.description && (
+                            <div className={styles.imgWrapper}>
+                                <img
+                                    src={
+                                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                                        creatorObj.image
+                                    }
+                                    alt={creatorObj.username + "님의 이미지"}
+                                />
+                            </div>
+                        )}
+                        {creatorObj.description ? (
+                            <Textarea
+                                defaultValue={creatorObj.description}
+                                readOnly
                             />
-                        </div>
-                    )}
-                    {creatorObj.description ? (
-                        <Textarea
-                            defaultValue={creatorObj.description}
-                            readOnly
-                        />
-                    ) : (
-                        <div className={styles.emptyDescription}>
-                            <img
-                                src={
-                                    import.meta.env.VITE_STORAGE_HOSTNAME +
-                                    "/menu/emptyDescription.svg"
-                                }
-                                alt="창작자 소개 없음"
-                            />
-                            <span>작성된 글이 없습니다.</span>
-                        </div>
-                    )}
-                </p>
-            </div>
+                        ) : (
+                            <div className={styles.emptyDescription}>
+                                <img
+                                    src={
+                                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                                        "/menu/emptyDescription.svg"
+                                    }
+                                    alt="창작자 소개 없음"
+                                />
+                                <span>작성된 글이 없습니다.</span>
+                            </div>
+                        )}
+                    </p>
+                </div>
+            )}
         </>
     );
 };
