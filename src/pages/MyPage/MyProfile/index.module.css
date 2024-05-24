@@ -1,0 +1,35 @@
+.layout {
+    padding-inline: 22px;
+    padding-bottom: 50px;
+    height: calc(100% - 187px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.layout > div {
+    margin-inline: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    flex: 1;
+}
+
+.layout > div > img {
+    height: min(100%, 300px);
+    object-fit: cover;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid var(--color-primary);
+}
+
+.layout > div label {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.layout > div input {
+    display: none;
+}

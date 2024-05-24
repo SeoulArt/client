@@ -65,14 +65,13 @@ const MyPage = () => {
                                         />
                                         {user.username}
                                     </div>
-                                    {/* <label>
+                                    <button
+                                        onClick={() =>
+                                            navigate("/mypage/my-profile")
+                                        }
+                                    >
                                         수정하기
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            disabled
-                                        />
-                                    </label> */}
+                                    </button>
                                 </div>
                             </div>
                             <div className={styles.creator}>

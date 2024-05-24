@@ -32,6 +32,7 @@ import toast from "react-hot-toast";
 import RejectInApp from "@/components/RejectInApp";
 import useAxiosInterceptor from "@/hooks/useAxiosInterceptor";
 import CreatorDescription from "@/pages/MyPage/CreatorDescription";
+import MyProfile from "@/pages/MyPage/MyProfile";
 
 const IS_FIRST_TIME = "isFirstTime";
 
@@ -196,6 +197,10 @@ function App() {
                                     </Route>
                                     <Route path="/mypage">
                                         <Route path="" element={<MyPage />} />
+                                        <Route
+                                            path="my-profile"
+                                            element={<MyProfile />}
+                                        />
                                         <Route
                                             path="creator"
                                             element={<CreatorDescription />}

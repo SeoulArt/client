@@ -53,7 +53,7 @@
     border: 1px solid var(--color-primary);
 }
 
-.imageConfig label {
+.imageConfig button {
     background-color: var(--color-disabled);
     border-radius: 10px;
     font-size: 10px;

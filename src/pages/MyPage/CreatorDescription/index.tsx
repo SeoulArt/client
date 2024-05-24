@@ -11,6 +11,7 @@ import Button from "@/UI/Button";
 import xIcon from "@/assets/x.svg";
 import Loading from "@/components/Loading";
 import toast from "react-hot-toast";
+import convertUrlToFile from "@/utils/convertUrlToFile";
 
 interface Creator {
     id: number;
@@ -55,9 +56,8 @@ const CreatorDescription = () => {
             imageFile && formData.append("image", imageFile);
             formData.append("description", value);
             let newDescription = "";
-            let newPreviewSrc = import.meta.env.VITE_STORAGE_HOSTNAME;
+            let newPreviewSrc = "";
             if (isEditing) {
-                console.log("수정");
                 const response = await baseAxios.put<
                     MutateResponse & CustomError
                 >("/user/introduce", formData, {
@@ -70,7 +70,11 @@ const CreatorDescription = () => {
                     throw Error("failed to mutate");
                 }
                 newDescription = response.data.description;
-                newPreviewSrc += response.data.image;
+                if (response.data.image) {
+                    newPreviewSrc =
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        response.data.image;
+                }
             } else {
                 const response = await baseAxios.post<
                     MutateResponse & CustomError
@@ -84,7 +88,11 @@ const CreatorDescription = () => {
                     throw Error("failed to mutate");
                 }
                 newDescription = response.data.description;
-                newPreviewSrc += response.data.image;
+                if (response.data.image) {
+                    newPreviewSrc =
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                        response.data.image;
+                }
             }
             changeCreatorDescription(newDescription);
             setPreviewSrc(newPreviewSrc);
@@ -108,10 +116,18 @@ const CreatorDescription = () => {
                 setValue(response.data.description || "");
                 setDepartment(response.data.department);
                 response.data.description &&
+                    setValue(response.data.description);
+                if (response.data.image) {
                     setPreviewSrc(
                         import.meta.env.VITE_STORAGE_HOSTNAME +
                             response.data.image
                     );
+                    const file = await convertUrlToFile(
+                        import.meta.env.VITE_STORAGE_HOSTNAME +
+                            response.data.image
+                    );
+                    setImageFile(file);
+                }
                 setIsLoading(false);
             } catch {
                 return navigate("/mypage");

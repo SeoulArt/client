@@ -20,7 +20,6 @@ const OauthCallback = () => {
 
         (async () => {
             try {
-                console.log(code);
                 const response = await baseAxios.post<
                     { user: User } & Token & CustomError
                 >(
