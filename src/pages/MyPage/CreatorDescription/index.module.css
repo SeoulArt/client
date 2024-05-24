@@ -31,6 +31,9 @@
 }
 .imgWrapper > img {
     object-fit: contain;
+}
+
+.imgWrapper.withButton > img {
     position: relative;
     left: 15px;
 }
@@ -56,6 +59,7 @@
 
 .layout textarea.forView {
     border: none;
+    padding-top: 0;
 }
 
 .layout > p {

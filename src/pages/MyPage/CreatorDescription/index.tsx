@@ -138,7 +138,11 @@ const CreatorDescription = () => {
                     department={department}
                 />
                 {previewSrc && (
-                    <div className={styles.imgWrapper}>
+                    <div
+                        className={`${styles.imgWrapper} ${
+                            isMutating ? styles.withButton : ""
+                        }`}
+                    >
                         <img
                             src={previewSrc}
                             alt={user?.username + "의 소개 이미지"}
