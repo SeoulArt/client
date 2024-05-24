@@ -1,3 +1,4 @@
+import getValidProfileUrl from "@/utils/getValidProfileUrl";
 import styles from "./index.module.css";
 
 interface Props {
@@ -11,7 +12,13 @@ const CreatorListUnit = ({ name, profileImage, department }: Props) => {
         <div className={styles.layout}>
             <div>
                 <div className={styles.profileWrapper}>
-                    <img src={profileImage} alt={name + "님의 프로필 이미지"} />
+                    <img
+                        onError={(event) =>
+                            (event.currentTarget.src = "/logo.svg")
+                        }
+                        src={getValidProfileUrl(profileImage)}
+                        alt={name + "님의 프로필 이미지"}
+                    />
                 </div>
                 <span>{name}</span>
             </div>

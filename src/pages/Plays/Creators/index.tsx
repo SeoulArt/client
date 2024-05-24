@@ -1,5 +1,5 @@
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
 import FilterSelect from "@/components/FilterSelect";
 import { FilterKeys, PlayId } from "@/constants";
@@ -22,6 +22,7 @@ const Creators = () => {
     const [filter, setFilter] = useState<FilterKeys>("all");
     const [creators, setCreators] = useState<Creator[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         (async () => {
@@ -53,6 +54,7 @@ const Creators = () => {
             } finally {
                 setIsLoading(false);
             }
+            scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
         })();
         // 창작자 불러오기
     }, []);
@@ -65,7 +67,7 @@ const Creators = () => {
     );
 
     return (
-        <>
+        <div className={styles.scrollWrapper} ref={scrollRef}>
             <div className={styles.headerWithSelect}>
                 <TitleWithBackButton title="창작자 소개" />
                 <div className={styles.absolute}>
@@ -100,7 +102,7 @@ const Creators = () => {
                     <span>등록된 창작자가 없습니다.</span>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

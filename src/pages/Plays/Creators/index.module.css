@@ -1,3 +1,7 @@
+.scrollWrapper {
+    height: 100%;
+}
+
 .headerWithSelect {
     position: relative;
     display: flex;
@@ -7,19 +11,19 @@
 .absolute {
     position: absolute;
     right: 16px;
-    bottom: 20px;
+    bottom: 25px;
 }
 
 .list {
-    margin: 40px 42px 35px;
+    margin: 10px 42px 35px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
 .empty {
+    height: calc(100%);
     margin-inline: 42px;
-    height: calc(100% - var(--height-header));
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -9,4 +9,5 @@
 .layout > h2 {
     font-size: 28px;
     font-weight: var(--weight-medium);
+    line-height: 34px;
 }
