@@ -1,73 +1,89 @@
 import CreatorListUnit from "@/components/CreatorListUnit";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { DUMMY_CREATORS } from "@/data";
-import { useEffect } from "react";
-import { Navigate, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import styles from "./index.module.css";
+import baseAxios from "@/queries/baseAxios";
+import toast from "react-hot-toast";
+import { CustomError } from "@/types";
+import Loading from "@/components/Loading";
+import Textarea from "@/UI/Textarea";
+
+interface CreatorInfo {
+    username: string;
+    department: string | null;
+    image: string | null;
+    description: string | null;
+    profileImage: string;
+    playList: string | null;
+}
 
 const CreatorDetail = () => {
     const { id } = useParams();
     const creatorId = Number(id);
-    const currentCreator = DUMMY_CREATORS[creatorId];
+    const navigate = useNavigate();
+    const [creatorObj, setCreatorObj] = useState<CreatorInfo | null>(null);
 
     useEffect(() => {
         // 유저 세부 정보 가져오기
+
+        (async () => {
+            try {
+                const response = await baseAxios.get<CreatorInfo & CustomError>(
+                    `/user/creator/${creatorId}`
+                );
+                if (response.status !== 200) {
+                    toast.error("창작자 소개 조회에 실패했습니다.");
+                    throw Error("failed to get creator description");
+                }
+                setCreatorObj(response.data);
+            } catch (error) {
+                navigate("/creators");
+                console.log(error);
+            }
+        })();
     }, []);
 
-    if (!currentCreator) return <Navigate to={"/"} replace />;
+    if (!creatorObj) return <Loading />;
 
     return (
         <>
             <TitleWithBackButton title="창작자 소개" />
             <div className={styles.layout}>
                 <CreatorListUnit
-                    name={currentCreator.name}
-                    department={"미정"}
-                    profileImage={"/logo.svg"}
+                    name={creatorObj.username}
+                    department={creatorObj.department || "미정"}
+                    profileImage={creatorObj.profileImage}
                 />
                 <p>
-                    <img
-                        src="/logo.svg"
-                        alt={currentCreator.name + "님의 이미지"}
-                    />
-                    {currentCreator.name}님의 소개글입니다. Lorem ipsum dolor
-                    sit amet consectetur adipisicing elit. Vitae facilis, iusto,
-                    quis provident cupiditate atque fuga excepturi repellat nisi
-                    nemo ducimus eveniet consequatur totam. Libero quos
-                    temporibus vero itaque hic!
-                    <br />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fugit officiis eius tempora autem temporibus dolorem eos
-                    ratione magni nihil earum? Accusamus quas esse, quia
-                    similique quam velit porro? Dolorem, cum.
-                    <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa cupiditate laboriosam aspernatur assumenda,
-                    consequuntur dicta nesciunt eaque. Ducimus dicta nisi, odio
-                    expedita dolorum amet, architecto vero obcaecati,
-                    perspiciatis cumque consequatur?
-                    <br />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fugit officiis eius tempora autem temporibus dolorem eos
-                    ratione magni nihil earum? Accusamus quas esse, quia
-                    similique quam velit porro? Dolorem, cum.
-                    <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa cupiditate laboriosam aspernatur assumenda,
-                    consequuntur dicta nesciunt eaque. Ducimus dicta nisi, odio
-                    expedita dolorum amet, architecto vero obcaecati,
-                    perspiciatis cumque consequatur?
-                    <br />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fugit officiis eius tempora autem temporibus dolorem eos
-                    ratione magni nihil earum? Accusamus quas esse, quia
-                    similique quam velit porro? Dolorem, cum.
-                    <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Ipsa cupiditate laboriosam aspernatur assumenda,
-                    consequuntur dicta nesciunt eaque. Ducimus dicta nisi, odio
-                    expedita dolorum amet, architecto vero obcaecati,
-                    perspiciatis cumque consequatur?
+                    {creatorObj.image && creatorObj.description && (
+                        <div className={styles.imgWrapper}>
+                            <img
+                                src={
+                                    import.meta.env.VITE_STORAGE_HOSTNAME +
+                                    creatorObj.image
+                                }
+                                alt={creatorObj.username + "님의 이미지"}
+                            />
+                        </div>
+                    )}
+                    {creatorObj.description ? (
+                        <Textarea
+                            defaultValue={creatorObj.description}
+                            readOnly
+                        />
+                    ) : (
+                        <div className={styles.emptyDescription}>
+                            <img
+                                src={
+                                    import.meta.env.VITE_STORAGE_HOSTNAME +
+                                    "/menu/emptyDescription.svg"
+                                }
+                                alt="창작자 소개 없음"
+                            />
+                            <span>작성된 글이 없습니다.</span>
+                        </div>
+                    )}
                 </p>
             </div>
         </>
