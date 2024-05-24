@@ -139,6 +139,7 @@ const Ticketing = () => {
     useEffect(() => {
         const getAvailablePlays = async () => {
             try {
+                setIsLoading(true);
                 const response = await baseAxios.get<number[]>(
                     "/ticket/available"
                 );
