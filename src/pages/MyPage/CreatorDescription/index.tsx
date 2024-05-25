@@ -12,6 +12,7 @@ import xIcon from "@/assets/x.svg";
 import Loading from "@/components/Loading";
 import toast from "react-hot-toast";
 import convertUrlToFile from "@/utils/convertUrlToFile";
+import imageCompression from "browser-image-compression";
 
 interface Creator {
     id: number;
@@ -53,7 +54,12 @@ const CreatorDescription = () => {
         const formData = new FormData();
         try {
             setIsLoading(true);
-            imageFile && formData.append("image", imageFile);
+            if (imageFile) {
+                const compressedFile = await imageCompression(imageFile, {
+                    maxSizeMB: 5,
+                });
+                formData.append("image", compressedFile);
+            }
             formData.append("description", value);
             let newDescription = "";
             let newPreviewSrc = "";

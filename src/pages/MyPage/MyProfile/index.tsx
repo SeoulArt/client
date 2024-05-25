@@ -52,7 +52,7 @@ const MyProfile = () => {
             }
             setIsLoading(true);
             const compressedFile = await imageCompression(imageObj.file, {
-                maxSizeMB: 1,
+                maxSizeMB: 5,
             });
 
             const formData = new FormData();
