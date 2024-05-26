@@ -16,7 +16,7 @@ export interface User {
     profileImage: string;
     phoneNumber: string | null;
     ticketPlayList: { playId: PlayId | 2 | 4 | 6; ticketId: number }[];
-    playList: number[] | null;
+    playList: string;
 }
 
 export interface Token {
