@@ -42,7 +42,7 @@ const PlayDetail = () => {
                     ref={articleRef}
                     src={`${
                         import.meta.env.VITE_STORAGE_HOSTNAME
-                    }/esset/desc/${PLAYS_MAP.get(playId)}.png
+                    }/esset/desc/num${Math.floor(playId / 2) + 1}.png
 						`}
                     alt={`${PLAYS_MAP.get(playId)} 포스터`}
                 />
