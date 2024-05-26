@@ -40,6 +40,7 @@ import CreateReview from "@/pages/Review/CreateReview";
 import Phone from "@/pages/MyPage/Phone";
 import MyReviews from "@/pages/MyPage/MyReviews";
 import MyQnA from "@/pages/MyPage/MyQnA";
+import Contents from "@/pages/Contents";
 
 const IS_FIRST_TIME = "isFirstTime";
 
@@ -189,7 +190,7 @@ function App() {
                                         </Route>
                                         <Route
                                             path="/contents"
-                                            element={<div>contents</div>}
+                                            element={<Contents />}
                                         />
                                         <Route path="/ticketing">
                                             <Route
