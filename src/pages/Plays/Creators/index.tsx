@@ -95,7 +95,7 @@ const Creators = () => {
                                                     import.meta.env
                                                         .VITE_UNIQUE_CREATOR_ID_2
                                                 )) &&
-                                        filter === 5
+                                        (filter === 3 || filter === 5)
                                             ? "의상"
                                             : creator.department
                                     }
