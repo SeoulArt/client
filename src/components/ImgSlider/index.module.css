@@ -17,3 +17,7 @@
 .rightArrow {
     right: 6px;
 }
+
+.layout a > img {
+    width: 100%;
+}
