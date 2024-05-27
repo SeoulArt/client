@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import baseAxios from "@/queries/baseAxios";
 import UIStore from "@/store/UIStore";
+import convertSecondsTostring from "@/utils/convertSecondsToString";
 
 interface PostResponse {
     playId: PlayId | 2 | 4 | 6;
@@ -32,6 +33,8 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
     if (dayNum === 5) return `${date < 10 ? 0 : ""}${date}(금)`;
     return `${date < 10 ? 0 : ""}${date}(토)`;
 };
+
+const TICKETING_OPEN_DATE = new Date(2024, 4, 28, 16, 42);
 
 const Ticketing = () => {
     const {
@@ -57,6 +60,9 @@ const Ticketing = () => {
     );
     const [availableTickets, setAvailableTickets] = useState<number[]>([]);
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [secondsLeft, setSecondsLeft] = useState<number>(
+        Math.ceil((+TICKETING_OPEN_DATE - +new Date()) / 1000)
+    );
     const specificPlayId = posterIdx * 2 + 1 + Number(selectedTimeIndex);
 
     const ticketAlreadyUserHave = user?.ticketPlayList.find(
@@ -122,6 +128,17 @@ const Ticketing = () => {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            setSecondsLeft((prev) => prev - 1);
+        }, 1000);
+
+        if (secondsLeft <= 0) {
+            clearInterval(timerId);
+        }
+        return () => clearInterval(timerId);
+    }, [secondsLeft]);
 
     useEffect(() => {
         if (!user) {
@@ -332,9 +349,14 @@ const Ticketing = () => {
                     </div>
                     <Button
                         onClick={handleTicketing}
-                        disabled={selectedTimeIndex === null}
+                        disabled={selectedTimeIndex === null || secondsLeft > 0}
                     >
-                        예매하기
+                        {secondsLeft > 0
+                            ? convertSecondsTostring(
+                                  secondsLeft,
+                                  TICKETING_OPEN_DATE
+                              )
+                            : "예매하기"}
                     </Button>
                 </>
             )}
