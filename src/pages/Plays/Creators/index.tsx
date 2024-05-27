@@ -84,7 +84,21 @@ const Creators = () => {
                                 <CreatorListUnit
                                     name={creator.username}
                                     profileImage={creator.profileImage}
-                                    department={creator.department}
+                                    department={
+                                        (creator.id ===
+                                            Number(
+                                                import.meta.env
+                                                    .VITE_UNIQUE_CREATOR_ID_1
+                                            ) ||
+                                            creator.id ===
+                                                Number(
+                                                    import.meta.env
+                                                        .VITE_UNIQUE_CREATOR_ID_2
+                                                )) &&
+                                        filter === 5
+                                            ? "의상"
+                                            : creator.department
+                                    }
                                 />
                             </Link>
                         </li>
