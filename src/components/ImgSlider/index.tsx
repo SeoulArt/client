@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import styles from "./index.module.css";
 
 interface Props {
-    images: { src: string; description: string }[];
+    images: { src: string; description: string; externalLink?: string }[];
     currentIndex: number;
     onChange: (idx: number) => void;
 }
@@ -34,9 +34,27 @@ const ImgSlider = ({ images, currentIndex, onChange }: Props) => {
     return (
         <div className={styles.layout}>
             <Slider ref={sliderRef} {...settings}>
-                {images.map((image, index) => (
-                    <img key={index} src={image.src} alt={image.description} />
-                ))}
+                {images.map((image, index) =>
+                    image.externalLink ? (
+                        <a
+                            key={index}
+                            href={image.externalLink}
+                            target="_blank"
+                        >
+                            <img
+                                key={index}
+                                src={image.src}
+                                alt={image.description}
+                            />
+                        </a>
+                    ) : (
+                        <img
+                            key={index}
+                            src={image.src}
+                            alt={image.description}
+                        />
+                    )
+                )}
             </Slider>
             {currentIndex !== 0 && (
                 <button
