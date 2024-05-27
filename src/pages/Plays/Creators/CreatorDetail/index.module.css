@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.layout > p {
+.layout > article {
     padding-top: 28px;
     display: flex;
     flex: 1;
@@ -27,7 +27,7 @@
     height: 100%;
 }
 
-.layout > p > textarea {
+.layout > article > textarea {
     border: none;
     font-size: 16px;
     line-height: 1.2;

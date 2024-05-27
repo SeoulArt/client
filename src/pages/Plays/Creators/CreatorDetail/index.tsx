@@ -55,7 +55,7 @@ const CreatorDetail = () => {
                         department={creatorObj.department || "미정"}
                         profileImage={creatorObj.profileImage}
                     />
-                    <p>
+                    <article>
                         {creatorObj.image && creatorObj.description && (
                             <div className={styles.imgWrapper}>
                                 <img
@@ -84,7 +84,7 @@ const CreatorDetail = () => {
                                 <span>작성된 글이 없습니다.</span>
                             </div>
                         )}
-                    </p>
+                    </article>
                 </div>
             )}
         </>
