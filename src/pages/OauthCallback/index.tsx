@@ -40,6 +40,7 @@ const OauthCallback = () => {
                 navigate(redirectUrl);
             } catch (error) {
                 toast.error("로그인 중 문제가 발생하였습니다.");
+                navigate("/");
             } finally {
                 localStorage.removeItem("redirectUrl");
             }
