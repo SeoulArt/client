@@ -196,10 +196,9 @@ const QnADetail = () => {
                                 }))
                             }
                             placeholder={
-                                (mode === "view"
+                                mode === "view"
                                     ? "아직 답변이 없습니다."
-                                    : "답변할 내용을 작성해주세요.") +
-                                "(최대 300자)"
+                                    : "답변할 내용을 작성해주세요.(최대 300자)"
                             }
                             maxLength={300}
                             readOnly={!isEditor}
