@@ -20,7 +20,10 @@ const CreateQuestion = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const isQuestionable =
-        user && (!user.playList || user.playList.includes(playId.toString()));
+        user &&
+        (user.role === "ROLE_ADMIN" ||
+            !user.playList ||
+            user.playList.includes(playId.toString()));
 
     if (!isQuestionable) {
         toast.error("해당 작품에 대한 질문 권한이 없습니다.");
@@ -39,13 +42,15 @@ const CreateQuestion = () => {
         try {
             setIsLoading(true);
             const response = await baseAxios.post<
-                { questionId: number } & CustomError
-            >(`/qna/question/${playId}`, { comment: value.trim() });
+                { qnaId: number } & CustomError
+            >(`/qna/question/${playId}`, { question: value.trim() });
             if (response.status !== 200) {
                 throw Error("failed to create question");
             }
             toast.success("질문 작성 완료!");
-            navigate(`/qna/${playId}/questions/${response.data.questionId}`);
+            navigate(`/qna/${playId}/questions/${response.data.qnaId}`, {
+                replace: true,
+            });
         } catch (error) {
             toast.error("질문 등록에 실패했습니다.");
             console.log(error);

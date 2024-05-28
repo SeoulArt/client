@@ -58,6 +58,7 @@
 }
 
 .list > li > a {
+    width: 100%;
     padding-inline: 17px;
     padding-block: 16px;
     line-height: 1.2;

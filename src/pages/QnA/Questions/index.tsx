@@ -12,11 +12,11 @@ import { CustomError } from "@/types";
 import toast from "react-hot-toast";
 
 interface Question {
-    id: number;
+    qnaId: number;
     username: string;
     profileImage: string;
     question: string;
-    isAnswered: boolean;
+    answered: boolean;
 }
 
 const Questions = () => {
@@ -29,7 +29,10 @@ const Questions = () => {
     const playId = Number(params.playId) as PlayId;
     // 유저인데, 창작자가 아니거나, 창작자여도 이 작품을 담당하지 않았거나
     const isQuestionable =
-        user && (!user.playList || user.playList.includes(playId.toString()));
+        user &&
+        (user.role === "ROLE_ADMIN" ||
+            !user.playList ||
+            user.playList.includes(playId.toString()));
 
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
@@ -68,19 +71,19 @@ const Questions = () => {
                 >
                     {questions.length > 0 ? (
                         questions.map((question) => (
-                            <li key={question.id}>
+                            <li key={question.qnaId}>
                                 <Link
-                                    to={`/qna/${playId}/questions/${question.id}`}
+                                    to={`/qna/${playId}/questions/${question.qnaId}`}
                                 >
                                     <p>
                                         <span
                                             className={
-                                                question.isAnswered
+                                                question.answered
                                                     ? styles.answered
                                                     : styles.notAnswered
                                             }
                                         >
-                                            {question.isAnswered
+                                            {question.answered
                                                 ? "답변완료"
                                                 : "답변미완"}
                                         </span>

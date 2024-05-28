@@ -10,88 +10,97 @@ import toast from "react-hot-toast";
 import baseAxios from "@/queries/baseAxios";
 import Loading from "@/components/Loading";
 import { CustomError } from "@/types";
+import UIStore from "@/store/UIStore";
 
 interface QnAObj {
     authorId: number;
     question: string;
-    answer: string | null;
+    answer: string;
+    author: boolean;
 }
 
 const QnADetail = () => {
     const { user } = authStore();
+    const { open } = UIStore();
     const params = useParams();
     const navigate = useNavigate();
     const playId = Number(params.playId) as PlayId;
     const questionId = Number(params.questionId);
     const [qnaObj, setQnaObj] = useState<QnAObj>({
+        author: false,
         authorId: -1,
         question: "",
-        answer: null,
+        answer: "",
     });
     const [mode, setMode] = useState<"view" | "edit">("view");
     const [isLoading, setIsLoading] = useState(true);
     const isInitialAnswerEmpty = useRef<boolean>(true);
 
-    const isAuthor = user?.userId === qnaObj.authorId;
     const isEditor =
-        user?.role === "ROLE_ADMIN" ||
-        (user?.isEditor &&
-            user.playList &&
-            user.playList.includes(playId.toString()));
+        user &&
+        (user.role === "ROLE_ADMIN" ||
+            (!qnaObj.author &&
+                user.isEditor &&
+                user.playList &&
+                user.playList.includes(playId.toString())));
+
+    const getQnADetail = async () => {
+        try {
+            const response = await baseAxios.get<QnAObj & CustomError>(
+                `/qna/${questionId}`
+            );
+            if (response.status !== 200) {
+                toast.error("QnA 조회에 실패했습니다.");
+                throw Error("failed to get qna detail");
+            }
+            setQnaObj({
+                ...response.data,
+                answer: response.data.answer || "",
+            });
+            if (response.data.answer) isInitialAnswerEmpty.current = false;
+        } catch (error) {
+            console.log(error);
+            navigate(`/qna/${playId}/questions`, { replace: true });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         // QNA 글 조회, 해당 글 없으면 홈으로 REDIRECT
-        (async () => {
-            try {
-                const response = await baseAxios.get<QnAObj & CustomError>(
-                    `/qna/${questionId}`
-                );
-                if (response.status !== 200) {
-                    toast.error("QnA 조회에 실패했습니다.");
-                    throw Error("failed to get qna detail");
-                }
-                setQnaObj(response.data);
-                if (response.data.answer) isInitialAnswerEmpty.current = false;
-            } catch (error) {
-                console.log(error);
-                navigate(`/qna/${playId}/questions`, { replace: true });
-            } finally {
-                setIsLoading(false);
-            }
-        })();
+        getQnADetail();
     }, []);
 
     const handleDeleteQuestion = async () => {
-        const ok = confirm("정말로 이 질문을 삭제하시겠습니까?");
-        if (ok) {
-            // 삭제 로직
-            try {
-                setIsLoading(true);
-                const response = await baseAxios.delete(`/qna/${questionId}`);
-                if (response.status !== 200) {
-                    throw new Error("failed to DELETE quetion");
-                }
-                navigate(`/qna/${playId}/questions`, { replace: true });
-            } catch (error) {
-                toast.error("질문 삭제에 실패했습니다.");
-                console.log(error);
-            } finally {
-                setIsLoading(false);
+        // 삭제 로직
+        try {
+            setIsLoading(true);
+            const response = await baseAxios.delete(`/qna/${questionId}`);
+            if (response.status !== 200) {
+                throw new Error("failed to DELETE quetion");
             }
+            navigate(`/qna/${playId}/questions`, { replace: true });
+            toast.success("질문 삭제 완료!");
+        } catch (error) {
+            toast.error("질문 삭제에 실패했습니다.");
+            console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleSubmitQnA = async () => {
         try {
-            if (isAuthor && qnaObj.question.trim().length > 0) {
+            if (qnaObj.author && qnaObj.question.trim().length > 0) {
                 // 질문 수정하는 로직
                 const response = await baseAxios.put(
                     `/qna/question/${questionId}`,
-                    { comment: qnaObj.question }
+                    { question: qnaObj.question }
                 );
                 if (response.status !== 200) {
                     throw Error("failed to PUT QnA");
                 }
+                await getQnADetail();
                 toast.success("질문 수정 완료!");
                 setMode("view");
             } else if (
@@ -104,17 +113,18 @@ const QnADetail = () => {
                 if (isInitialAnswerEmpty) {
                     response = await baseAxios.post(
                         `/qna/answer/${questionId}`,
-                        { comment: qnaObj.answer }
+                        { answer: qnaObj.answer }
                     );
                 } else {
                     response = await baseAxios.put(
                         `/qna/answer/${questionId}`,
-                        { comment: qnaObj.answer }
+                        { answer: qnaObj.answer }
                     );
                 }
                 if (response.status !== 200) {
                     throw Error("failed to PUT QnA");
                 }
+                await getQnADetail();
                 toast.success(
                     isInitialAnswerEmpty ? "답변 작성 완료!" : "답변 수정 완료!"
                 );
@@ -139,10 +149,19 @@ const QnADetail = () => {
             <div className={styles.relative}>
                 <TitleWithBackButton title={PLAYS_MAP.get(playId) || ""} />
                 {/* 조건 실제 유저 받아와서 수정해야 */}
-                {isAuthor && mode !== "edit" && (
+                {qnaObj.author && mode !== "edit" && (
                     <div className={styles.menu}>
                         <button onClick={() => setMode("edit")}>수정</button>|
-                        <button onClick={handleDeleteQuestion}>삭제</button>
+                        <button
+                            onClick={() => {
+                                open(
+                                    ["정말로 이 질문을 삭제하시겠습니까?"],
+                                    handleDeleteQuestion
+                                );
+                            }}
+                        >
+                            삭제
+                        </button>
                     </div>
                 )}
             </div>
@@ -152,17 +171,17 @@ const QnADetail = () => {
                 ) : (
                     <>
                         <Textarea
-                            disabled={!(mode === "edit" && isAuthor)}
+                            disabled={!(mode === "edit" && qnaObj.author)}
                             value={qnaObj.question}
                             onChange={(event) =>
-                                isAuthor &&
+                                qnaObj.author &&
                                 mode === "edit" &&
                                 setQnaObj((prev) => ({
                                     ...prev,
                                     question: event.target.value.slice(0, 300),
                                 }))
                             }
-                            readOnly={!isAuthor}
+                            readOnly={!qnaObj.author}
                             maxLength={300}
                         />
                         <Textarea
@@ -189,7 +208,7 @@ const QnADetail = () => {
                             <Button
                                 disabled={
                                     !(
-                                        isAuthor &&
+                                        qnaObj.author &&
                                         qnaObj.question.trim().length > 0 &&
                                         !isLoading
                                     )
