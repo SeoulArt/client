@@ -36,9 +36,10 @@ const Reviews = () => {
 
     const isWritable =
         user &&
-        (user.ticketPlayList.findIndex((pair) => pair.playId === playId) ||
-            !user.playList ||
-            user.playList.includes(playId.toString()));
+        ((user.role === "ROLE_USER" &&
+            user.ticketPlayList.findIndex((pair) => pair.playId === playId) !==
+                -1) ||
+            user.role === "ROLE_CREATOR");
 
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;

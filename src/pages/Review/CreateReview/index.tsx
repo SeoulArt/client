@@ -38,7 +38,7 @@ const CreateReview = () => {
 
     if (
         !user ||
-        (user.role !== "ROLE_ADMIN" &&
+        (user.role === "ROLE_USER" &&
             user.ticketPlayList.findIndex((pair) => pair.playId === playId) ===
                 -1)
     ) {
