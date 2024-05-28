@@ -21,3 +21,7 @@
 .layout:disabled {
     color: var(--color-disabled);
 }
+
+.layout:read-only {
+    color: var(--color-primary);
+}

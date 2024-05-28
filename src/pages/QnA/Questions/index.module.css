@@ -3,6 +3,10 @@
     height: calc(100% - var(--height-header));
 }
 
+.layout.withoutButton {
+    height: 100%;
+}
+
 .list.play1 {
     background-color: var(--color-play1);
 }
@@ -22,6 +26,10 @@
     flex-direction: column;
     gap: 12px;
     overflow-y: scroll;
+}
+
+.list.withoutButton {
+    height: 100%;
 }
 
 .list.withoutButton {
@@ -50,6 +58,7 @@
 }
 
 .list > li > a {
+    width: 100%;
     padding-inline: 17px;
     padding-block: 16px;
     line-height: 1.2;

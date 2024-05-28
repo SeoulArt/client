@@ -37,9 +37,10 @@ const OauthCallback = () => {
                 });
                 toast.success(`환영합니다 ${response.data.user.username}님`);
                 const redirectUrl = localStorage.getItem("redirectUrl") || "/";
-                navigate(redirectUrl);
+                navigate(redirectUrl, { replace: true });
             } catch (error) {
                 toast.error("로그인 중 문제가 발생하였습니다.");
+                navigate("/", { replace: true });
             } finally {
                 localStorage.removeItem("redirectUrl");
             }

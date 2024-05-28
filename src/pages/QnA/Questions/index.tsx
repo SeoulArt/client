@@ -7,28 +7,52 @@ import Button from "@/UI/Button";
 import authStore from "@/store/authStore";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
+import baseAxios from "@/queries/baseAxios";
+import { CustomError } from "@/types";
+import toast from "react-hot-toast";
+
+interface Question {
+    qnaId: number;
+    username: string;
+    profileImage: string;
+    question: string;
+    answered: boolean;
+}
 
 const Questions = () => {
     const { user } = authStore();
     const params = useParams();
     const navigate = useNavigate();
-    const [questions, setQuestions] = useState<
-        { id: number; isAnswered: boolean; text: string }[]
-    >([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const playId = Number(params.playId) as PlayId;
+    // 유저인데, 창작자가 아니거나, 창작자여도 이 작품을 담당하지 않았거나
+    const isQuestionable =
+        user &&
+        (user.role === "ROLE_ADMIN" ||
+            !user.playList ||
+            user.playList.includes(playId.toString()));
 
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
         // 질문 불러오는 로직
-        try {
-            setQuestions([]);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
+        (async () => {
+            try {
+                const response = await baseAxios.get<Question[] & CustomError>(
+                    `/qna/list/${playId}`
+                );
+                if (response.status !== 200) {
+                    toast.error("질문 조회에 실패했습니다.");
+                    throw Error("failed to get quetion about " + playId);
+                }
+                setQuestions(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsLoading(false);
+            }
+        })();
     }, [playId]);
 
     if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
@@ -42,28 +66,28 @@ const Questions = () => {
             <div className={styles.layout}>
                 <ul
                     className={`${styles.list} ${
-                        !user ? styles.withoutButton : ""
+                        user && !isQuestionable ? styles.withoutButton : ""
                     } ${styles[`play${playId}`]}`}
                 >
                     {questions.length > 0 ? (
                         questions.map((question) => (
-                            <li key={question.id}>
+                            <li key={question.qnaId}>
                                 <Link
-                                    to={`/qna/${playId}/questions/${question.id}`}
+                                    to={`/qna/${playId}/questions/${question.qnaId}`}
                                 >
                                     <p>
                                         <span
                                             className={
-                                                question.isAnswered
+                                                question.answered
                                                     ? styles.answered
                                                     : styles.notAnswered
                                             }
                                         >
-                                            {question.isAnswered
+                                            {question.answered
                                                 ? "답변완료"
                                                 : "답변미완"}
                                         </span>
-                                        {question.text}
+                                        {question.question}
                                     </p>
                                 </Link>
                             </li>
@@ -81,12 +105,28 @@ const Questions = () => {
                         </div>
                     )}
                 </ul>
-                {user && (
+                {!user ? (
                     <Button
-                        onClick={() => navigate(`/qna/${playId}/questions/new`)}
+                        onClick={() => {
+                            localStorage.setItem(
+                                "redirectUrl",
+                                `/qna/${playId}/questions/new`
+                            );
+                            navigate("/mypage");
+                        }}
                     >
-                        질문하기
+                        질문하려면 로그인하세요
                     </Button>
+                ) : (
+                    isQuestionable && (
+                        <Button
+                            onClick={() =>
+                                navigate(`/qna/${playId}/questions/new`)
+                            }
+                        >
+                            질문하기
+                        </Button>
+                    )
                 )}
             </div>
         </>
