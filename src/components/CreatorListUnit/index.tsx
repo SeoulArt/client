@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 
 interface Props {
     name: string;
-    department: string;
+    department?: string;
     profileImage: string;
 }
 

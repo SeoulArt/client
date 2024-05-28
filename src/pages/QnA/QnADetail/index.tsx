@@ -3,7 +3,6 @@ import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { PLAYS_MAP, PlayId } from "@/constants";
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
-import styles from "./index.module.css";
 import Button from "@/UI/Button";
 import authStore from "@/store/authStore";
 import toast from "react-hot-toast";
@@ -11,9 +10,9 @@ import baseAxios from "@/queries/baseAxios";
 import Loading from "@/components/Loading";
 import { CustomError } from "@/types";
 import UIStore from "@/store/UIStore";
+import styles from "./index.module.css";
 
 interface QnAObj {
-    authorId: number;
     question: string;
     answer: string;
     author: boolean;
@@ -28,7 +27,6 @@ const QnADetail = () => {
     const questionId = Number(params.questionId);
     const [qnaObj, setQnaObj] = useState<QnAObj>({
         author: false,
-        authorId: -1,
         question: "",
         answer: "",
     });

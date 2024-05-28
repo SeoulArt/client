@@ -25,13 +25,13 @@ const CreateQuestion = () => {
             !user.playList ||
             user.playList.includes(playId.toString()));
 
+    if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) {
+        return <Navigate to="/" replace />;
+    }
+
     if (!isQuestionable) {
         toast.error("해당 작품에 대한 질문 권한이 없습니다.");
         return <Navigate to={`/qna/${playId}/questions`} replace />;
-    }
-
-    if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) {
-        return <Navigate to="/" replace />;
     }
 
     const submitHandler = async () => {

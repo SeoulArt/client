@@ -33,6 +33,10 @@ import RejectInApp from "@/components/RejectInApp";
 import useAxiosInterceptor from "@/hooks/useAxiosInterceptor";
 import CreatorDescription from "@/pages/MyPage/CreatorDescription";
 import MyProfile from "@/pages/MyPage/MyProfile";
+import Review from "@/pages/Review";
+import ReviewDetail from "@/pages/Review/ReviewDetail";
+import Reviews from "@/pages/Review/Reviews";
+import CreateReview from "@/pages/Review/CreateReview";
 
 const IS_FIRST_TIME = "isFirstTime";
 
@@ -190,10 +194,24 @@ function App() {
                                                 element={<Ticketing />}
                                             />
                                         </Route>
-                                        <Route
-                                            path="/review"
-                                            element={<div>review</div>}
-                                        />
+                                        <Route path="/review">
+                                            <Route
+                                                path=""
+                                                element={<Review />}
+                                            />
+                                            <Route
+                                                path=":playId/reviews/new"
+                                                element={<CreateReview />}
+                                            />
+                                            <Route
+                                                path=":playId/reviews"
+                                                element={<Reviews />}
+                                            />
+                                            <Route
+                                                path=":playId/reviews/:reviewId"
+                                                element={<ReviewDetail />}
+                                            />
+                                        </Route>
                                     </Route>
                                     <Route path="/mypage">
                                         <Route path="" element={<MyPage />} />

@@ -11,7 +11,11 @@ const ThreePlayCircles = ({ linkTo }: Props) => {
         <div className={styles.layout}>
             {Array.from(PLAYS_MAP.keys()).map((playId) => (
                 <div key={playId}>
-                    <Link to={`/${linkTo}/${playId}/questions`} />
+                    <Link
+                        to={`/${linkTo}/${playId}/${
+                            linkTo === "qna" ? "question" : "review"
+                        }s`}
+                    />
                 </div>
             ))}
         </div>
