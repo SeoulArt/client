@@ -1,3 +1,4 @@
+import imageCompression from "browser-image-compression";
 import { PLAYS_MAP, PlayId } from "@/constants";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import styles from "./index.module.css";
@@ -74,8 +75,15 @@ const CreateReview = () => {
             formData.append("playId", playId.toString());
             formData.append("title", formValues.title);
             formData.append("content", formValues.content);
-            formValues.imageFile &&
-                formData.append("image", formValues.imageFile);
+            if (formValues.imageFile) {
+                const compressedFile = await imageCompression(
+                    formValues.imageFile,
+                    {
+                        maxSizeMB: 5,
+                    }
+                );
+                formData.append("image", compressedFile);
+            }
             const response = await baseAxios.post<
                 { reviewId: number } & CustomError
             >(`/review`, formData, {

@@ -1,3 +1,4 @@
+import imageCompression from "browser-image-compression";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { PLAYS_MAP, PlayId } from "@/constants";
 import baseAxios from "@/queries/baseAxios";
@@ -65,7 +66,6 @@ const ReviewDetail = () => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            console.log(reader.result);
             setReviewObj((prev) => ({
                 ...prev,
                 prevSrc: reader.result as string,
@@ -139,8 +139,15 @@ const ReviewDetail = () => {
             const formData = new FormData();
             formData.append("title", reviewObj.title);
             formData.append("content", reviewObj.content);
-            reviewObj.imageFile &&
-                formData.append("image", reviewObj.imageFile);
+            if (reviewObj.imageFile) {
+                const compressedFile = await imageCompression(
+                    reviewObj.imageFile,
+                    {
+                        maxSizeMB: 5,
+                    }
+                );
+                formData.append("image", compressedFile);
+            }
             const response = await baseAxios.put(
                 `/review/${reviewId}`,
                 formData,
