@@ -191,8 +191,8 @@ function App() {
                                             />
                                         </Route>
                                         <Route
-                                            path="/community"
-                                            element={<div>community</div>}
+                                            path="/review"
+                                            element={<div>review</div>}
                                         />
                                     </Route>
                                     <Route path="/mypage">

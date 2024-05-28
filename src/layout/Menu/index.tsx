@@ -21,11 +21,8 @@ const Menu = () => {
                         <Link to="/contents" onClick={() => setIsOpened(false)}>
                             콘텐츠
                         </Link>
-                        <Link
-                            to="/community"
-                            onClick={() => setIsOpened(false)}
-                        >
-                            커뮤니티
+                        <Link to="/review" onClick={() => setIsOpened(false)}>
+                            후기
                         </Link>
                     </div>
                     <Link to="/ticketing" onClick={() => setIsOpened(false)}>
