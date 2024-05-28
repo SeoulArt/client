@@ -220,7 +220,9 @@ const QnADetail = () => {
                         ) : (
                             isEditor && (
                                 <Button onClick={() => setMode("edit")}>
-                                    답변 등록하기
+                                    {qnaObj.answer
+                                        ? "답변 수정하기"
+                                        : "답변 등록하기"}
                                 </Button>
                             )
                         )}
