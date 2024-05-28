@@ -123,7 +123,7 @@ const Reviews = () => {
                         onClick={() => {
                             localStorage.setItem(
                                 "redirectUrl",
-                                `/qna/${playId}/questions/new`
+                                `/review/${playId}/reviews/new`
                             );
                             navigate("/mypage");
                         }}
