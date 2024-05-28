@@ -32,7 +32,7 @@ const Questions = () => {
         user &&
         (user.role === "ROLE_ADMIN" ||
             !user.playList ||
-            user.playList.includes(playId.toString()));
+            !user.playList.includes(playId.toString()));
 
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
