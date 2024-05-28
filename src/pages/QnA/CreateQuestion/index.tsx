@@ -23,14 +23,14 @@ const CreateQuestion = () => {
         user &&
         (user.role === "ROLE_ADMIN" ||
             !user.playList ||
-            user.playList.includes(playId.toString()));
+            !user.playList.includes(playId.toString()));
 
     if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) {
         return <Navigate to="/" replace />;
     }
 
     if (!isQuestionable) {
-        toast.error("해당 작품에 대한 질문 권한이 없습니다.");
+        toast.error("해당 작품의 창작자는 질문 권한이 없습니다.");
         return <Navigate to={`/qna/${playId}/questions`} replace />;
     }
 
