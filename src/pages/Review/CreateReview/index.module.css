@@ -33,6 +33,7 @@
 }
 
 .imageLabel > ul {
+    margin-top: 12px;
     margin-bottom: 20px;
     padding-left: 20px;
     display: flex;
