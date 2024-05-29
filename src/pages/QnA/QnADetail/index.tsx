@@ -205,7 +205,7 @@ const QnADetail = () => {
                             <Button
                                 disabled={
                                     !(
-                                        qnaObj.isAuthor &&
+                                        (qnaObj.isAuthor || user?.isEditor) &&
                                         qnaObj.question.trim().length > 0 &&
                                         !isLoading
                                     )
