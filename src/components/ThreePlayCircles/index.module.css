@@ -15,7 +15,7 @@
 }
 
 .layout > div > a {
-    background-color: beige;
+    height: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
 }
