@@ -38,7 +38,7 @@ const QnADetail = () => {
         user &&
         (user.role === "ROLE_ADMIN" ||
             (!qnaObj.author &&
-                user.isEditor &&
+                user.editor &&
                 user.playList &&
                 user.playList.includes(playId.toString())));
 
