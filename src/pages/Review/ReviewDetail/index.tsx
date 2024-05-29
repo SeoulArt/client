@@ -192,7 +192,7 @@ const ReviewDetail = () => {
                         <button
                             onClick={() => {
                                 open(
-                                    ["정말로 이 질문을 삭제하시겠습니까?"],
+                                    ["정말로 이 후기를 삭제하시겠습니까?"],
                                     handleDeleteReview
                                 );
                             }}
