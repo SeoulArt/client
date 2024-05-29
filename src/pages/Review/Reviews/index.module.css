@@ -3,10 +3,6 @@
     height: calc(100% - var(--height-header));
 }
 
-.layout.withoutButton {
-    height: 100%;
-}
-
 .list.play1 {
     background-color: var(--color-play1);
 }

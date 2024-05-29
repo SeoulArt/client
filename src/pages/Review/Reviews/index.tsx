@@ -34,13 +34,6 @@ const Reviews = () => {
 
     const playId = Number(params.playId) as PlayId;
 
-    const isWritable =
-        user &&
-        ((user.role === "ROLE_USER" &&
-            user.ticketPlayList.findIndex((pair) => pair.playId === playId) !==
-                -1) ||
-            user.role === "ROLE_CREATOR");
-
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
         // 질문 불러오는 로직
@@ -82,11 +75,7 @@ const Reviews = () => {
         <>
             <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
             <div className={styles.layout}>
-                <ul
-                    className={`${styles.list} ${
-                        user && !isWritable ? styles.withoutButton : ""
-                    } ${styles[`play${playId}`]}`}
-                >
+                <ul className={`${styles.list}  ${styles[`play${playId}`]}`}>
                     {reviews.length > 0 ? (
                         reviews.map((review) => (
                             <li key={review.reviewId}>
@@ -137,21 +126,19 @@ const Reviews = () => {
                             : "후기를 작성하려면 로그인하세요"}
                     </Button>
                 ) : (
-                    isWritable && (
-                        <Button
-                            disabled={secondsLeft > 0}
-                            onClick={() =>
-                                navigate(`/review/${playId}/reviews/new`)
-                            }
-                        >
-                            {secondsLeft > 0
-                                ? convertSecondsTostring(
-                                      secondsLeft,
-                                      REVIEW_OPEN_DATE
-                                  )
-                                : "후기 작성하기"}
-                        </Button>
-                    )
+                    <Button
+                        disabled={secondsLeft > 0}
+                        onClick={() =>
+                            navigate(`/review/${playId}/reviews/new`)
+                        }
+                    >
+                        {secondsLeft > 0
+                            ? convertSecondsTostring(
+                                  secondsLeft,
+                                  REVIEW_OPEN_DATE
+                              )
+                            : "후기 작성하기"}
+                    </Button>
                 )}
             </div>
         </>
