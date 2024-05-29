@@ -1,4 +1,3 @@
-import ReactGA from "react-ga4";
 import Header from "@/layout/Header";
 import LayoutWithHeaderAndMenu from "@/layout/LayoutWithHeaderAndMenu";
 import MobileLayout from "@/layout/MobileLayout";
@@ -46,10 +45,6 @@ import Contents from "@/pages/Contents";
 const IS_FIRST_TIME = "isFirstTime";
 
 const IS_KAKAO = navigator.userAgent.toLowerCase().includes("kakao");
-
-if (import.meta.env.VITE_GA_TRACKING_ID) {
-    ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
-}
 
 function App() {
     useAxiosInterceptor();
