@@ -44,10 +44,11 @@ const Questions = () => {
                 );
                 if (response.status !== 200) {
                     toast.error("질문 조회에 실패했습니다.");
-                    throw Error("failed to get quetion about " + playId);
+                    throw Error("failed to get questions about " + playId);
                 }
                 setQuestions(response.data);
             } catch (error) {
+                navigate("/");
                 console.log(error);
             } finally {
                 setIsLoading(false);

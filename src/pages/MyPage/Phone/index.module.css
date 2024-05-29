@@ -1,0 +1,38 @@
+.layout {
+    padding-top: 26px;
+    padding-bottom: 50px;
+    padding-inline: 22px;
+    height: calc(100% - calc(var(--height-header) + 105px));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow-y: scroll;
+    text-align: center;
+}
+
+.layout > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout > div > h2 {
+    margin-bottom: 4px;
+    font-size: min(8vw, 28px);
+    font-weight: var(--weight-semibold);
+}
+
+.layout > div > span {
+    margin-bottom: 24px;
+    font-size: min(3vw, 12px);
+}
+
+.layout > div > input {
+    height: 50px;
+    outline: none;
+    color: black;
+    border: 1px solid var(--color-primary);
+    padding: 12px;
+    font-size: 20px;
+    text-align: center;
+}

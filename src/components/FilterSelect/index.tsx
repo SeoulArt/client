@@ -5,11 +5,21 @@ import { useState } from "react";
 
 interface Props {
     value: FilterKeys;
+    onlyPlay?: boolean;
     onChange: (value: FilterKeys) => void;
 }
 
-const FilterSelect = ({ value, onChange }: Props) => {
+const FilterSelect = ({ value, onlyPlay = false, onChange }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
+    const filters = [
+        "all",
+        ...Array.from(FILTER_TEXT_MAP.keys()).filter(
+            (key) => key !== "staff" && key !== "all"
+        ),
+    ];
+    if (!onlyPlay) {
+        filters.push("staff");
+    }
 
     return (
         <div className={styles.selectWrapper}>
@@ -22,13 +32,7 @@ const FilterSelect = ({ value, onChange }: Props) => {
             </button>
             {isOpen && (
                 <div className={styles.selectOptions}>
-                    {[
-                        "all",
-                        ...Array.from(FILTER_TEXT_MAP.keys()).filter(
-                            (key) => key !== "staff" && key !== "all"
-                        ),
-                        "staff",
-                    ].map((key) => (
+                    {filters.map((key) => (
                         <button
                             key={key}
                             onClick={() => {

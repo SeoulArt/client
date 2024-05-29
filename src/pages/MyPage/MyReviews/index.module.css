@@ -1,35 +1,31 @@
-.layout {
-    padding-inline: 25px;
-    height: calc(100% - var(--height-header));
+.headerRelative {
+    position: relative;
+    display: flex;
+    align-items: last baseline;
 }
 
-.list.play1 {
-    background-color: var(--color-play1);
+.absolute {
+    position: absolute;
+    right: 16px;
+    bottom: 25px;
 }
-.list.play3 {
-    background-color: var(--color-play2);
-}
-.list.play5 {
-    background-color: var(--color-play3);
+
+.layout {
+    padding-inline: 25px;
+    padding-bottom: 27px;
+    height: calc(100% - calc(var(--height-header) + 105px));
 }
 
 .list {
+    background-color: var(--color-disabled);
     padding-inline: 22px;
     padding-block: 33px;
     margin-bottom: 30px;
-    height: calc(100% - 96px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
     overflow-y: scroll;
-}
-
-.list.withoutButton {
-    height: 100%;
-}
-
-.list.withoutButton {
-    height: 100%;
 }
 
 .list > li,
@@ -56,7 +52,7 @@
 .list > li > a {
     width: 100%;
     padding-inline: 17px;
-    padding-block: 15px;
+    padding-block: 16px;
     max-height: 81px;
     display: flex;
     align-items: center;
