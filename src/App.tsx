@@ -38,6 +38,9 @@ import ReviewDetail from "@/pages/Review/ReviewDetail";
 import Reviews from "@/pages/Review/Reviews";
 import CreateReview from "@/pages/Review/CreateReview";
 import Phone from "@/pages/MyPage/Phone";
+import MyQuestions from "@/pages/MyPage/MyQuestions";
+import MyAnswers from "@/pages/MyPage/MyAnswers";
+import MyReviews from "@/pages/MyPage/MyReviews";
 
 const IS_FIRST_TIME = "isFirstTime";
 
@@ -227,6 +230,18 @@ function App() {
                                         <Route
                                             path="phone"
                                             element={<Phone />}
+                                        />
+                                        <Route
+                                            path="question"
+                                            element={<MyQuestions />}
+                                        />
+                                        <Route
+                                            path="answer"
+                                            element={<MyAnswers />}
+                                        />
+                                        <Route
+                                            path="review"
+                                            element={<MyReviews />}
                                         />
                                     </Route>
                                 </Route>

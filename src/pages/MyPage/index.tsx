@@ -113,8 +113,6 @@ const MyPage = () => {
                             <img src={myPageArrow} />
                         </button>
                     </div>
-                    {/* <div></div>
-                    <div></div> */}
                 </div>
             )}
             <div className={styles.buttons}>

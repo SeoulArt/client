@@ -1,80 +1,63 @@
-import { Navigate, useNavigate, useParams } from "react-router";
-import { PLAYS_MAP, PlayId } from "@/constants";
 import TitleWithBackButton from "@/components/TitleWithBackButton";
-import { Link } from "react-router-dom";
-import styles from "./index.module.css";
-import Button from "@/UI/Button";
-import authStore from "@/store/authStore";
-import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
+
+import authStore from "@/store/authStore";
+import { Navigate, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import baseAxios from "@/queries/baseAxios";
 import { CustomError } from "@/types";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import styles from "./index.module.css";
 
 interface Question {
     qnaId: number;
-    username: string;
-    profileImage: string;
+    playId: number;
     question: string;
     isAnswered: boolean;
 }
 
-const Questions = () => {
+const MyQuestions = () => {
     const { user } = authStore();
-    const params = useParams();
-    const navigate = useNavigate();
     const [questions, setQuestions] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    const playId = Number(params.playId) as PlayId;
-    // 유저인데, 창작자가 아니거나, 창작자여도 이 작품을 담당하지 않았거나
-    const isQuestionable =
-        user &&
-        (user.role === "ROLE_ADMIN" ||
-            !user.playList ||
-            !user.playList.includes(playId.toString()));
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
         // 질문 불러오는 로직
         (async () => {
             try {
                 const response = await baseAxios.get<Question[] & CustomError>(
-                    `/qna/list/${playId}`
+                    "/user/question"
                 );
                 if (response.status !== 200) {
-                    toast.error("질문 조회에 실패했습니다.");
-                    throw Error("failed to get questions about " + playId);
+                    toast.error("내가 쓴 질문 조회에 실패했습니다.");
+                    throw Error("failed to get my questions");
                 }
                 setQuestions(response.data);
             } catch (error) {
-                navigate("/");
+                navigate("/mypage");
                 console.log(error);
             } finally {
                 setIsLoading(false);
             }
         })();
-    }, [playId]);
+    }, []);
 
-    if (Number.isNaN(playId) || !PLAYS_MAP.get(playId))
-        return <Navigate to="/" replace />;
+    if (!user) return <Navigate to="/" replace />;
 
     if (isLoading) return <Loading />;
 
     return (
         <>
-            <TitleWithBackButton title={PLAYS_MAP.get(playId) as string} />
+            <TitleWithBackButton title="내가 쓴 질문" />
             <div className={styles.layout}>
-                <ul
-                    className={`${styles.list} ${
-                        user && !isQuestionable ? styles.withoutButton : ""
-                    } ${styles[`play${playId}`]}`}
-                >
+                <ul className={`${styles.list}`}>
                     {questions.length > 0 ? (
                         questions.map((question) => (
                             <li key={question.qnaId}>
                                 <Link
-                                    to={`/qna/${playId}/questions/${question.qnaId}`}
+                                    to={`/qna/${question.playId}/questions/${question.qnaId}`}
                                 >
                                     <p>
                                         <span
@@ -106,32 +89,9 @@ const Questions = () => {
                         </div>
                     )}
                 </ul>
-                {!user ? (
-                    <Button
-                        onClick={() => {
-                            localStorage.setItem(
-                                "redirectUrl",
-                                `/qna/${playId}/questions/new`
-                            );
-                            navigate("/mypage");
-                        }}
-                    >
-                        질문하려면 로그인하세요
-                    </Button>
-                ) : (
-                    isQuestionable && (
-                        <Button
-                            onClick={() =>
-                                navigate(`/qna/${playId}/questions/new`)
-                            }
-                        >
-                            질문하기
-                        </Button>
-                    )
-                )}
             </div>
         </>
     );
 };
 
-export default Questions;
+export default MyQuestions;
