@@ -56,9 +56,10 @@
 .list > li > a {
     width: 100%;
     padding-inline: 17px;
-    padding-block: 16px;
+    padding-block: 15px;
     max-height: 81px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
     font-size: 14px;
@@ -73,6 +74,7 @@
 }
 
 .list > li > a > p {
+    height: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;

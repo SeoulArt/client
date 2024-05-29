@@ -17,7 +17,11 @@ interface Question {
     isAnswered: boolean;
 }
 
-const MyQuestions = () => {
+interface Props {
+    type: "question" | "answer";
+}
+
+const MyQnA = ({ type }: Props) => {
     const { user } = authStore();
     const [questions, setQuestions] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +32,15 @@ const MyQuestions = () => {
         (async () => {
             try {
                 const response = await baseAxios.get<Question[] & CustomError>(
-                    "/user/question"
+                    `/user/${type}`
                 );
                 if (response.status !== 200) {
-                    toast.error("내가 쓴 질문 조회에 실패했습니다.");
-                    throw Error("failed to get my questions");
+                    toast.error(
+                        `내가 쓴 ${
+                            type === "question" ? "질문" : "답변"
+                        } 조회에 실패했습니다.`
+                    );
+                    throw Error(`failed to get my ${type}s`);
                 }
                 setQuestions(response.data);
             } catch (error) {
@@ -50,7 +58,9 @@ const MyQuestions = () => {
 
     return (
         <>
-            <TitleWithBackButton title="내가 쓴 질문" />
+            <TitleWithBackButton
+                title={`내가 쓴 ${type === "question" ? "질문" : "답변"}`}
+            />
             <div className={styles.layout}>
                 <ul className={`${styles.list}`}>
                     {questions.length > 0 ? (
@@ -60,17 +70,19 @@ const MyQuestions = () => {
                                     to={`/qna/${question.playId}/questions/${question.qnaId}`}
                                 >
                                     <p>
-                                        <span
-                                            className={
-                                                question.isAnswered
-                                                    ? styles.answered
-                                                    : styles.notAnswered
-                                            }
-                                        >
-                                            {question.isAnswered
-                                                ? "답변완료"
-                                                : "답변미완"}
-                                        </span>
+                                        {type === "question" && (
+                                            <span
+                                                className={
+                                                    question.isAnswered
+                                                        ? styles.answered
+                                                        : styles.notAnswered
+                                                }
+                                            >
+                                                {question.isAnswered
+                                                    ? "답변완료"
+                                                    : "답변미완"}
+                                            </span>
+                                        )}
                                         {question.question}
                                     </p>
                                 </Link>
@@ -85,7 +97,11 @@ const MyQuestions = () => {
                                 }
                                 alt=""
                             />
-                            <span> 작성된 질문이 없습니다.</span>
+                            <span>
+                                {" "}
+                                작성된 {type === "question" ? "질문" : "답변"}이
+                                없습니다.
+                            </span>
                         </div>
                     )}
                 </ul>
@@ -94,4 +110,4 @@ const MyQuestions = () => {
     );
 };
 
-export default MyQuestions;
+export default MyQnA;
