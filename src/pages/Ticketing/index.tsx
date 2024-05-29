@@ -34,7 +34,7 @@ const getDateTextFromPlayId = (playId: PlayId | 2 | 4 | 6) => {
     return `${date < 10 ? 0 : ""}${date}(토)`;
 };
 
-const TICKETING_OPEN_DATE = new Date(2024, 4, 28, 16, 42);
+const TICKETING_OPEN_DATE = new Date(2024, 4, 30, 20);
 
 const Ticketing = () => {
     const {

@@ -19,7 +19,7 @@ interface Review {
     image: string | null;
 }
 
-const REVIEW_OPEN_DATE = new Date(2024, 4, 28, 16, 42);
+const REVIEW_OPEN_DATE = new Date(2024, 4, 30, 20);
 // const REVIEW_OPEN_DATE = new Date();
 
 const Reviews = () => {
