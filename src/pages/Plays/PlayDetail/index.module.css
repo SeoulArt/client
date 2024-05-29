@@ -19,20 +19,19 @@
     bottom: 8px;
     left: 50%;
     display: flex;
-    transform: rotate(-90deg) translate3d(0, -50%, 0);
     animation: pop 1s infinite;
 }
 
 @keyframes pop {
     0% {
-        transform: rotate(-90deg) translate3d(0, -50%, 0);
+        transform: translate3d(-50%, 0, 0);
     }
 
     50% {
-        transform: rotate(-90deg) translate3d(8px, -50%, 0);
+        transform: translate3d(-50%, 8px, 0);
     }
 
     100% {
-        transform: rotate(-90deg) translate3d(0, -50%, 0);
+        transform: translate3d(-50%, 0, 0);
     }
 }

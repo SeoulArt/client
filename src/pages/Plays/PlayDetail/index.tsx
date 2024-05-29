@@ -1,6 +1,6 @@
 import TitleWithBackButton from "@/components/TitleWithBackButton";
 import { PLAYS_MAP, PlayId } from "@/constants";
-import leftArrow from "@/assets/leftArrow.svg";
+import downArrow from "@/assets/downArrow.svg";
 import { useEffect, useRef } from "react";
 import { Navigate, useParams } from "react-router";
 import styles from "./index.module.css";
@@ -35,7 +35,7 @@ const PlayDetail = () => {
                             })
                         }
                     >
-                        <img src={leftArrow} />
+                        <img src={downArrow} />
                     </button>
                 </div>
                 <img
