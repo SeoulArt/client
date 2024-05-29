@@ -41,8 +41,7 @@ const Phone = () => {
             <TitleWithBackButton title="예매" />
             <div className={styles.layout}>
                 <div>
-                    <h2>전화번호를 입력해주세요</h2>
-                    <span>예매 완료를 위해 전화번호 입력이 필요합니다.</span>
+                    <h2>전화번호를 변경하세요</h2>
                     <span>
                         (입력하신 전화번호는 예매 확인 및 관련 안내를 위해
                         사용됩니다.)

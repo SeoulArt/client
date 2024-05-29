@@ -22,12 +22,7 @@
     font-weight: var(--weight-semibold);
 }
 
-.layout > div > span:first-of-type {
-    margin-bottom: 2px;
-    font-size: min(4vw, 14px);
-}
-
-.layout > div > span:last-of-type {
+.layout > div > span {
     margin-bottom: 24px;
     font-size: min(3vw, 12px);
 }
