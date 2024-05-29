@@ -36,7 +36,7 @@ const Reviews = () => {
 
     useEffect(() => {
         if (Number.isNaN(playId) || !PLAYS_MAP.get(playId)) return;
-        // 질문 불러오는 로직
+        // 후기 불러오는 로직
         (async () => {
             try {
                 const response = await baseAxios.get<Review[] & CustomError>(

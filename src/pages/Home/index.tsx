@@ -8,17 +8,17 @@ const links = [
     {
         src:
             import.meta.env.VITE_STORAGE_HOSTNAME +
-            "/menu/toIntroducePlayIcon.svg",
+            "/menu/toIntroducePlayIcon.png",
         to: "/plays",
         text: "작품 소개",
     },
     {
-        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toCreatorsIcon.svg",
+        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toCreatorsIcon.png",
         to: "/creators",
         text: "창작자 소개",
     },
     {
-        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toQnAIcon.svg",
+        src: import.meta.env.VITE_STORAGE_HOSTNAME + "/menu/toQnAIcon.png",
         to: "/qna",
         text: "작품 Q&A",
     },
