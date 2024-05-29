@@ -17,7 +17,7 @@ import getValidProfileUrl from "@/utils/getValidProfileUrl";
 import CreatorListUnit from "@/components/CreatorListUnit";
 
 interface ReviewObj {
-    author: boolean;
+    isAuthor: boolean;
     title: string;
     content: string;
     user: {
@@ -28,7 +28,7 @@ interface ReviewObj {
 }
 
 interface ReviewResponse {
-    author: boolean;
+    isAuthor: boolean;
     title: string;
     content: string;
     user: {
@@ -47,7 +47,7 @@ const ReviewDetail = () => {
     const [reviewObj, setReviewObj] = useState<
         ReviewObj & { imageFile: File | null }
     >({
-        author: false,
+        isAuthor: false,
         title: "",
         content: "",
         user: {
@@ -128,7 +128,7 @@ const ReviewDetail = () => {
 
     const handleSubmitReview = async () => {
         if (
-            !reviewObj.author ||
+            !reviewObj.isAuthor ||
             reviewObj.title.trim().length === 0 ||
             reviewObj.content.trim().length === 0
         )
@@ -186,7 +186,7 @@ const ReviewDetail = () => {
                     }
                 />
                 {/* 조건 실제 유저 받아와서 수정해야 */}
-                {reviewObj.author && mode !== "edit" && (
+                {reviewObj.isAuthor && mode !== "edit" && (
                     <div className={styles.menu}>
                         <button onClick={() => setMode("edit")}>수정</button>|
                         <button
@@ -212,17 +212,17 @@ const ReviewDetail = () => {
                             profileImage={reviewObj.user.profileImage}
                         />
                         <Textarea
-                            disabled={!(mode === "edit" && reviewObj.author)}
+                            disabled={!(mode === "edit" && reviewObj.isAuthor)}
                             value={reviewObj.title}
                             onChange={(event) =>
-                                reviewObj.author &&
+                                reviewObj.isAuthor &&
                                 mode === "edit" &&
                                 setReviewObj((prev) => ({
                                     ...prev,
                                     title: event.target.value.slice(0, 50),
                                 }))
                             }
-                            readOnly={!reviewObj.author}
+                            readOnly={!reviewObj.isAuthor}
                             maxLength={50}
                         />
                         {reviewObj.prevSrc && (
@@ -252,17 +252,17 @@ const ReviewDetail = () => {
                             </div>
                         )}
                         <Textarea
-                            disabled={!(mode === "edit" && reviewObj.author)}
+                            disabled={!(mode === "edit" && reviewObj.isAuthor)}
                             value={reviewObj.content}
                             onChange={(event) =>
-                                reviewObj.author &&
+                                reviewObj.isAuthor &&
                                 mode === "edit" &&
                                 setReviewObj((prev) => ({
                                     ...prev,
                                     content: event.target.value.slice(0, 300),
                                 }))
                             }
-                            readOnly={!reviewObj.author}
+                            readOnly={!reviewObj.isAuthor}
                             maxLength={300}
                         />
                         {!reviewObj.prevSrc &&
@@ -290,7 +290,7 @@ const ReviewDetail = () => {
                             <Button
                                 disabled={
                                     !(
-                                        reviewObj.author &&
+                                        reviewObj.isAuthor &&
                                         reviewObj.title.trim().length > 0 &&
                                         reviewObj.content.trim().length > 0 &&
                                         !isLoading
