@@ -28,6 +28,7 @@ interface AuthAction {
     endTypingPhoneNumber: () => void;
     changeCreatorDescription: (description: string) => void;
     changeProfileImage: (url: string) => void;
+    changePhoneNumber: (phoneNumber: string) => void;
 }
 
 const authStore = create<AuthStore & AuthAction>((set) => ({
@@ -61,6 +62,7 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
         set((state) => {
             if (!state.user) return state;
             return {
+                ...state,
                 user: {
                     ...state.user,
                     ticketPlayList: [...state.user.ticketPlayList, playObj],
@@ -72,6 +74,7 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
         set((state) => {
             if (!state.user) return state;
             return {
+                ...state,
                 user: {
                     ...state.user,
                     ticketPlayList: [
@@ -87,6 +90,7 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
         set((state) => {
             if (!state.user) return state;
             return {
+                ...state,
                 user: {
                     ...state.user,
                     phoneNumber: phoneNumber,
@@ -118,6 +122,17 @@ const authStore = create<AuthStore & AuthAction>((set) => ({
                 user: {
                     ...state.user,
                     profileImage: url,
+                },
+            };
+        });
+    },
+    changePhoneNumber(phoneNumber) {
+        set((state) => {
+            if (!state?.user) return state;
+            return {
+                user: {
+                    ...state.user,
+                    phoneNumber,
                 },
             };
         });

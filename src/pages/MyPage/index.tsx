@@ -70,26 +70,31 @@ const MyPage = () => {
                             </button>
                         </div>
                     </div>
-                    {user.role === "ROLE_CREATOR" && (
+                    {user.role !== "ROLE_USER" && (
                         <>
-                            {user.role === "ROLE_CREATOR" && (
-                                <div className={styles.creator}>
-                                    <h3>창작자 소개</h3>
-                                    <button
-                                        onClick={() =>
-                                            navigate("/mypage/creator")
-                                        }
-                                    >
-                                        <span>
-                                            {user.description
-                                                ? "수정하기"
-                                                : "등록하기"}
-                                        </span>
-                                        <img src={myPageArrow} />
-                                    </button>
-                                </div>
-                            )}
+                            <div className={styles.creator}>
+                                <h3>창작자 소개</h3>
+                                <button
+                                    onClick={() => navigate("/mypage/creator")}
+                                >
+                                    <span>
+                                        {user.description
+                                            ? "수정하기"
+                                            : "등록하기"}
+                                    </span>
+                                    <img src={myPageArrow} />
+                                </button>
+                            </div>
                         </>
+                    )}
+                    {user.phoneNumber && (
+                        <div className={styles.creator}>
+                            <h3>예매</h3>
+                            <button onClick={() => navigate("/mypage/phone")}>
+                                <span>전화번호 변경하기</span>
+                                <img src={myPageArrow} />
+                            </button>
+                        </div>
                     )}
                 </div>
             )}

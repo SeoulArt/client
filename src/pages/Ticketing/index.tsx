@@ -98,19 +98,26 @@ const Ticketing = () => {
     const handleConfirmTicketingWithPhoneNumber = async () => {
         try {
             setIsLoading(true);
-            await baseAxios.post("/user/mobile", { mobile: phoneNumber });
+            const response = await baseAxios.post("/user/mobile", {
+                mobile: phoneNumber,
+            });
+            endTypingPhoneNumber();
+            setSelectedTimeIndex(null);
+            if (response.status !== 200) {
+                throw Error("failed to ticketing with phoneNumber");
+            }
             addPhoneNumber(phoneNumber);
             toast.success("전화번호가 등록되었습니다.");
             // 예매 확정
-            endTypingPhoneNumber();
-            setSelectedTimeIndex(null);
         } catch (error) {
+            await handleCancelTicket(false);
+            toast.error("티켓 예매에 실패했습니다.");
             console.log(error);
         } finally {
             setIsLoading(false);
         }
     };
-    const handleCancelTicket = async () => {
+    const handleCancelTicket = async (withToast: boolean = true) => {
         try {
             if (!ticketAlreadyUserHave) return;
             setIsLoading(true);
@@ -121,7 +128,7 @@ const Ticketing = () => {
             });
             cancelTicket(ticketAlreadyUserHave?.ticketId);
             setSelectedTimeIndex(null);
-            toast.success("예매가 취소되었습니다.");
+            withToast && toast.success("예매가 취소되었습니다.");
         } catch (error) {
             console.log(error);
         } finally {
