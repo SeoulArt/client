@@ -16,7 +16,7 @@ interface Question {
     username: string;
     profileImage: string;
     question: string;
-    answered: boolean;
+    isAnswered: boolean;
 }
 
 const Questions = () => {
@@ -78,12 +78,12 @@ const Questions = () => {
                                     <p>
                                         <span
                                             className={
-                                                question.answered
+                                                question.isAnswered
                                                     ? styles.answered
                                                     : styles.notAnswered
                                             }
                                         >
-                                            {question.answered
+                                            {question.isAnswered
                                                 ? "답변완료"
                                                 : "답변미완"}
                                         </span>
