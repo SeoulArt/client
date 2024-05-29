@@ -72,7 +72,7 @@ const MyPage = () => {
                     </div>
                     {user.role !== "ROLE_USER" && (
                         <>
-                            <div className={styles.creator}>
+                            <div>
                                 <h3>창작자 소개</h3>
                                 <button
                                     onClick={() => navigate("/mypage/creator")}
@@ -88,7 +88,7 @@ const MyPage = () => {
                         </>
                     )}
                     {user.phoneNumber && (
-                        <div className={styles.creator}>
+                        <div>
                             <h3>예매</h3>
                             <button onClick={() => navigate("/mypage/phone")}>
                                 <span>전화번호 변경하기</span>
@@ -96,6 +96,25 @@ const MyPage = () => {
                             </button>
                         </div>
                     )}
+                    <div>
+                        <h3>작성내역</h3>
+                        <button onClick={() => navigate("/mypage/question")}>
+                            <span>내가 쓴 질문</span>
+                            <img src={myPageArrow} />
+                        </button>
+                        {(user.isEditor || user.role === "ROLE_ADMIN") && (
+                            <button onClick={() => navigate("/mypage/answer")}>
+                                <span>내가 쓴 답변</span>
+                                <img src={myPageArrow} />
+                            </button>
+                        )}
+                        <button onClick={() => navigate("/mypage/review")}>
+                            <span>후기</span>
+                            <img src={myPageArrow} />
+                        </button>
+                    </div>
+                    {/* <div></div>
+                    <div></div> */}
                 </div>
             )}
             <div className={styles.buttons}>
