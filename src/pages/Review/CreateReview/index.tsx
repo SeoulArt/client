@@ -68,7 +68,7 @@ const CreateReview = () => {
         )
             return toast.error("후기 제목과 내용을 입력해주세요");
 
-        // 질문 등록하는 로직
+        // 후기 등록하는 로직
         try {
             setIsLoading(true);
             const formData = new FormData();
@@ -94,12 +94,12 @@ const CreateReview = () => {
             if (response.status !== 200) {
                 throw Error("failed to create question");
             }
-            toast.success("질문 작성 완료!");
+            toast.success("후기 작성 완료!");
             navigate(`/review/${playId}/reviews/${response.data.reviewId}`, {
                 replace: true,
             });
         } catch (error) {
-            toast.error("질문 등록에 실패했습니다.");
+            toast.error("후기 등록에 실패했습니다.");
             console.log(error);
         } finally {
             setIsLoading(false);
@@ -185,7 +185,7 @@ const CreateReview = () => {
                                 formValues.content.trim().length === 0
                             }
                         >
-                            질문 등록하기
+                            후기 등록하기
                         </Button>
                     </>
                 )}

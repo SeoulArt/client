@@ -158,13 +158,13 @@ const ReviewDetail = () => {
                 }
             );
             if (response.status !== 200) {
-                throw Error("failed to PUT QnA");
+                throw Error("failed to PUT review");
             }
             await getReviewDetail();
-            toast.success("질문 수정 완료!");
+            toast.success("후기 수정 완료!");
             setMode("view");
         } catch (error) {
-            toast.error("QnA 작성에 실패했습니다.");
+            toast.error("후기 작성에 실패했습니다.");
         }
     };
 
