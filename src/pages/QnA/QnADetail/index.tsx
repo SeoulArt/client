@@ -15,7 +15,7 @@ import styles from "./index.module.css";
 interface QnAObj {
     question: string;
     answer: string;
-    author: boolean;
+    isAuthor: boolean;
 }
 
 const QnADetail = () => {
@@ -26,7 +26,7 @@ const QnADetail = () => {
     const playId = Number(params.playId) as PlayId;
     const questionId = Number(params.questionId);
     const [qnaObj, setQnaObj] = useState<QnAObj>({
-        author: false,
+        isAuthor: false,
         question: "",
         answer: "",
     });
@@ -37,8 +37,8 @@ const QnADetail = () => {
     const isEditor =
         user &&
         (user.role === "ROLE_ADMIN" ||
-            (!qnaObj.author &&
-                user.editor &&
+            (!qnaObj.isAuthor &&
+                user.isEditor &&
                 user.playList &&
                 user.playList.includes(playId.toString())));
 
@@ -89,7 +89,7 @@ const QnADetail = () => {
 
     const handleSubmitQnA = async () => {
         try {
-            if (qnaObj.author && qnaObj.question.trim().length > 0) {
+            if (qnaObj.isAuthor && qnaObj.question.trim().length > 0) {
                 // 질문 수정하는 로직
                 const response = await baseAxios.put(
                     `/qna/question/${questionId}`,
@@ -147,7 +147,7 @@ const QnADetail = () => {
             <div className={styles.relative}>
                 <TitleWithBackButton title={PLAYS_MAP.get(playId) || ""} />
                 {/* 조건 실제 유저 받아와서 수정해야 */}
-                {qnaObj.author && mode !== "edit" && (
+                {qnaObj.isAuthor && mode !== "edit" && (
                     <div className={styles.menu}>
                         <button onClick={() => setMode("edit")}>수정</button>|
                         <button
@@ -169,17 +169,17 @@ const QnADetail = () => {
                 ) : (
                     <>
                         <Textarea
-                            disabled={!(mode === "edit" && qnaObj.author)}
+                            disabled={!(mode === "edit" && qnaObj.isAuthor)}
                             value={qnaObj.question}
                             onChange={(event) =>
-                                qnaObj.author &&
+                                qnaObj.isAuthor &&
                                 mode === "edit" &&
                                 setQnaObj((prev) => ({
                                     ...prev,
                                     question: event.target.value.slice(0, 300),
                                 }))
                             }
-                            readOnly={!qnaObj.author}
+                            readOnly={!qnaObj.isAuthor}
                             maxLength={300}
                         />
                         <Textarea
@@ -205,7 +205,7 @@ const QnADetail = () => {
                             <Button
                                 disabled={
                                     !(
-                                        qnaObj.author &&
+                                        qnaObj.isAuthor &&
                                         qnaObj.question.trim().length > 0 &&
                                         !isLoading
                                     )
