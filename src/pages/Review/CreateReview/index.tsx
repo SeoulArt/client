@@ -37,13 +37,7 @@ const CreateReview = () => {
         return <Navigate to="/" replace />;
     }
 
-    if (
-        !user ||
-        (user.role === "ROLE_USER" &&
-            user.ticketPlayList.findIndex((pair) => pair.playId === playId) ===
-                -1)
-    ) {
-        toast.error("해당 작품에 대한 후기 작성 권한이 없습니다.");
+    if (!user) {
         return <Navigate to={`/review/${playId}/reviews`} replace />;
     }
 
