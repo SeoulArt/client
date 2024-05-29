@@ -1,0 +1,27 @@
+.layout {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--color-primary);
+    border-radius: 10px;
+    font-family: inherit;
+    flex: 1;
+    color: var(--color-primary);
+
+    resize: none;
+}
+
+.layout::placeholder {
+    color: var(--color-disabled);
+}
+
+.layout:focus {
+    outline: none;
+}
+
+.layout:disabled {
+    color: var(--color-disabled);
+}
+
+.layout:disabled:read-only {
+    color: var(--color-primary);
+}

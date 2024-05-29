@@ -1,0 +1,29 @@
+.flex {
+    border-radius: 10px;
+    width: 100%;
+    height: 56px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.flex:disabled {
+    background-color: var(--color-disabled);
+}
+
+.default {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.kakao {
+    background-color: #fde500;
+    color: var(--color-primary);
+}
+
+.naver {
+    background-color: #00c73c;
+    color: var(--color-white);
+}

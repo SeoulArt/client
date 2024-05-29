@@ -1,0 +1,138 @@
+.layout {
+    margin-top: 56px;
+    margin-inline: 22px;
+    height: calc(100% - var(--height-header));
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.layout.withPhone {
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.layout.withPhone > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout.withPhone > div > h2 {
+    margin-bottom: 4px;
+    font-size: min(8vw, 28px);
+    font-weight: var(--weight-semibold);
+}
+
+.layout.withPhone > div > span:first-of-type {
+    margin-bottom: 2px;
+    font-size: min(4vw, 14px);
+}
+
+.layout.withPhone > div > span:last-of-type {
+    margin-bottom: 24px;
+    font-size: min(3vw, 12px);
+}
+
+.layout.withPhone > div > input {
+    height: 50px;
+    outline: none;
+    color: black;
+    border: 1px solid var(--color-primary);
+    padding: 12px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.layout.withDate {
+    margin-top: 37px;
+}
+
+.upperNoti {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.upperNoti > span.date {
+    margin-bottom: 5px;
+    border: 1px solid var(--color-primary);
+    border-radius: 40px;
+    min-width: 80px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.upperNoti > span.done {
+    margin-bottom: 16px;
+    width: 100%;
+    text-align: center;
+    font-weight: var(--weight-semibold);
+}
+
+.poster {
+    flex: 1;
+    border-radius: 10px;
+}
+
+.poster.noti {
+    background-color: var(--color-disabled);
+    margin-bottom: 39px;
+}
+
+.times {
+    margin-block: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.times > button {
+    border: 1px solid var(--color-primary);
+    padding-block: 5px;
+    padding-inline: 15px;
+    color: black;
+}
+
+.times > button.selected1 {
+    background-color: var(--color-play1);
+}
+.times > button.selected2 {
+    background-color: var(--color-play2);
+}
+.times > button.selected3 {
+    background-color: var(--color-play3);
+}
+
+.times > button.selected1,
+.times > button.selected2 {
+    color: var(--color-white);
+}
+
+.ticketLayout {
+    margin-top: 16px;
+    margin-bottom: 23px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 23px;
+    font-weight: var(--weight-semibold);
+}
+
+.ticketLayout > .ticketTitle {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+    font-size: 24px;
+}
+
+.ticketLayout > .ticketDescription {
+    font-size: 16px;
+}
+
+.ticketDescription > button {
+    color: var(--color-error);
+    text-decoration: underline;
+}

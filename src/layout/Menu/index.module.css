@@ -1,0 +1,108 @@
+/* 기본 */
+.menuWrapper {
+    position: fixed;
+    bottom: -21px;
+    left: 50%;
+
+    transform: translate3d(-50%, 0, 0);
+}
+
+.menuContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    animation: pop 1.5s linear infinite;
+}
+
+.circle {
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-white);
+}
+
+.menuContent > img {
+    margin-top: -40px;
+}
+
+@keyframes pop {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    20% {
+        transform: translate3d(0, -6px, 0);
+    }
+
+    40% {
+        transform: translate3d(0, 0, 0);
+    }
+    60% {
+        transform: translate3d(0, -6px, 0);
+    }
+
+    80% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* active */
+.overlay {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    opacity: 0.3;
+}
+
+.activeMenu {
+    position: fixed;
+    z-index: 2;
+    bottom: 6px;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    background-color: var(--color-white);
+    border-radius: 50%;
+    height: 292px;
+    width: 292px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.activeMenu > * {
+    height: 106px;
+    width: 106px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activeMenu a {
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+}
+
+.activeMenu > div {
+    width: 100%;
+    justify-content: center;
+    gap: 132px;
+}
+
+.circle.active {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}

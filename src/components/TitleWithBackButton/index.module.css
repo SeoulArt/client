@@ -1,0 +1,13 @@
+.layout {
+    margin: 28px 16px 20px;
+    height: 34px;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+}
+
+.layout > h2 {
+    font-size: 28px;
+    font-weight: var(--weight-medium);
+    line-height: 34px;
+}

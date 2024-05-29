@@ -1,0 +1,19 @@
+<svg
+    width="30"
+    height="30"
+    viewBox="0 0 30 30"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <circle
+        cx="15"
+        cy="15"
+        r="15"
+        transform="rotate(90 15 15)"
+        fill="#262626"
+    />
+    <path
+        d="M7.75 11.9124L8.66239 11L15.375 17.7126L22.0876 11L23 11.9124L15.375 19.5374L7.75 11.9124Z"
+        fill="white"
+    />
+</svg>

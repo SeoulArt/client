@@ -1,0 +1,78 @@
+.headerRelative {
+    position: relative;
+    display: flex;
+    align-items: last baseline;
+}
+
+.absolute {
+    position: absolute;
+    right: 16px;
+    bottom: 25px;
+}
+
+.layout {
+    padding-inline: 25px;
+    padding-bottom: 27px;
+    height: calc(100% - calc(var(--height-header) + 105px));
+}
+
+.list {
+    background-color: var(--color-disabled);
+    padding-inline: 22px;
+    padding-block: 33px;
+    margin-bottom: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: scroll;
+}
+
+.list > li,
+.list > .empty {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    display: flex;
+}
+
+.list > li {
+    min-height: 81px;
+    width: 100%;
+    display: flex;
+}
+
+.list > .empty {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 23px;
+}
+
+.list > li > a {
+    width: 100%;
+    padding-inline: 17px;
+    padding-block: 16px;
+    max-height: 81px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.2;
+    word-break: break-all;
+}
+
+.list > li > a > img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.list > li > a > p {
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
