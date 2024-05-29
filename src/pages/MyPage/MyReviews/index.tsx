@@ -8,6 +8,8 @@ import { CustomError } from "@/types";
 import toast from "react-hot-toast";
 import authStore from "@/store/authStore";
 import Loading from "@/components/Loading";
+import FilterSelect from "@/components/FilterSelect";
+import { FilterKeys } from "@/constants";
 
 interface Review {
     playId: number;
@@ -20,6 +22,7 @@ const MyReviews = () => {
     const { user } = authStore();
     const [reviews, setReviews] = useState<Review[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [filter, setFilter] = useState<FilterKeys>("all");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,27 +52,41 @@ const MyReviews = () => {
 
     return (
         <>
-            <TitleWithBackButton title={"내가 쓴 후기"} />
+            <div className={styles.headerRelative}>
+                <TitleWithBackButton title={"내가 쓴 후기"} />
+                <div className={styles.absolute}>
+                    <FilterSelect
+                        value={filter}
+                        onlyPlay={true}
+                        onChange={setFilter}
+                    />
+                </div>
+            </div>
             <div className={styles.layout}>
                 <ul className={styles.list}>
                     {reviews.length > 0 ? (
-                        reviews.map((review) => (
-                            <li key={review.reviewId}>
-                                <Link
-                                    to={`/review/${review.playId}/reviews/${review.reviewId}`}
-                                >
-                                    <p>{review.content}</p>
-                                    {review.image && (
-                                        <img
-                                            src={getValidProfileUrl(
-                                                review.image
-                                            )}
-                                            alt={"후기 이미지"}
-                                        />
-                                    )}
-                                </Link>
-                            </li>
-                        ))
+                        reviews
+                            .filter(
+                                (review) =>
+                                    filter === "all" || filter === review.playId
+                            )
+                            .map((review) => (
+                                <li key={review.reviewId}>
+                                    <Link
+                                        to={`/review/${review.playId}/reviews/${review.reviewId}`}
+                                    >
+                                        <p>{review.content}</p>
+                                        {review.image && (
+                                            <img
+                                                src={getValidProfileUrl(
+                                                    review.image
+                                                )}
+                                                alt={"후기 이미지"}
+                                            />
+                                        )}
+                                    </Link>
+                                </li>
+                            ))
                     ) : (
                         <div className={styles.empty}>
                             <img

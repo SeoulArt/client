@@ -1,3 +1,15 @@
+.headerRelative {
+    position: relative;
+    display: flex;
+    align-items: last baseline;
+}
+
+.absolute {
+    position: absolute;
+    right: 16px;
+    bottom: 25px;
+}
+
 .layout {
     padding-inline: 25px;
     padding-bottom: 27px;

@@ -9,6 +9,8 @@ import { CustomError } from "@/types";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import styles from "./index.module.css";
+import FilterSelect from "@/components/FilterSelect";
+import { FilterKeys } from "@/constants";
 
 interface Question {
     qnaId: number;
@@ -25,6 +27,7 @@ const MyQnA = ({ type }: Props) => {
     const { user } = authStore();
     const [questions, setQuestions] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [filter, setFilter] = useState<FilterKeys>("all");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -58,36 +61,51 @@ const MyQnA = ({ type }: Props) => {
 
     return (
         <>
-            <TitleWithBackButton
-                title={`내가 쓴 ${type === "question" ? "질문" : "답변"}`}
-            />
+            <div className={styles.headerRelative}>
+                <TitleWithBackButton
+                    title={`내가 쓴 ${type === "question" ? "질문" : "답변"}`}
+                />
+                <div className={styles.absolute}>
+                    <FilterSelect
+                        value={filter}
+                        onlyPlay={true}
+                        onChange={setFilter}
+                    />
+                </div>
+            </div>
             <div className={styles.layout}>
                 <ul className={`${styles.list}`}>
                     {questions.length > 0 ? (
-                        questions.map((question) => (
-                            <li key={question.qnaId}>
-                                <Link
-                                    to={`/qna/${question.playId}/questions/${question.qnaId}`}
-                                >
-                                    <p>
-                                        {type === "question" && (
-                                            <span
-                                                className={
-                                                    question.isAnswered
-                                                        ? styles.answered
-                                                        : styles.notAnswered
-                                                }
-                                            >
-                                                {question.isAnswered
-                                                    ? "답변완료"
-                                                    : "답변미완"}
-                                            </span>
-                                        )}
-                                        {question.question}
-                                    </p>
-                                </Link>
-                            </li>
-                        ))
+                        questions
+                            .filter(
+                                (question) =>
+                                    filter === "all" ||
+                                    filter === question.playId
+                            )
+                            .map((question) => (
+                                <li key={question.qnaId}>
+                                    <Link
+                                        to={`/qna/${question.playId}/questions/${question.qnaId}`}
+                                    >
+                                        <p>
+                                            {type === "question" && (
+                                                <span
+                                                    className={
+                                                        question.isAnswered
+                                                            ? styles.answered
+                                                            : styles.notAnswered
+                                                    }
+                                                >
+                                                    {question.isAnswered
+                                                        ? "답변완료"
+                                                        : "답변미완"}
+                                                </span>
+                                            )}
+                                            {question.question}
+                                        </p>
+                                    </Link>
+                                </li>
+                            ))
                     ) : (
                         <div className={styles.empty}>
                             <img
