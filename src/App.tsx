@@ -24,7 +24,7 @@ import Questions from "@/pages/QnA/Questions";
 import CreateQuestion from "@/pages/QnA/CreateQuestion";
 import { CustomError, Token, User } from "@/types";
 import baseAxios from "@/queries/baseAxios";
-import Ticketing from "@/pages/Ticketing";
+// import Ticketing from "@/pages/Ticketing";
 import Loading from "@/components/Loading";
 import Modal from "@/UI/Modal";
 import UIStore from "@/store/UIStore";
@@ -192,12 +192,12 @@ function App() {
                                             path="/contents"
                                             element={<Contents />}
                                         />
-                                        <Route path="/ticketing">
+                                        {/* <Route path="/ticketing">
                                             <Route
                                                 path=""
                                                 element={<Ticketing />}
                                             />
-                                        </Route>
+                                        </Route> */}
                                         <Route path="/review">
                                             <Route
                                                 path=""
