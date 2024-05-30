@@ -25,9 +25,9 @@ const Menu = () => {
                             후기
                         </Link>
                     </div>
-                    <Link to="/ticketing" onClick={() => setIsOpened(false)}>
-                        예매
-                    </Link>
+                    <div className={styles.ticket}>예매</div>
+                    {/* <Link to="/ticketing" onClick={() => setIsOpened(false)}>
+                    </Link> */}
                     <div className={`${styles.circle} ${styles.active}`}>
                         <img src={triangle} />
                     </div>
