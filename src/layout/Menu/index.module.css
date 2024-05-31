@@ -98,11 +98,6 @@
     gap: 132px;
 }
 
-.activeMenu > .ticket {
-    color: var(--color-disabled);
-    cursor: not-allowed;
-}
-
 .circle.active {
     position: absolute;
     width: 80px;

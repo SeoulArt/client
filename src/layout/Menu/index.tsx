@@ -25,9 +25,12 @@ const Menu = () => {
                             후기
                         </Link>
                     </div>
-                    <div className={styles.ticket}>예매</div>
-                    {/* <Link to="/ticketing" onClick={() => setIsOpened(false)}>
-                    </Link> */}
+                    <a
+                        href="https://booking.naver.com/booking/12/bizes/1029318?fbclid=PAZXh0bgNhZW0CMTEAAaazWvv1rO4qA5n_VbbBVRSBx1TiC2emu0-m0QWszRP7Jkrga-UBOfKd87A_aem_AcfP9Q6iagf17KwTd7JVlUppDEAMNZNDQTIr2fgFCCTMy9_4aUIwzvQ66bUH5nrfyI98hd5Lhf6bs4iFIell90Lj"
+                        target="_blank"
+                    >
+                        예매
+                    </a>
                     <div className={`${styles.circle} ${styles.active}`}>
                         <img src={triangle} />
                     </div>
